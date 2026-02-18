@@ -216,22 +216,37 @@ class WBPG_Admin {
 					<div class="wbpg-card wbpg-guide">
 						<h2><?php _e( 'User Guide & Examples', 'wp-bulk-pages-generator' ); ?></h2>
 						<div class="wbpg-guide-content">
+							<!-- Basic Usage -->
 							<div class="wbpg-guide-item">
-								<h3><?php _e( 'Basic Usage', 'wp-bulk-pages-generator' ); ?></h3>
-								<p><?php echo sprintf( __( 'Enter the number of pages, fill in titles, and click %s. If you leave the slug empty, WordPress will generate it from the title.', 'wp-bulk-pages-generator' ), '<strong>' . __( 'Create All', 'wp-bulk-pages-generator' ) . '</strong>' ); ?></p>
+								<h3><i class="fa-solid fa-play" aria-hidden="true" style="margin-right:8px;font-size:12px;"></i><?php _e( 'Quick Workflow', 'wp-bulk-pages-generator' ); ?></h3>
+								<p><?php echo sprintf( __( '1. Select a %1$s to begin. 2. Enter how many rows to add. 3. Fill in your content. 4. Click %2$s to start.', 'wp-bulk-pages-generator' ), '<strong>' . __( 'Post Type', 'wp-bulk-pages-generator' ) . '</strong>', '<strong>' . __( 'Create All', 'wp-bulk-pages-generator' ) . '</strong>' ); ?></p>
 							</div>
+
+							<!-- Block Patterns -->
 							<div class="wbpg-guide-item">
-								<h3><?php _e( 'Block Content', 'wp-bulk-pages-generator' ); ?></h3>
-								<p><?php _e( 'Paste the markup below for a heading and paragraph:', 'wp-bulk-pages-generator' ); ?></p>
-								<code>&lt;!-- wp:heading --&gt;&lt;h2&gt;Hello&lt;/h2&gt;&lt;!-- /wp:heading --&gt;<br>&lt;!-- wp:paragraph --&gt;&lt;p&gt;Bulk page.&lt;/p&gt;&lt;!-- /wp:paragraph --&gt;</code>
+								<h3><i class="fa-solid fa-cubes" aria-hidden="true" style="margin-right:8px;font-size:12px;"></i><?php _e( 'Advanced Block Patterns', 'wp-bulk-pages-generator' ); ?></h3>
+								<p><?php _e( 'Paste these snippets into the Content field for professional layouts:', 'wp-bulk-pages-generator' ); ?></p>
+								
+								<div class="wbpg-code-example">
+									<strong><?php _e( 'FAQ Section:', 'wp-bulk-pages-generator' ); ?></strong>
+									<code>&lt;!-- wp:details {"summary":"Is this free?"} --&gt;&lt;details open&gt;&lt;summary&gt;Is this free?&lt;/summary&gt;&lt;!-- wp:paragraph --&gt;&lt;p&gt;Yes, fully open source.&lt;/p&gt;&lt;!-- /wp:paragraph --&gt;&lt;/details&gt;&lt;!-- /wp:details --&gt;</code>
+								</div>
+
+								<div class="wbpg-code-example" style="margin-top:10px;">
+									<strong><?php _e( 'Call to Action:', 'wp-bulk-pages-generator' ); ?></strong>
+									<code>&lt;!-- wp:buttons --&gt;&lt;div class="wp-block-buttons"&gt;&lt;!-- wp:button --&gt;&lt;div class="wp-block-button"&gt;&lt;a class="wp-block-button__link wp-element-button"&gt;Start Now&lt;/a&gt;&lt;/div&gt;&lt;!-- /wp:button --&gt;&lt;/div&gt;&lt;!-- /wp:buttons --&gt;</code>
+								</div>
 							</div>
+
+							<!-- Tips & Tricks -->
 							<div class="wbpg-guide-item">
-								<h3><?php _e( 'Parent Pages', 'wp-bulk-pages-generator' ); ?></h3>
-								<p><?php echo sprintf( __( 'Select a %s for sub-pages. This is hidden for non-hierarchical types.', 'wp-bulk-pages-generator' ), '<strong>' . __( 'Parent', 'wp-bulk-pages-generator' ) . '</strong>' ); ?></p>
-							</div>
-							<div class="wbpg-guide-item">
-								<h3><?php _e( 'Bulk Actions', 'wp-bulk-pages-generator' ); ?></h3>
-								<p><?php echo sprintf( __( 'Select rows to delete them at once using the %s button.', 'wp-bulk-pages-generator' ), '<strong>' . __( 'Delete Selected', 'wp-bulk-pages-generator' ) . '</strong>' ); ?></p>
+								<h3><i class="fa-solid fa-lightbulb" aria-hidden="true" style="margin-right:8px;font-size:12px;"></i><?php _e( 'Pro Tips & Accessibility', 'wp-bulk-pages-generator' ); ?></h3>
+								<ul style="margin: 0; padding-left: 18px; font-size: 13px; color: var(--wbpg-text-muted);">
+									<li><?php _e( 'Use **Tab** keys to navigate quickly between input fields.', 'wp-bulk-pages-generator' ); ?></li>
+									<li><?php _e( 'Press **Enter** or **Space** on the trash icon to remove a row via keyboard.', 'wp-bulk-pages-generator' ); ?></li>
+									<li><?php _e( 'Leave the **Slug** empty to let WordPress generate a search-friendly URL.', 'wp-bulk-pages-generator' ); ?></li>
+									<li><?php _e( 'The **Start Over** button clears all data—use it to quickly start a new batch.', 'wp-bulk-pages-generator' ); ?></li>
+								</ul>
 							</div>
 						</div>
 					</div>
