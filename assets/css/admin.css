@@ -853,12 +853,13 @@
     }
 
     .wbpg-table td {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: flex-start !important;
+        padding: 12px 0 !important;
+        width: 100% !important;
         border: none !important;
-        padding: 12px 0 12px 100px !important;
-        /* Fixed padding for labels */
-        position: relative;
-        text-align: left !important;
-        min-height: 48px;
+        position: static !important;
         border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
     }
 
@@ -868,26 +869,28 @@
 
     .wbpg-table td::before {
         content: attr(data-label);
-        position: absolute;
-        left: 0;
-        width: 90px;
-        /* Fixed width for labels */
-        padding-right: 10px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        display: block !important;
+        position: static !important;
+        flex: 0 0 100px !important;
+        width: 100px !important;
+        padding-right: 12px !important;
         font-weight: 600;
         font-size: 11px;
         text-transform: uppercase;
         color: var(--wbpg-text-muted);
-        top: 16px;
+        top: auto;
+        white-space: normal !important;
+        margin-top: 10px;
     }
 
     .wbpg-table td input,
     .wbpg-table td select,
     .wbpg-table td textarea {
+        flex: 1 !important;
         width: 100% !important;
+        min-width: 0 !important;
         margin: 0 !important;
+        box-sizing: border-box !important;
     }
 
     .wbpg-layout {
