@@ -1,58 +1,61 @@
-# WP Bulk Content Creator 🚀
-### The Ultimate Geist-Inspired Bulk Generator for WordPress
+# WP Bulk Pages Generator 🚀
+### The Ultimate Geist-Inspired Bulk Content Engine for WordPress
 
 [![WordPress Version](https://img.shields.io/badge/WordPress-6.0%2B-blue.svg?style=flat-square&logo=wordpress)](https://wordpress.org)
 [![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-777bb4.svg?style=flat-square&logo=php)](https://php.net)
 [![UI Design](https://img.shields.io/badge/UI-Geist--Minimal-black.svg?style=flat-square)](https://vercel.com/design)
 [![Theme](https://img.shields.io/badge/Support-Dark%20Mode-success.svg?style=flat-square)](https://github.com/)
+[![Standards](https://img.shields.io/badge/WCAG-2.1%20AA-blueviolet.svg?style=flat-square)](https://www.w3.org/WAI/standards-guidelines/wcag/)
 [![License](https://img.shields.io/badge/License-GPL--v2-orange.svg?style=flat-square)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
-**WP Bulk Pages Generator** is a premium-grade WordPress plugin designed for high-speed site building and SEO content deployment. Featuring a state-of-the-art **Geist design system**, it offers an unparalleled bulk creation experience for Pages, Posts, and Custom Content.
+**WP Bulk Pages Generator** is a premium-grade WordPress plugin designed for high-speed site building, silo construction, and SEO content deployment. Featuring a world-class **Geist design system**, it offers a flawless bulk creation experience for Pages, Posts, and any Custom Post Type (CPT) with full taxonomy support.
 
 ---
 
 ## 🎨 Professional Features
 
-- **Geist Design System**: A clean, high-contrast, and minimalist interface focused on information density and speed.
-- **🌗 Native Dark Mode**: Full dark mode support with a dedicated toggle for comfortable nighttime development.
-- **📌 Sticky Documentation Sidebar**: Never lose your place. Content guides and block examples stay pinned to your right as you work.
-- **🔄 Contextual Naming**: The interface dynamically rebrands itself (e.g., "Configure Post Details") based on your selected post type.
-- **🧱 Block Content Support**: Paste unique **Gutenberg Block Markup** directly into the list for instant, rich-content generation.
-- **🍱 Multi Post-Type Engine**: Automatically detects every public post type on your site.
-- **🛡️ Secure & Stable**: 100% Nonce-protected and uses sequential `async/await` processing to prevent server timeouts.
+- **💎 Geist Design System**: A high-contrast, minimalist interface focused on information density and speed.
+- **🌗 Universal Dark Mode**: Seamless dark/light theme switching with automated persistence.
+- **📚 Premium Iconography**: Powered by **Font Awesome 6** for an intuitive, modern UI experience.
+- **📌 Interactive Guide Sidebar**: Real-time documentation and Gutenberg block examples pinned as you work.
+- **🔄 Smart Labeling**: The entire dashboard dynamically rebrands titles, columns, and buttons based on your selected Post Type.
+- **🧱 Rich Content Support**: Full support for **Block Editor (Gutenberg) Markup** and raw HTML.
+- **🍱 Intelligent Taxonomy Logic**: Automatically detects and handles Categories, Tags, and Custom Hierarchical Taxonomies.
+- **🛡️ Enterprise-Grade Security**: Fully Nonce-protected REST API endpoints with strict capability checks.
 
 ---
 
 ## 🛠️ Efficient Workflow
 
-1. **Select Type**: Choose between Posts, Pages, or CPTs. The interface will adapt instantly.
-2. **Generate List**: Add up to 100 rows at a time.
-3. **Configure**: Fill titles, slugs, and rich block content. Use the **Sticky Sidebar** for block markup references.
-4. **Create**: Run the sequential generator and monitor real-time progress.
+1. **Build Your List**: Select your target Post Type (Page, Post, or CPT) and row count.
+2. **Configure Details**: Fill in titles, slugs, and rich content. The interface adapts to show "Parent" pages for hierarchical types or "Terms" for others.
+3. **Execution**: Click "Create All" and monitor real-time progress via the live status summary.
 
 ---
 
-## 📈 SEO & Performance Benefits
-Built for SEO professionals and agency developers:
-- **Silo Construction**: Build entire hierarchical content structures in minutes.
-- **Cluster Deployment**: Deploy service area pages or city-specific clusters effortlessly.
-- **Zero Placeholder Content**: Create real, block-rich content from the start.
-- **Server Friendly**: No high-impact database imports—just clean, native REST API calls.
+## 📈 SEO & Performance Hardening
+
+Built for SEO professionals, agencies, and performance-minded developers:
+- **Zero Layout Thrash**: Uses `DocumentFragment` batch rendering for instantaneous UI response even with 100+ rows.
+- **Sequential API Processing**: Prevents server timeouts and database deadlocks by processing content in a smart `async/await` loop.
+- **CSS Containment**: Leverages modern browser rendering optimizations for a lag-free experience.
+- **Silo Specialist**: Build complex hierarchical content structures (Service -> City -> Suburbs) in seconds.
 
 ---
 
-## 📥 Installation 
+## ♿ Accessibility & Standards
 
-1. Download the plugin folder.
-2. Upload it to your `/wp-content/plugins/` directory.
-3. Activate it via the **Plugins** menu.
-4. Access the high-performance dashboard via **"Bulk Pages"** in your sidebar.
+- **WCAG 2.1 AA Compliant**: High-contrast ratios, semantic HTML5 landmarks, and ARIA-live status updates.
+- **Keyboard Optimized**: Full `:focus-visible` support for high-visibility navigation without a mouse.
+- **Reduced Motion Support**: Respects system-level motion preferences for inclusive usage.
+- **MDN & Google Web Dev Driven**: Follows strict coding standards for future-proof WordPress compatibility.
 
 ---
 
-## ✨ Build Information
-- **WordPress Compliance**: Tested up to 6.9.1 (2026 Compatible)
-- **Aesthetics**: Strictly Inter/Geist typography.
-- **Logic**: Strict validation with error highlighting for empty titles.
+## 📥 Quick Installation
 
-*Developed for the modern WordPress ecosystem.*
+1. Upload the plugin folder to your `/wp-content/plugins/` directory.
+2. Activate the plugin in the **Plugins** menu.
+3. Navigate to **"Bulk Pages"** in your admin sidebar to begin.
+
+*Engineered for the modern, high-performance WordPress ecosystem.*

@@ -93,23 +93,23 @@ class WBPG_API {
 	 */
 	public function create_page( $request ) {
 		$params    = $request->get_json_params();
-		$title     = sanitize_text_field( $params['title'] );
-		$slug      = sanitize_title( $params['slug'] );
-		$parent    = intval( $params['parent'] );
-		$content   = $params['content'];
+		$title     = ! empty( $params['title'] ) ? sanitize_text_field( $params['title'] ) : '';
+		$slug      = ! empty( $params['slug'] ) ? sanitize_title( $params['slug'] ) : '';
+		$parent    = ! empty( $params['parent'] ) ? absint( $params['parent'] ) : 0;
+		$content   = ! empty( $params['content'] ) ? wp_kses_post( $params['content'] ) : '';
 		$post_type = ! empty( $params['post_type'] ) ? sanitize_key( $params['post_type'] ) : 'page';
-		$term_id   = ! empty( $params['term_id'] ) ? intval( $params['term_id'] ) : 0;
+		$term_id   = ! empty( $params['term_id'] ) ? absint( $params['term_id'] ) : 0;
 		$taxonomy  = ! empty( $params['taxonomy'] ) ? sanitize_key( $params['taxonomy'] ) : '';
 
 		if ( empty( $title ) ) {
-			return new WP_Error( 'missing_title', 'Title is required.', array( 'status' => 400 ) );
+			return new WP_Error( 'missing_title', __( 'Title is required.', 'wp-bulk-pages-generator' ), array( 'status' => 400 ) );
 		}
 
 		$post_data = array(
 			'post_title'   => $title,
 			'post_name'    => $slug,
 			'post_parent'  => $parent,
-			'post_content' => wp_kses_post( $content ),
+			'post_content' => $content,
 			'post_type'    => $post_type,
 			'post_status'  => 'publish',
 		);
@@ -208,10 +208,10 @@ class WBPG_API {
 					break;
 				}
 			}
-			// Fallback to first public taxonomy if no hierarchical one found
+			// Fallback to first public available taxonomy
 			if ( empty( $primary_taxonomy ) ) {
 				foreach ( $taxonomies as $tax_slug => $tax_obj ) {
-					if ( $tax_obj->public ) {
+					if ( $tax_obj->public && ! in_array( $tax_slug, array( 'post_format' ) ) ) {
 						$primary_taxonomy = $tax_slug;
 						break;
 					}

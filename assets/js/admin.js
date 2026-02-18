@@ -12,16 +12,17 @@ jQuery(document).ready(function ($) {
     let currentPostType = 'page';
     let currentTaxonomy = '';
     let availablePostTypes = {};
+    const i18n = wbpgData.i18n;
 
     // Theme Toggle Logic
     function setTheme(theme) {
         $('.wbpg-admin-wrap').attr('data-theme', theme);
         localStorage.setItem('wbpg-theme', theme);
-        const $icon = $('#wbpg-theme-toggle .dashicons');
+        const $icon = $('#wbpg-theme-toggle i');
         if (theme === 'dark') {
-            $icon.removeClass('dashicons-lightbulb').addClass('dashicons-visibility');
+            $icon.removeClass('fa-lightbulb').addClass('fa-moon');
         } else {
-            $icon.removeClass('dashicons-visibility').addClass('dashicons-lightbulb');
+            $icon.removeClass('fa-moon').addClass('fa-lightbulb');
         }
     }
 
@@ -42,12 +43,12 @@ jQuery(document).ready(function ($) {
         const taxLabel = typeData.tax_label || 'Category';
         const isHierarchical = typeData.hierarchical;
 
-        $('#wbpg-configure-title').text(`2. Configure ${typeLabel} Details`);
-        $('#wbpg-create-all-btn').text(`Create All ${typeLabel}s`);
+        $('#wbpg-configure-title').text(i18n.configure.replace('%s', typeLabel));
+        $('#wbpg-create-all-btn').text(i18n.create_btn.replace('%s', typeLabel));
 
         // Update Column Header
         if (isHierarchical) {
-            $('#wbpg-parent-column-head').text('Parent');
+            $('#wbpg-parent-column-head').text(i18n.parent || 'Parent');
         } else if (typeData.taxonomy) {
             $('#wbpg-parent-column-head').text(taxLabel);
         }
@@ -60,7 +61,7 @@ jQuery(document).ready(function ($) {
             method: 'GET',
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('X-WP-Nonce', wbpgData.nonce);
-                $generateBtn.prop('disabled', true).text('Loading...');
+                $generateBtn.prop('disabled', true).text(i18n.loading);
             },
             success: function (types) {
                 const $selector = $('#wbpg-post-type');
@@ -72,7 +73,7 @@ jQuery(document).ready(function ($) {
                 toggleParentColumn();
                 updateDynamicLabels();
                 loadParents(currentPostType);
-                $generateBtn.prop('disabled', false).text('Generate List');
+                $generateBtn.prop('disabled', false).text(i18n.generate);
             }
         });
     }
@@ -99,7 +100,7 @@ jQuery(document).ready(function ($) {
         currentTaxonomy = typeData.taxonomy || '';
 
         if (isHierarchical) {
-            parentOptionsHtml = '<option value="0">None (Top Level)</option>';
+            parentOptionsHtml = `<option value="0">${i18n.none}</option>`;
             $.ajax({
                 url: wbpgData.apiUrl + '/parents',
                 method: 'GET',
@@ -115,7 +116,7 @@ jQuery(document).ready(function ($) {
                 }
             });
         } else if (currentTaxonomy) {
-            parentOptionsHtml = '<option value="0">Select Category</option>';
+            parentOptionsHtml = `<option value="0">${i18n.select_cat}</option>`;
             $.ajax({
                 url: wbpgData.apiUrl + '/terms',
                 method: 'GET',
@@ -163,9 +164,16 @@ jQuery(document).ready(function ($) {
         }
 
         $rowsContainer.empty();
+
+        // Performance Optimization: Use DocumentFragment for batch insertion
+        const fragment = document.createDocumentFragment();
         for (let i = 0; i < count; i++) {
-            addRow();
+            const rowHtml = createRowHtml();
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = rowHtml.trim();
+            fragment.appendChild(tempDiv.firstChild);
         }
+        $rowsContainer[0].appendChild(fragment);
 
         $listWrapper.show();
         $summaryBox.hide();
@@ -177,20 +185,23 @@ jQuery(document).ready(function ($) {
         }, 500);
     });
 
-    function addRow(data = {}) {
+    function createRowHtml(data = {}) {
         const rowId = Date.now() + Math.random().toString(36).substr(2, 9);
-        const rowHtml = `
+        return `
             <tr id="row-${rowId}" class="wbpg-row">
                 <td class="col-check"><input type="checkbox" class="wbpg-row-check"></td>
-                <td class="col-status"><span class="wbpg-status-icon pending" title="Pending"></span></td>
+                <td class="col-status"><div class="wbpg-status-icon pending" title="Pending"><i class="fa-regular fa-clock"></i></div></td>
                 <td><input type="text" class="wbpg-row-title" placeholder="Enter title..." value="${data.title || ''}" required></td>
                 <td><input type="text" class="wbpg-row-slug" placeholder="slug" value="${data.slug || ''}"></td>
                 <td class="col-parent"><select class="wbpg-row-parent">${parentOptionsHtml}</select></td>
                 <td><textarea class="wbpg-row-content" placeholder="Block content or HTML...">${data.content || ''}</textarea></td>
-                <td class="col-action"><span class="wbpg-row-remove dashicons dashicons-trash" title="Remove"></span></td>
+                <td class="col-action"><span class="wbpg-row-remove fa-solid fa-trash-can" title="Remove"></span></td>
             </tr>
         `;
-        const $row = $(rowHtml);
+    }
+
+    function addRow(data = {}) {
+        const $row = $(createRowHtml(data));
         if (data.parent) {
             $row.find('.wbpg-row-parent').val(data.parent);
         }
@@ -219,7 +230,7 @@ jQuery(document).ready(function ($) {
     function toggleBulkActions() {
         const selectedCount = $('.wbpg-row-check:checked').length;
         if (selectedCount > 0) {
-            $('#wbpg-delete-selected-btn').show().text(`Delete Selected (${selectedCount})`);
+            $('#wbpg-delete-selected-btn').show().html(`<i class="fa-solid fa-trash-can" style="margin-right:4px;"></i> ${i18n.delete_selected.replace('%d', selectedCount)}`);
         } else {
             $('#wbpg-delete-selected-btn').hide();
         }
@@ -230,7 +241,7 @@ jQuery(document).ready(function ($) {
         const selected = $('.wbpg-row-check:checked');
         if (selected.length === 0) return;
 
-        if (confirm(`Remove ${selected.length} rows?`)) {
+        if (confirm(i18n.confirm_remove.replace('%d', selected.length))) {
             selected.closest('tr').fadeOut(300, function () {
                 $(this).remove();
                 toggleBulkActions();
@@ -262,9 +273,9 @@ jQuery(document).ready(function ($) {
         if (pendingRows.length === 0) return;
 
         const typeLabel = $('#wbpg-post-type option:selected').text();
-        if (!confirm(`Create ${pendingRows.length} ${typeLabel}(s)?`)) return;
+        if (!confirm(i18n.confirm_create.replace('%d', pendingRows.length).replace('%s', typeLabel))) return;
 
-        $createBtn.prop('disabled', true).text('Creating...');
+        $createBtn.prop('disabled', true).text(i18n.creating);
         $summaryBox.show();
         $progressBar.css('width', '0%');
 
@@ -288,11 +299,11 @@ jQuery(document).ready(function ($) {
 
             // Reset UI state before attempt
             $row.find('.wbpg-row-title').css('border-color', 'var(--wbpg-border)');
-            $statusIcon.attr('class', 'wbpg-status-icon loading').attr('title', 'Creating...');
+            $statusIcon.attr('class', 'wbpg-status-icon loading').attr('title', i18n.creating).html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
 
             // Strict Validation
             if (!data.title) {
-                $statusIcon.attr('class', 'wbpg-status-icon error').attr('title', 'Title is missing or empty');
+                $statusIcon.attr('class', 'wbpg-status-icon error').attr('title', i18n.error_no_title).html('<i class="fa-solid fa-circle-exclamation"></i>');
                 $row.find('.wbpg-row-title').css('border-color', 'var(--wbpg-error)');
                 completed++;
                 updateProgress(successCount, total, completed);
@@ -302,30 +313,29 @@ jQuery(document).ready(function ($) {
             try {
                 const response = await createPage(data);
                 if (response.success && response.id) {
-                    $statusIcon.attr('class', 'wbpg-status-icon success').attr('title', 'Created successfully');
-                    if ($row.find('.wbpg-view-link').length === 0) {
-                        $row.find('.wbpg-row-title').after(`<div class="wbpg-view-link" style="font-size:11px; margin-top:4px;"><a href="${response.link}" target="_blank">View ${typeLabel}</a></div>`);
-                    }
+                    $statusIcon.attr('class', 'wbpg-status-icon success').attr('title', i18n.success_created).html('<i class="fa-solid fa-circle-check"></i>');
+                    $row.find('.wbpg-view-link').remove(); // Prevent duplicates
+                    $row.find('.wbpg-row-title').after(`<div class="wbpg-view-link" style="font-size:11px; margin-top:4px;"><a href="${response.link}" target="_blank">${i18n.view.replace('%s', typeLabel)}</a></div>`);
                     $row.find('input, select, textarea').prop('disabled', true).css('opacity', '0.6');
                     $row.find('.wbpg-row-remove').hide();
                     successCount++;
                 } else {
-                    const errorMsg = (response && response.message) ? response.message : 'Unknown error';
-                    $statusIcon.attr('class', 'wbpg-status-icon error').attr('title', errorMsg);
+                    const errorMsg = (response && response.message) ? response.message : i18n.unknown_error;
+                    $statusIcon.attr('class', 'wbpg-status-icon error').attr('title', errorMsg).html('<i class="fa-solid fa-circle-xmark"></i>');
                 }
             } catch (error) {
-                let msg = 'Network Error';
+                let msg = i18n.network_error;
                 if (error.responseJSON && error.responseJSON.message) {
                     msg = error.responseJSON.message;
                 }
-                $statusIcon.attr('class', 'wbpg-status-icon error').attr('title', msg);
+                $statusIcon.attr('class', 'wbpg-status-icon error').attr('title', msg).html('<i class="fa-solid fa-triangle-exclamation"></i>');
             }
 
             completed++;
             updateProgress(successCount, total, completed);
         }
 
-        $createBtn.prop('disabled', false).text(`Create All ${typeLabel}s`);
+        $createBtn.prop('disabled', false).text(i18n.create_btn.replace('%s', typeLabel));
     });
 
     function createPage(data) {
@@ -343,11 +353,18 @@ jQuery(document).ready(function ($) {
     function updateProgress(successCount, total, attempted) {
         const percentage = (attempted / total) * 100;
         const typeLabel = $('#wbpg-post-type option:selected').text();
+        const $icon = (attempted === total) ? '<i class="fa-solid fa-circle-check" style="margin-right:8px;"></i>' : '';
         $progressBar.css('width', percentage + '%');
-        $progressText.text(`Successfully created ${successCount} out of ${total} ${typeLabel}(s).`);
+
+        let formatted = i18n.success_msg
+            .replace('%d', successCount)
+            .replace('%d', total)
+            .replace('%s', typeLabel);
+
+        $progressText.html(`${$icon}${formatted}`);
 
         if (attempted === total && successCount < total) {
-            $progressText.append(` (${total - successCount} failed or skipped)`);
+            $progressText.append(i18n.error_failed.replace('%d', total - successCount));
             $progressText.css('color', 'var(--wbpg-error)');
         } else if (attempted === total) {
             $progressText.css('color', 'var(--wbpg-success)');
