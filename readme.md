@@ -40,7 +40,7 @@ This plugin is designed for Webmasters and SEOs who need to:
 
 ---
 
-## � Installation
+## 📥 Installation 
 
 1. Download the plugin folder.
 2. Upload it to your `/wp-content/plugins/` directory.
