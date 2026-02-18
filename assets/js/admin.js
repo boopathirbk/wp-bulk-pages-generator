@@ -7,6 +7,8 @@ jQuery(document).ready(function ($) {
     const $summaryBox = $('#wbpg-status-summary');
     const $progressBar = $('#wbpg-progress-bar');
     const $progressText = $('#wbpg-progress-text');
+    const $adminWrap = $('.wbpg-admin-wrap');
+    const $themeToggle = $('#wbpg-theme-toggle');
 
     let parentOptionsHtml = '<option value="0">None (Top Level)</option>';
     let currentPostType = 'page';
@@ -17,15 +19,11 @@ jQuery(document).ready(function ($) {
 
     // Theme Toggle Logic
     function setTheme(theme) {
-        const $wrap = $('.wbpg-admin-wrap');
-        const $toggleBtn = $('#wbpg-theme-toggle');
-        const $icon = $toggleBtn.find('i');
-        const $textSpan = $toggleBtn.find('.wbpg-toggle-text');
+        const $icon = $themeToggle.find('i');
+        const $textSpan = $themeToggle.find('.wbpg-toggle-text');
 
-        $wrap.attr('data-theme', theme);
+        $adminWrap.attr('data-theme', theme);
         localStorage.setItem('wbpg_theme', theme);
-
-        // Use a cookie for no-flash SSR initial load
         document.cookie = `wbpg_theme=${theme}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
 
         if (theme === 'dark') {
@@ -40,10 +38,16 @@ jQuery(document).ready(function ($) {
     // Initialize Tippy.js
     function initTooltips() {
         if (typeof tippy === 'function') {
+            // Destroy existing instances on dynamic icons to prevent memory leaks
+            $('.wbpg-row .wbpg-tooltip-icon').each(function () {
+                if (this._tippy) this._tippy.destroy();
+            });
+
             tippy('.wbpg-tooltip-icon', {
                 content(reference) {
                     const id = reference.getAttribute('id');
-                    return i18n[id.replace('tip-', 'tip_')] || 'Info';
+                    if (!id) return reference.getAttribute('title') || 'Info';
+                    return i18n[id.replace('tip-', 'tip_')] || reference.getAttribute('title') || 'Info';
                 },
                 appendTo: () => document.body,
                 theme: 'light',
@@ -82,27 +86,24 @@ jQuery(document).ready(function ($) {
     function updateDynamicLabels() {
         const typeData = availablePostTypes[currentPostType] || {};
         const typeLabel = typeData.name || 'Page';
-        const taxLabel = typeData.tax_label || 'Category';
         const isHierarchical = typeData.hierarchical;
+        const hasTaxonomy = !!typeData.taxonomy;
 
         $('#wbpg-configure-title').text(i18n.configure.replace('%s', typeLabel));
         $('#wbpg-create-all-btn').text(i18n.create_btn.replace('%s', typeLabel));
 
-        // Update Column Header
-        if (isHierarchical) {
-            $('#wbpg-parent-column-head').text(i18n.parent || 'Parent');
-        } else if (typeData.taxonomy) {
-            $('#wbpg-parent-column-head').text(taxLabel);
+        // Update Column Header and Visibility
+        if (isHierarchical || hasTaxonomy) {
+            $('.col-parent').show();
+            $('.wbpg-row-parent').prop('disabled', false);
+            $('#wbpg-parent-column-head').text(isHierarchical ? (i18n.parent || 'Parent') : typeData.tax_label);
+        } else {
+            $('.col-parent').hide();
+            $('.wbpg-row-parent').prop('disabled', true);
         }
 
         // Update Tooltips
-        $('#tip-type').attr('aria-label', i18n.tip_type);
-        $('#tip-count').attr('aria-label', i18n.tip_count);
         $('#tip-title').attr('aria-label', i18n.tip_title.replace('item', typeLabel.toLowerCase()));
-        $('#tip-slug').attr('aria-label', i18n.tip_slug);
-        $('#tip-content').attr('aria-label', i18n.tip_content);
-
-        // Update existing row placeholders if any
         $('.wbpg-row-title').attr('placeholder', i18n.placeholder_title.replace('%s', typeLabel));
     }
 
@@ -132,17 +133,7 @@ jQuery(document).ready(function ($) {
     loadPostTypes();
 
     function toggleParentColumn() {
-        const typeData = availablePostTypes[currentPostType] || { hierarchical: true };
-        const isHierarchical = typeData.hierarchical;
-        const hasTaxonomy = !!typeData.taxonomy;
-
-        if (isHierarchical || hasTaxonomy) {
-            $('.col-parent').show();
-            $('.wbpg-row-parent').prop('disabled', false);
-        } else {
-            $('.col-parent').hide();
-            $('.wbpg-row-parent').prop('disabled', true);
-        }
+        updateDynamicLabels(); // Consolidate logic
     }
 
     // Load parent pages or terms for a specific post type
@@ -226,7 +217,6 @@ jQuery(document).ready(function ($) {
 
     // Generate List Rows
     $generateBtn.on('click', function () {
-        if (isCreating) return; // Guard against current operations
         if (isCreating) return; // Guard against concurrent operations
         let count = parseInt($countInput.val());
         if (isNaN(count) || count < 1) return;
@@ -245,7 +235,10 @@ jQuery(document).ready(function ($) {
 
         for (let i = 0; i < count; i++) {
             const rowHtml = createRowHtml();
-            tempTbody.innerHTML = rowHtml.trim();
+            tempTbody.insertAdjacentHTML('beforeend', rowHtml.trim());
+        }
+
+        while (tempTbody.firstChild) {
             fragment.appendChild(tempTbody.firstChild);
         }
         $rowsContainer[0].appendChild(fragment);
@@ -265,7 +258,7 @@ jQuery(document).ready(function ($) {
     });
 
     function createRowHtml(data = {}) {
-        const rowId = Date.now() + Math.random().toString(36).substr(2, 9);
+        const rowId = Math.random().toString(36).substr(2, 9);
         const typeData = availablePostTypes[currentPostType] || {};
         const typeLabel = typeData.name || 'Page';
 
@@ -282,19 +275,11 @@ jQuery(document).ready(function ($) {
         `;
     }
 
-    function addRow(data = {}) {
-        const $row = $(createRowHtml(data));
-        if (data.parent) {
-            $row.find('.wbpg-row-parent').val(data.parent);
-        }
-        $rowsContainer.append($row);
-        toggleParentColumn();
-    }
 
-    // Selection Logic Fixes
+    // Selection Logic
     $('#wbpg-select-all').on('change', function () {
         const isChecked = $(this).is(':checked');
-        $('.wbpg-row-check').prop('checked', isChecked).trigger('change');
+        $('.wbpg-row-check:visible').prop('checked', isChecked).trigger('change');
     });
 
     $rowsContainer.on('change', '.wbpg-row-check', function () {
@@ -381,8 +366,18 @@ jQuery(document).ready(function ($) {
             };
 
             // Reset UI state before attempt
-            $row.find('.wbpg-row-title').css('border-color', 'var(--wbpg-border)');
+            $row.find('.wbpg-row-title, .wbpg-row-slug').css('border-color', 'var(--wbpg-border)');
             $statusIcon.attr('class', 'wbpg-status-icon loading').attr('title', i18n.creating).html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
+
+            // Quick Client-Side Slug Collision Check (within the current list)
+            const slug = data.slug.toLowerCase();
+            if (slug && pendingRows.toArray().some((r, idx) => idx !== i && $(r).find('.wbpg-row-slug').val().trim().toLowerCase() === slug)) {
+                $statusIcon.attr('class', 'wbpg-status-icon error').attr('title', i18n.error_duplicate_slug || 'Duplicate slug in list').html('<i class="fa-solid fa-clone"></i>');
+                $row.find('.wbpg-row-slug').css('border-color', 'var(--wbpg-error)');
+                completed++;
+                updateProgress(successCount, total, completed);
+                continue;
+            }
 
             // Strict Validation
             if (!data.title) {
