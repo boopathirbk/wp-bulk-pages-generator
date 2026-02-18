@@ -34,7 +34,7 @@ class WBPG_Admin {
 	 * Enqueue Admin Assets.
 	 */
 	public function enqueue_assets( $hook ) {
-		if ( 'toplevel_page_wp-bulk-pages-generator' !== $hook ) {
+		if ( false === strpos( $hook, 'wp-bulk-pages-generator' ) ) {
 			return;
 		}
 

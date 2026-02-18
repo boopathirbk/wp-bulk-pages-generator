@@ -187,7 +187,7 @@ jQuery(document).ready(function ($) {
                 <td><input type="text" class="wbpg-row-title" placeholder="Enter title..." value="${data.title || ''}" required></td>
                 <td><input type="text" class="wbpg-row-slug" placeholder="slug" value="${data.slug || ''}"></td>
                 <td class="col-parent"><select class="wbpg-row-parent">${parentOptionsHtml}</select></td>
-                <td><textarea class="wbpg-row-content" placeholder="Content...">${data.content || ''}</textarea></td>
+                <td><textarea class="wbpg-row-content" placeholder="Block content or HTML...">${data.content || ''}</textarea></td>
                 <td class="col-action"><span class="wbpg-row-remove dashicons dashicons-trash" title="Remove"></span></td>
             </tr>
         `;
