@@ -198,34 +198,41 @@ jQuery(document).ready(function ($) {
 
 
     // Handle Post Type Change
-    const val = $this.val();
-    if (!val) {
-        currentPostType = '';
-        $('#wbpg-generate-row').hide();
-        $listWrapper.hide();
-        return;
-    }
+    $(document).on('change', '#wbpg-post-type', function () {
+        const $this = $(this);
+        const val = $this.val();
 
-    if (currentPostType && $('.wbpg-row').length > 0) {
-        if (!confirm(i18n.confirm_type_change)) {
-            $this.val(currentPostType);
+        if (!val) {
+            currentPostType = '';
+            $('#wbpg-generate-row').hide();
+            $listWrapper.hide();
             return;
         }
-        $rowsContainer.empty();
-        $listWrapper.hide();
-        $summaryBox.hide();
-    }
 
-    currentPostType = val;
-    const typeData = availablePostTypes[currentPostType] || {};
-    const typeLabel = typeData.name || 'Item';
+        // Disable placeholder once a selection is made
+        $this.find('option[value=""]').prop('disabled', true);
 
-    $generateBtn.text(i18n.generate_btn.replace('%s', typeLabel));
-    $('#wbpg-generate-row').fadeIn(300);
+        if (currentPostType && $('.wbpg-row').length > 0) {
+            if (!confirm(i18n.confirm_type_change)) {
+                $this.val(currentPostType);
+                return;
+            }
+            $rowsContainer.empty();
+            $listWrapper.hide();
+            $summaryBox.hide();
+        }
 
-    toggleParentColumn();
-    loadParents(currentPostType);
-    updateDynamicLabels();
+        currentPostType = val;
+        const typeData = availablePostTypes[currentPostType] || {};
+        const typeLabel = typeData.name || 'Item';
+
+        $generateBtn.text(i18n.generate_btn.replace('%s', typeLabel));
+        $('#wbpg-generate-row').fadeIn(300);
+
+        toggleParentColumn();
+        loadParents(currentPostType);
+        updateDynamicLabels();
+    });
 
     // Enforce count limits on input
     $countInput.on('input', function () {
