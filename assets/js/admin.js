@@ -458,6 +458,77 @@ jQuery(document).ready(function ($) {
 
         isCreating = false;
         $createBtn.prop('disabled', false).text(i18n.create_btn.replace('%s', typeLabel));
+
+        // UI Transition after creation
+        if (successCount > 0) {
+            transitionToResults();
+        } else {
+            $('#wbpg-start-over-btn').show();
+        }
+    });
+
+    function transitionToResults() {
+        const typeLabel = $('#wbpg-post-type option:selected').text();
+        const $resultsContainer = $('#wbpg-results-container');
+        const $resultsList = $('#wbpg-results-list');
+
+        $resultsList.empty();
+
+        // Hide table container
+        $listWrapper.fadeOut(400);
+
+        // Show "Start Over" button
+        $('#wbpg-start-over-btn').fadeIn(400);
+
+        // Collect and show successes
+        $('.wbpg-row .wbpg-status-icon.success').each(function () {
+            const $row = $(this).closest('tr');
+            const title = $row.find('.wbpg-row-title').val();
+            const link = $row.find('.wbpg-view-link a').attr('href');
+
+            const resultHtml = `
+                <div class="wbpg-result-item">
+                    <div class="wbpg-result-info">
+                        <span class="wbpg-result-title" title="${escapeHtml(title)}">${escapeHtml(title)}</span>
+                        <span class="wbpg-result-type">${escapeHtml(typeLabel)}</span>
+                    </div>
+                    <a href="${escapeHtml(link)}" target="_blank" class="wbpg-result-link" title="Open in new tab">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+            `;
+            $resultsList.append(resultHtml);
+        });
+
+        $resultsContainer.fadeIn(600);
+    }
+
+    // Start Over Logic
+    $(document).on('click', '#wbpg-start-over-btn', function () {
+        const typeLabel = (availablePostTypes[currentPostType] || {}).name || 'Page';
+
+        // Hide summary and results
+        $summaryBox.fadeOut(300);
+        $('#wbpg-results-container').hide();
+        $('#wbpg-start-over-btn').hide();
+
+        // Reset Table
+        $rowsContainer.empty();
+        $listWrapper.hide();
+        $('#wbpg-select-all').prop('checked', false);
+        $('#wbpg-delete-selected-btn').hide();
+
+        // Reset Progress
+        $progressBar.css('width', '0%');
+        updateProgress(0, 0, 0);
+
+        // Reset Create Button
+        $createBtn.prop('disabled', false).text(i18n.create_btn.replace('%s', typeLabel));
+
+        // Scroll back to top setup
+        $('html, body').animate({
+            scrollTop: $('.wbpg-setup').offset().top - 50
+        }, 500);
     });
 
     function createPage(data) {
@@ -473,7 +544,7 @@ jQuery(document).ready(function ($) {
     }
 
     function updateProgress(successCount, total, attempted) {
-        const percentage = (attempted / total) * 100;
+        const percentage = total > 0 ? (attempted / total) * 100 : 0;
         const typeLabel = $('#wbpg-post-type option:selected').text();
         const $icon = (attempted === total && successCount === total) ? '<i class="fa-solid fa-circle-check" style="margin-right:8px;"></i>' : '';
         $progressBar.css('width', percentage + '%');

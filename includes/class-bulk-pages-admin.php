@@ -88,6 +88,8 @@ class WBPG_Admin {
 				'placeholder_slug'  => __( 'slug', 'wp-bulk-pages-generator' ),
 				'placeholder_content' => __( 'Block content or HTML...', 'wp-bulk-pages-generator' ),
 				'skipped'           => __( 'Skipped (No title)', 'wp-bulk-pages-generator' ),
+				'results'           => __( 'Creation Results', 'wp-bulk-pages-generator' ),
+				'start_over'        => __( 'Start Over', 'wp-bulk-pages-generator' ),
 				'confirm_type_change' => __( 'Switching the post type will clear your current list. Continue?', 'wp-bulk-pages-generator' ),
 				'confirm_leave'       => __( 'Bulk creation is in progress. Are you sure you want to leave?', 'wp-bulk-pages-generator' ),
 				'toggle_theme'       => __( 'Toggle Light/Dark Mode', 'wp-bulk-pages-generator' ),
@@ -191,11 +193,18 @@ class WBPG_Admin {
 
 					<!-- Status Summary -->
 					<div id="wbpg-status-summary" class="wbpg-card wbpg-summary" style="display:none;">
-						<h2><?php _e( 'Progress Summary', 'wp-bulk-pages-generator' ); ?></h2>
+						<div class="wbpg-summary-header">
+							<h2><?php _e( 'Progress Summary', 'wp-bulk-pages-generator' ); ?></h2>
+							<button id="wbpg-start-over-btn" class="button button-secondary" style="display:none;"><?php _e( 'Start Over', 'wp-bulk-pages-generator' ); ?></button>
+						</div>
 						<div id="wbpg-progress-bar-container" role="progressbar" aria-valuemin="0" aria-valuemax="100">
 							<div id="wbpg-progress-bar"></div>
 						</div>
 						<p id="wbpg-progress-text" aria-live="polite"><?php _e( 'Creating pages: 0/0', 'wp-bulk-pages-generator' ); ?></p>
+						<div id="wbpg-results-container" style="display:none;">
+							<h3 class="wbpg-results-title"><?php _e( 'Review Created Items', 'wp-bulk-pages-generator' ); ?></h3>
+							<div id="wbpg-results-list" class="wbpg-results-list"></div>
+						</div>
 					</div>
 
 				</main>
