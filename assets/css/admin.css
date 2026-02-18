@@ -711,9 +711,24 @@
 #wbpg-start-over-btn {
     font-size: 13px !important;
     height: 36px !important;
-    /* Increased for better touch/clickability */
     padding: 0 16px !important;
     border-radius: 6px !important;
+    background: transparent !important;
+    border: 1px solid var(--wbpg-border) !important;
+    color: var(--wbpg-text) !important;
+    font-weight: 500 !important;
+    transition: var(--wbpg-transition) !important;
+    cursor: pointer !important;
+}
+
+#wbpg-start-over-btn:hover {
+    background: var(--wbpg-bg-page) !important;
+    border-color: var(--wbpg-text-muted) !important;
+}
+
+.wbpg-admin-wrap[data-theme="dark"] #wbpg-start-over-btn:hover {
+    background: #222 !important;
+    border-color: #444 !important;
 }
 
 .wbpg-results-title {
@@ -839,9 +854,9 @@
 
     .wbpg-table td {
         border: none !important;
-        padding: 12px 0 !important;
+        padding: 12px 0 12px 100px !important;
+        /* Fixed padding for labels */
         position: relative;
-        padding-left: 40% !important;
         text-align: left !important;
         min-height: 48px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
@@ -855,9 +870,12 @@
         content: attr(data-label);
         position: absolute;
         left: 0;
-        width: 35%;
+        width: 90px;
+        /* Fixed width for labels */
         padding-right: 10px;
         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         font-weight: 600;
         font-size: 11px;
         text-transform: uppercase;

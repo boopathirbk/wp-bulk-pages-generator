@@ -1,68 +1,104 @@
-# WP Bulk Pages Generator 🚀
-### The Ultimate 2026-Ready Bulk Content Engine for WordPress
-
-[![WordPress Version](https://img.shields.io/badge/WordPress-6.9.1-blue.svg?style=flat-square&logo=wordpress)](https://wordpress.org)
-[![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-777bb4.svg?style=flat-square&logo=php)](https://php.net)
-[![UI Design](https://img.shields.io/badge/UI-Geist--Minimal-black.svg?style=flat-square)](https://vercel.com/design)
-[![Accessibility](https://img.shields.io/badge/WCAG-2.2%20Level%20AA-success.svg?style=flat-square)](https://www.w3.org/WAI/standards-guidelines/wcag/)
-[![A11y Notifications](https://img.shields.io/badge/A11y-ARIA%20Live-orange.svg?style=flat-square)](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions)
-
-**WP Bulk Pages Generator** is an enterprise-grade WordPress plugin engineered for 2026 performance, security, and accessibility standards. Built on the **Geist Design System** and fully optimized for **WordPress 6.9.1**, it provides a frictionless, high-speed interface for bulk-deploying Pages, Posts, and Custom Post Types (CPT) with precision taxonomy integration.
-
----
-
-## 🎨 2026-Ready Feature Set
-
-- **💎 Modern Geist Architecture**: A high-density, minimalist interface designed for rapid data entry and zero cognitive load.
-- **📱 Mobile-First Card View**: Intelligent responsive engine that transforms data tables into clean, scannable cards on mobile devices.
-- **🌗 Intelligent Dark Mode**: Automated theme persistence with high-contrast optimization for low-light environments.
-- **🛡️ State Armor (Operation Lock)**: Prevents accidental navigation or refresh during bulk creation, protecting your content batches from interruption.
-- **🧱 Block-Native Engine**: Full validation for **Gutenberg Block Markup**, ensuring your bulk content renders perfectly in the modern editor.
-- **🔄 Dynamic Context Branding**: Real-time dashboard rebranding that adapts titles, instructions, and tooltips based on the selected post type.
-- **🍱 Advanced Taxonomy Layer**: Deep integration with hierarchical (Categories) and flat (Tags) taxonomies across all public post types.
-- **📐 40px Component Standard**: All buttons and inputs follow the latest **WP 6.9 Design System** height standards for optimal reach and clickability.
-- **♿ WCAG 2.2 Level AA Compliance**: High-visibility focus rings, ARIA landmarks, keyboard support (Enter/Space), and automated focus management.
-- **📢 Real-Time A11y Announcements**: Integrated `aria-live` regions that announce creation progress and success/error status to screen reader users.
-- **⚡ Performance First**: Zero layout thrash via `DocumentFragment` batching and optimized `async/await` sequential processing.
-- **🎯 Precise Creation Logic**: Intelligent row-filtering that skips empty entries while providing a descriptive "X out of Y filled" confirmation prompt.
-- **🔄 Instant Reset (Start Over)**: A dedicated recovery flow that resets the entire workspace without page reloads, with automatic focus management.
+<div align="center">
+  <img src="https://raw.githubusercontent.com/fortawesome/Font-Awesome/6.x/svgs/solid/rocket.svg" width="100" height="100" alt="WP Bulk Pages Generator Logo">
+  
+  # WP Bulk Pages Generator 🚀
+  ### *The Future-Proof Enterprise Engine for WordPress 2026*
+  
+  [![WordPress 6.9.1+](https://img.shields.io/badge/WP-6.9.1%2B-2271b1?style=for-the-badge&logo=wordpress)](https://wordpress.org)
+  [![WCAG 2.2 AA](https://img.shields.io/badge/A11y-WCAG%202.2%20AA-success?style=for-the-badge)](https://www.w3.org/WAI/standards-guidelines/wcag/)
+  [![Geist Design](https://img.shields.io/badge/UI-Geist--Minimal-000?style=for-the-badge)](https://vercel.com/design)
+  
+  [Overview](#-overview) • [Bento Features](#-the-bento-experience) • [How it Works](#-the-engine) • [Installation](#-deployment)
+</div>
 
 ---
 
-## 🛠️ Deployment Workflow
+## ⚡ Overview
 
-1. **Build Your List**: Select your target content type. The system identifies hierarchical structures and available taxonomies automatically.
-2. **Configure Details**: Fill in titles, slugs, and content. The UI dynamically focuses your cursor and validates titles in real-time.
-3. **Smart Execution**: Click "Create All". The system calculates how many rows are filled, asks for confirmation, and skip any empty rows while marking them as "Skipped".
-4. **Instant Feedback**: The Progress Summary provides a real-time count of successes, failures, and skipped items via a modern progress bar and live text announcements.
+Stop wasting hours on manual page creation. **WP Bulk Pages Generator** is a high-performance, enterprise-grade deployment engine designed to help developers and agency owners build large-scale WordPress sites in seconds. Engineered for **Zero Friction**, **Zero Bloat**, and **Maximum Accessibility**.
 
 ---
 
-## 🏗️ Technical Architecture
+## 🍱 The Bento Experience
 
-### Backend: Stable & Future-Proof
-- **Universal Compatibility**: Hardened for **PHP 7.4 through 8.2+**. 
-- **Modern Standards**: Implements 2026-ready patterns while maintaining absolute stability on legacy environments.
-- **Security First**: Nonce-locked REST API endpoints with managed capability drifts and strict sanitization.
-- **Resilient API**: Structured error handling for taxonomy and parent-page retrieval with graceful failovers.
-
-### Frontend: Modern Asset Stack
-- **Geist UI Layer**: Vanilla CSS optimization (zero bloat) with CSS Containment for lag-free interactions.
-- **Tippy.js & Popper.js**: Industry-standard tooltip positioning for unclipped interactive hints.
-- **Speed**: Sequential `async/await` loop ensures no server-side bottlenecks or database lockouts.
-- **A11y Core**: Accessible status icons, ARIA-live announcements, and high-visibility native focus rings.
+<table width="100%">
+  <tr>
+    <td width="50%" valign="top">
+      <h3>💎 Modern Architecture</h3>
+      Built on the <b>Geist Design System</b>. A high-density interface with 40px touch-targets and micro-animations for a fluid, premium experience.
+    </td>
+    <td width="50%" valign="top">
+      <h3>📱 Mobile-First Native</h3>
+      Our <b>Card-View Transformation Engine</b> turns complex data tables into breathable, touch-ready cards on mobile devices automatically.
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>♿ Ethical A11y</h3>
+      Native support for <b>WCAG 2.2 Level AA</b>. Features focus management, ARIA-live progress regions, and keyboard-first navigation.
+    </td>
+    <td width="50%" valign="top">
+      <h3>🧱 Block-Powered</h3>
+      Native validation for <b>Gutenberg Block Markup</b>. Deploy complex FAQ patterns, CTAs, and layout sections via raw list injection.
+    </td>
+  </tr>
+</table>
 
 ---
 
-## 📥 Quick Installation
+## ⚙️ The Engine
 
-1. Upload the `wp-bulk-pages-generator` folder to your `/wp-content/plugins/` directory.
-2. Activate the plugin in the **Plugins** menu.
-3. Navigate to **"Bulk Pages"** in your admin sidebar to begin bulk deployment.
+How our **Zero-Timeout Deployment Logic** handles your content batches:
+
+```mermaid
+graph TD
+    A[Setup Context] -->|Post Type / Taxonomy| B[Batch Input Grid]
+    B -->|Generate Rows| C[Enterprise Grid]
+    C -->|Title/Slug/Parent| D{Sequential Execution}
+    D -->|REST API Handler| E[WP Database]
+    E -->|Real-time Feedback| F[Live Progress Summary]
+    F -->|Success/Error| G[Link Generation]
+```
 
 ---
 
-## 👨‍💻 Developer Support
-The plugin exposes several endpoints under the `wp-bulk-pages/v1` namespace for external automation or integration workflows.
+## 🏗️ Deployment Lifecycle
 
-*Engineered for speed. Hardened for the future.*
+### 1️⃣ Contextual Discovery
+The plugin identifies hierarchical relationships and available taxonomies for any **Public Post Type**. Select "Page" and see parent-child dropdowns; select "Post" and see Categories/Tags.
+
+### 2️⃣ Rapid In-Grid Entry
+Utilize the **Geist-inspired Table** to input titles and slugs. Leave slugs blank? The engine auto-generates SEO-optimized URLs. Need nesting? The parent selector updates in real-time.
+
+### 3️⃣ Sequential Creation
+When you hit **Create All**, we don't just dump data. Our `async/await` loop processes rows one by one, ensuring your server remains responsive and avoiding the dreaded PHP execution timeouts.
+
+### 4️⃣ Live Status Armor
+Integrated **State Armor** prevents you from accidentally leaving the page during creation. Real-time status icons and `aria-live` announcements keep you informed of every step.
+
+---
+
+## 🛠️ Technical Stack
+
+- **Backend**: Hardened PHP REST API (7.4 - 8.2+) with strict Nonce validation.
+- **Frontend**: Optimized jQuery + Tippy.js with Zero Layout Thrash logic.
+- **UI**: Vanilla CSS Variables, CSS Containment for performance, and SVG-Icons.
+- **A11y**: Managed Tab-order, high-visibility focus rings, and automated accessibility tips.
+
+---
+
+## 📥 Deployment
+
+1.  Clone this repository into your `/wp-content/plugins/` directory.
+2.  Activate via **WP Admin**.
+3.  Launch the engine from the **"Bulk Pages"** menu item.
+
+---
+
+<div align="center">
+  <br/>
+  <img src="https://img.shields.io/badge/Built%20with-Passion-ff69b4?style=flat-square" alt="Built with Passion">
+  <img src="https://img.shields.io/badge/Powered%20by-WordPress-21759b?style=flat-square" alt="Powered by WordPress">
+  <br/>
+  <sub>© 2026 WP Bulk Pages Generator. Engineered for the Future.</sub>
+</div>
