@@ -27,16 +27,16 @@ Manual page creation is a bottleneck for agencies and SEO pros. **WP Bulk Pages 
 <table width="100%">
   <tr>
     <td width="33.3%" align="center">
-      <img src="screenshots/welcome.png" alt="Welcome Screen">
-      <br/><b>Command Center</b>
+      <img src="screenshots/welcome.png" alt="Build Your List Screen">
+      <br/><b>1. Build Your List</b>
     </td>
     <td width="33.3%" align="center">
-      <img src="screenshots/page-creation.png" alt="Page Creation Grid">
-      <br/><b>Precision Grid</b>
+      <img src="screenshots/page-creation.png" alt="Configure Details Grid">
+      <br/><b>2. Configure Details</b>
     </td>
     <td width="33.3%" align="center">
-      <img src="screenshots/summary.png" alt="Creation Summary">
-      <br/><b>Success Summary</b>
+      <img src="screenshots/summary.png" alt="Progress Summary">
+      <br/><b>Progress Summary</b>
     </td>
   </tr>
   <tr>
@@ -46,11 +46,11 @@ Manual page creation is a bottleneck for agencies and SEO pros. **WP Bulk Pages 
     </td>
     <td width="33.3%" align="center">
       <img src="screenshots/mobile-view.png" alt="Mobile View">
-      <br/><b>Responsive Card View</b>
+      <br/><b>Mobile Responsive View</b>
     </td>
     <td width="33.3%" align="center">
-      <img src="screenshots/created-page.png" alt="Created Page Dashboard">
-      <br/><b>Instant Results</b>
+      <img src="screenshots/created-page.png" alt="Review Created Items">
+      <br/><b>Review Created Items</b>
     </td>
   </tr>
 </table>
@@ -102,15 +102,16 @@ Manual page creation is a bottleneck for agencies and SEO pros. **WP Bulk Pages 
 ### 1️⃣ Build Your List (Setup)
 Select your target **Post Type**. Enter your desired row count (supports **1 to 100 rows** per batch). The system instantly caches parent-page and category data to fill the grid.
 
-### 2️⃣ Configure Details (The Grid)
+### 2️⃣ Configure Details (Dynamic Grid)
 An enterprise-grade interactive table featuring:
+- **Dynamic Headings**: Automatically updates to "Configure Page Details" or "Configure Post Details" based on selection.
 - **Status Icons**: Real-time visual feedback (Pending, Loading, Success, Error, Skipped).
 - **Intelligent Slugs**: Auto-generates SEO-friendly URLs if left blank.
 - **Bulk Selection**: Select all or specific rows to batch-delete before processing.
 - **Live Tooltips**: Comprehensive Tippy.js powered hints for every column.
 
-### 3️⃣ Creation & Results (Processing)
-Hit **Create All**. The system validates titles, skips empty rows, and runs an `async` loop. Once finished, a **Results Gallery** appears with direct "View" links to your new content.
+### 3️⃣ Creation & Results (Summary)
+Hit **Create All Pages** (the button dynamically reflects your Post Type). The system validates titles, skips empty rows, and runs an `async` loop. Once finished, a **Review Created Items** gallery appears with direct "View" links to your new content.
 
 ---
 
@@ -134,8 +135,8 @@ graph LR
     C --> D{Run Engine}
     D -->|Valid| E[Create via REST API]
     D -->|Empty| F[Mark as Skipped]
-    E --> G[Update Results List]
-    G --> H[View Live Content]
+    G[Review Created Items] --> H[View Live Content]
+    E --> G
 ```
 
 ---
@@ -183,7 +184,7 @@ Yes. We've implemented a **Geist-inspired Dark Theme** that respects your OS/Wor
 ### Part A: Preparing the Grid
 1. Select **"Page"** or **"Post"** from the dropdown. 
 2. Enter **"10"** in the counter.
-3. Click **"Generate List"**.
+3. Click **"Generate Pages"** (label updates to your choice).
 
 ### Part B: Batch Entry
 1. Type your **Titles** in the Title column.
@@ -192,7 +193,7 @@ Yes. We've implemented a **Geist-inspired Dark Theme** that respects your OS/Wor
 
 ### Part C: The Big Red Button
 1. Review your data.
-2. Click **"Create All"**.
+2. Click **"Create All Pages"** (or your selected type).
 3. Monitor the **Progress Bar**. Once complete, either click "Start Over" for a new batch or browse your new pages via the links.
 
 ---
