@@ -10,12 +10,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class WBPG_Admin {
 	/** @var string Plugin version */
-	private string $version = WBPG_VERSION;
+	private $version = WBPG_VERSION;
 
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'add_menu_page' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
-		add_action( 'admin_init', array( $this, 'add_security_headers' ) );
 	}
 
 	/**
@@ -43,8 +42,13 @@ class WBPG_Admin {
 
 		// Enqueue Geist Font (System stacks favored, adding Inter as fallback)
 		wp_enqueue_style( 'wbpg-font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css', array(), '6.5.1' );
+		
+		// Enqueue Tippy.js and Popper.js for robust tooltips
+		wp_enqueue_script( 'wbpg-popper', 'https://unpkg.com/@popperjs/core@2', array(), '2.11.8', true );
+		wp_enqueue_script( 'wbpg-tippy', 'https://unpkg.com/tippy.js@6', array( 'wbpg-popper' ), '6.3.7', true );
+
 		wp_enqueue_style( 'wbpg-admin-style', WBPG_PLUGIN_URL . 'assets/css/admin.css', array(), WBPG_VERSION );
-		wp_enqueue_script( 'wbpg-admin-script', WBPG_PLUGIN_URL . 'assets/js/admin.js', array( 'jquery' ), WBPG_VERSION, true );
+		wp_enqueue_script( 'wbpg-admin-script', WBPG_PLUGIN_URL . 'assets/js/admin.js', array( 'jquery', 'wbpg-tippy' ), WBPG_VERSION, true );
 
 		// Localize Script for API and i18n
 		wp_localize_script( 'wbpg-admin-script', 'wbpgData', array(

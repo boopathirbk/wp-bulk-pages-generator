@@ -56,11 +56,10 @@
 .wbpg-admin-wrap {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
     max-width: 1400px;
-    margin: 20px auto;
-    padding: 0 20px;
+    margin: 10px 0 0 0;
+    padding: 0 20px 80px 20px;
     color: var(--wbpg-text) !important;
     background: var(--wbpg-bg-page) !important;
-    min-height: 100vh;
     box-sizing: border-box !important;
 }
 
@@ -221,6 +220,15 @@
 }
 
 /* Buttons */
+.wbpg-card {
+    background: var(--wbpg-bg-card) !important;
+    border-radius: 8px !important;
+    padding: 24px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    margin-bottom: 24px !important;
+    border: 1px solid var(--wbpg-border) !important;
+}
+
 .wbpg-admin-wrap .button-primary {
     background: var(--wbpg-primary) !important;
     color: var(--wbpg-bg-card) !important;
@@ -238,9 +246,64 @@
 }
 
 .button-link-delete {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    background: transparent !important;
     color: var(--wbpg-error) !important;
+    border: 1px solid var(--wbpg-error) !important;
+    border-radius: 8px !important;
+    padding: 0 16px !important;
+    height: 38px !important;
+    font-size: 13px !important;
     font-weight: 500 !important;
     text-decoration: none !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+}
+
+.button-link-delete:hover {
+    background: var(--wbpg-error) !important;
+    color: #fff !important;
+}
+
+.button-link-delete i {
+    font-size: 14px !important;
+}
+
+/* Geist-style Checkboxes */
+.wbpg-table input[type="checkbox"] {
+    appearance: none !important;
+    width: 18px !important;
+    height: 18px !important;
+    border: 1px solid var(--wbpg-border) !important;
+    border-radius: 4px !important;
+    background: var(--wbpg-bg-card) !important;
+    cursor: pointer !important;
+    position: relative !important;
+    transition: all 0.2s ease !important;
+}
+
+.wbpg-table input[type="checkbox"]:checked {
+    background: var(--wbpg-accent) !important;
+    border-color: var(--wbpg-accent) !important;
+}
+
+.wbpg-table input[type="checkbox"]:checked::after {
+    content: "\f00c" !important;
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900 !important;
+    color: #fff !important;
+    font-size: 10px !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+.wbpg-table input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--wbpg-accent) !important;
+    outline-offset: 2px !important;
 }
 
 /* Table Card Customization */
@@ -256,27 +319,6 @@
 }
 
 /* Table */
-.wbpg-admin-wrap .wbpg-table {
-    width: 100%;
-    min-width: 900px;
-    /* Prevent congestion */
-    border-collapse: separate;
-    border-spacing: 0;
-    table-layout: fixed;
-    /* Ensure tooltips aren't clipped by table layout */
-}
-
-.wbpg-table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    width: 100%;
-    scrollbar-width: thin;
-}
-
-.wbpg-table-responsive::-webkit-scrollbar {
-    height: 6px;
-}
-
 .wbpg-table-responsive::-webkit-scrollbar-thumb {
     background: var(--wbpg-text-muted);
     border-radius: 10px;
@@ -287,23 +329,55 @@
     background: var(--wbpg-accent);
 }
 
-.wbpg-admin-wrap .wbpg-table th {
-    background: var(--wbpg-bg-page);
-    padding: 14px 16px;
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--wbpg-text-muted);
-    border-bottom: 1px solid var(--wbpg-border);
-    text-align: left;
-    white-space: nowrap;
+/* Table Configuration */
+.wbpg-table-responsive {
+    width: 100% !important;
+    margin-top: 24px !important;
 }
 
-.wbpg-admin-wrap .wbpg-table td {
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--wbpg-border);
-    vertical-align: middle;
+.wbpg-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    table-layout: fixed !important;
+}
+
+.wbpg-table th {
+    text-align: left !important;
+    padding: 12px 10px !important;
+    font-size: 11px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: var(--wbpg-text-muted) !important;
+    border-bottom: 1px solid var(--wbpg-border) !important;
+}
+
+/* Specific Column Widths for Alignment */
+.col-check {
+    width: 40px !important;
+}
+
+.col-status {
+    width: 60px !important;
+}
+
+.col-parent {
+    width: 160px !important;
+}
+
+.col-action {
+    width: 80px !important;
+    text-align: center !important;
+}
+
+/* Flex behavior for fluid columns */
+.wbpg-table th:not([class]) {
+    width: auto !important;
+}
+
+.wbpg-table td {
+    padding: 16px 10px !important;
+    border-bottom: 1px solid var(--wbpg-border) !important;
+    vertical-align: middle !important;
     background: var(--wbpg-bg-card);
 }
 
@@ -332,37 +406,21 @@
     resize: vertical;
 }
 
-/* Columns */
-.col-check {
-    width: 45px !important;
-}
 
-.col-status {
-    width: 80px !important;
-}
-
-.col-parent {
-    width: 220px !important;
-}
-
-.col-action {
-    width: 60px !important;
-}
-
-/* Let Title, Slug, and Content grow */
+/* Fluid growing columns */
 .wbpg-table th:nth-child(3),
 .wbpg-table td:nth-child(3) {
-    width: 250px;
+    width: auto !important;
 }
 
 .wbpg-table th:nth-child(4),
 .wbpg-table td:nth-child(4) {
-    width: 180px;
+    width: 150px !important;
 }
 
 .wbpg-table th:nth-child(6),
 .wbpg-table td:nth-child(6) {
-    width: 350px;
+    width: 300px !important;
 }
 
 /* Status Icons */
@@ -404,7 +462,7 @@
     }
 }
 
-/* Tooltips */
+/* Tooltips (Handled by Tippy.js) */
 .wbpg-tooltip-icon {
     display: inline-flex;
     align-items: center;
@@ -414,68 +472,11 @@
     color: var(--wbpg-text-muted);
     margin-left: 4px;
     vertical-align: middle;
-    position: relative;
     font-size: 14px;
-    /* FA size */
 }
 
 .wbpg-tooltip-icon:hover {
     color: var(--wbpg-accent);
-}
-
-.wbpg-tooltip-icon i {
-    pointer-events: none;
-}
-
-/* Tooltip Content */
-.wbpg-tooltip-icon::after {
-    content: attr(aria-label);
-    position: absolute;
-    bottom: 125%;
-    left: 50%;
-    transform: translateX(-50%) translateY(10px);
-    background: #000;
-    color: #fff;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 11px;
-    font-weight: 500;
-    width: max-content;
-    max-width: 200px;
-    white-space: normal;
-    text-align: center;
-    line-height: 1.4;
-    opacity: 0;
-    visibility: hidden;
-    transition: var(--wbpg-transition);
-    z-index: 10000;
-    /* Higher than WP admin bars if needed */
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-    pointer-events: none;
-    font-style: normal;
-}
-
-/* Tooltip Arrow */
-.wbpg-tooltip-icon::before {
-    content: '';
-    position: absolute;
-    bottom: 110%;
-    left: 50%;
-    transform: translateX(-50%) translateY(10px);
-    border: 6px solid transparent;
-    border-top-color: #000;
-    opacity: 0;
-    visibility: hidden;
-    transition: var(--wbpg-transition);
-    z-index: 9999;
-    pointer-events: none;
-}
-
-.wbpg-tooltip-icon:hover::after,
-.wbpg-tooltip-icon:hover::before {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
 }
 
 /* Guide Sidebar */

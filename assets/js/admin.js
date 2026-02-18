@@ -27,9 +27,26 @@ jQuery(document).ready(function ($) {
         }
     }
 
+    // Initialize Tippy.js
+    function initTooltips() {
+        if (typeof tippy === 'function') {
+            tippy('.wbpg-tooltip-icon', {
+                content(reference) {
+                    const id = reference.getAttribute('id');
+                    return i18n[id.replace('tip-', 'tip_')] || 'Info';
+                },
+                appendTo: () => document.body,
+                theme: 'light',
+                animation: 'shift-away',
+                interactive: true
+            });
+        }
+    }
+
     // Initialize Theme
     setTheme(localStorage.getItem('wbpg-theme') || 'light');
     $('#wbpg-theme-toggle').attr('aria-label', i18n.toggle_theme);
+    initTooltips();
 
     // Prevent navigation during creation
     $(window).on('beforeunload', function () {
@@ -42,6 +59,7 @@ jQuery(document).ready(function ($) {
         const $currentWrap = $('.wbpg-admin-wrap');
         const newTheme = $currentWrap.attr('data-theme') === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
+        // Refresh tippy theme if needed or just use a neutral one
     });
 
     function updateDynamicLabels() {
@@ -211,6 +229,7 @@ jQuery(document).ready(function ($) {
             fragment.appendChild(tempTbody.firstChild);
         }
         $rowsContainer[0].appendChild(fragment);
+        initTooltips(); // Re-init for new icons
 
         $listWrapper.show();
         $summaryBox.hide();
