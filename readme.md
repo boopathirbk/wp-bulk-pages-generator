@@ -20,7 +20,40 @@
 
 Manual page creation is a bottleneck for agencies and SEO pros. **WP Bulk Pages Generator** is engineered to eliminate that friction. Built on the **Geist Design System**, it provides a high-performance, single-page interface to bulk-generate hundreds of Pages, Posts, or Custom Post Types (CPT) with precision taxonomy and parent-page nesting.
 
-**It's not just a plugin; it's a content deployment framework.**
+---
+
+## 📸 Visual Gallery
+
+<table width="100%">
+  <tr>
+    <td width="33.3%" align="center">
+      <img src="screenshots/welcome.png" alt="Welcome Screen">
+      <br/><b>Command Center</b>
+    </td>
+    <td width="33.3%" align="center">
+      <img src="screenshots/page-creation.png" alt="Page Creation Grid">
+      <br/><b>Precision Grid</b>
+    </td>
+    <td width="33.3%" align="center">
+      <img src="screenshots/summary.png" alt="Creation Summary">
+      <br/><b>Success Summary</b>
+    </td>
+  </tr>
+  <tr>
+    <td width="33.3%" align="center">
+      <img src="screenshots/dark-mode.png" alt="Dark Mode">
+      <br/><b>Premium Dark Mode</b>
+    </td>
+    <td width="33.3%" align="center">
+      <img src="screenshots/mobile-view.png" alt="Mobile View">
+      <br/><b>Responsive Card View</b>
+    </td>
+    <td width="33.3%" align="center">
+      <img src="screenshots/created-page.png" alt="Created Page Dashboard">
+      <br/><b>Instant Results</b>
+    </td>
+  </tr>
+</table>
 
 ---
 
