@@ -14,26 +14,25 @@ jQuery(document).ready(function ($) {
     let availablePostTypes = {};
 
     // Theme Toggle Logic
-    const $wrap = $('.wbpg-admin-wrap');
-    const $themeToggle = $('#wbpg-theme-toggle');
-    const $themeIcon = $themeToggle.find('.dashicons');
-
     function setTheme(theme) {
-        $wrap.attr('data-theme', theme);
+        $('.wbpg-admin-wrap').attr('data-theme', theme);
         localStorage.setItem('wbpg-theme', theme);
+        const $icon = $('#wbpg-theme-toggle .dashicons');
         if (theme === 'dark') {
-            $themeIcon.removeClass('dashicons-lightbulb').addClass('dashicons-visibility');
+            $icon.removeClass('dashicons-lightbulb').addClass('dashicons-visibility');
         } else {
-            $themeIcon.removeClass('dashicons-visibility').addClass('dashicons-lightbulb');
+            $icon.removeClass('dashicons-visibility').addClass('dashicons-lightbulb');
         }
     }
 
-    // Load saved theme
-    const savedTheme = localStorage.getItem('wbpg-theme') || 'light';
-    setTheme(savedTheme);
+    // Initialize Theme
+    setTheme(localStorage.getItem('wbpg-theme') || 'light');
 
-    $themeToggle.on('click', function () {
-        const newTheme = $wrap.attr('data-theme') === 'light' ? 'dark' : 'light';
+    // Use delegated listener for theme toggle
+    $(document).on('click', '#wbpg-theme-toggle', function (e) {
+        e.preventDefault();
+        const $currentWrap = $('.wbpg-admin-wrap');
+        const newTheme = $currentWrap.attr('data-theme') === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
     });
 
