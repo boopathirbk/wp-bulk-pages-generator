@@ -375,22 +375,15 @@
 }
 
 /* Table Configuration */
-.wbpg-table-responsive {
-    width: 100% !important;
-    margin-top: 24px !important;
-    overflow-x: auto !important;
-    scrollbar-width: thin;
-    padding-bottom: 20px;
-}
-
-.wbpg-admin-wrap[data-theme="dark"] .wbpg-list-header {
-    border-bottom: 2px solid #333 !important;
+@media (min-width: 783px) {
+    .wbpg-table {
+        table-layout: fixed !important;
+    }
 }
 
 .wbpg-table {
     width: 100% !important;
     border-collapse: collapse !important;
-    table-layout: fixed !important;
 }
 
 .wbpg-table th {
@@ -422,22 +415,24 @@
     border-bottom-color: #222 !important;
 }
 
-/* Specific Column Widths for Alignment */
-.col-check {
-    width: 40px !important;
-}
+/* Specific Column Widths for Desktop Alignment */
+@media (min-width: 783px) {
+    .col-check {
+        width: 40px !important;
+    }
 
-.col-status {
-    width: 60px !important;
-}
+    .col-status {
+        width: 60px !important;
+    }
 
-.col-parent {
-    width: 160px !important;
-}
+    .col-parent {
+        width: 160px !important;
+    }
 
-.col-action {
-    width: 80px !important;
-    text-align: center !important;
+    .col-action {
+        width: 80px !important;
+        text-align: center !important;
+    }
 }
 
 /* Flex behavior for fluid columns */
@@ -481,20 +476,23 @@
     resize: vertical;
 }
 
-/* Fluid growing columns */
-.wbpg-table th:nth-child(3),
-.wbpg-table td:nth-child(3) {
-    width: 30% !important;
-}
+/* Fluid growing columns for Desktop */
+@media (min-width: 783px) {
 
-.wbpg-table th:nth-child(4),
-.wbpg-table td:nth-child(4) {
-    width: 18% !important;
-}
+    .wbpg-table th:nth-child(3),
+    .wbpg-table td:nth-child(3) {
+        width: 30% !important;
+    }
 
-.wbpg-table th:nth-child(6),
-.wbpg-table td:nth-child(6) {
-    width: 32% !important;
+    .wbpg-table th:nth-child(4),
+    .wbpg-table td:nth-child(4) {
+        width: 18% !important;
+    }
+
+    .wbpg-table th:nth-child(6),
+    .wbpg-table td:nth-child(6) {
+        width: 32% !important;
+    }
 }
 
 /* Status Icons */
