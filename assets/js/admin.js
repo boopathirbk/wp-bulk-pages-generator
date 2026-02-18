@@ -17,13 +17,23 @@ jQuery(document).ready(function ($) {
 
     // Theme Toggle Logic
     function setTheme(theme) {
-        $('.wbpg-admin-wrap').attr('data-theme', theme);
-        localStorage.setItem('wbpg-theme', theme);
-        const $icon = $('#wbpg-theme-toggle i');
+        const $wrap = $('.wbpg-admin-wrap');
+        const $toggleBtn = $('#wbpg-theme-toggle');
+        const $icon = $toggleBtn.find('i');
+        const $textSpan = $toggleBtn.find('.wbpg-toggle-text');
+
+        $wrap.attr('data-theme', theme);
+        localStorage.setItem('wbpg_theme', theme);
+
+        // Use a cookie for no-flash SSR initial load
+        document.cookie = `wbpg_theme=${theme}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
+
         if (theme === 'dark') {
-            $icon.removeClass('fa-lightbulb').addClass('fa-moon');
+            $icon.removeClass('fa-moon fa-lightbulb').addClass('fa-sun');
+            $textSpan.text(i18n.lightMode || 'Light Mode');
         } else {
-            $icon.removeClass('fa-moon').addClass('fa-lightbulb');
+            $icon.removeClass('fa-sun fa-lightbulb').addClass('fa-moon');
+            $textSpan.text(i18n.darkMode || 'Dark Mode');
         }
     }
 
@@ -43,8 +53,15 @@ jQuery(document).ready(function ($) {
         }
     }
 
-    // Initialize Theme
-    setTheme(localStorage.getItem('wbpg-theme') || 'light');
+    // Initialize Theme (Favor Cookie/LocalStorage)
+    const savedTheme = localStorage.getItem('wbpg_theme') || getCookie('wbpg_theme') || 'light';
+    setTheme(savedTheme);
+
+    function getCookie(name) {
+        let value = `; ${document.cookie}`;
+        let parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
     $('#wbpg-theme-toggle').attr('aria-label', i18n.toggle_theme);
     initTooltips();
 
@@ -182,6 +199,7 @@ jQuery(document).ready(function ($) {
 
     // Handle Post Type Change
     $('#wbpg-post-type').on('change', function () {
+        if (isCreating) return; // Guard against concurrent operations
         const $this = $(this);
         if ($('.wbpg-row').length > 0) {
             if (!confirm(i18n.confirm_type_change)) {
@@ -208,6 +226,8 @@ jQuery(document).ready(function ($) {
 
     // Generate List Rows
     $generateBtn.on('click', function () {
+        if (isCreating) return; // Guard against current operations
+        if (isCreating) return; // Guard against concurrent operations
         let count = parseInt($countInput.val());
         if (isNaN(count) || count < 1) return;
 

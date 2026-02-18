@@ -28,6 +28,7 @@ require_once WBPG_PLUGIN_DIR . 'includes/class-bulk-pages-admin.php';
 
 // Initialize the plugin
 function wbpg_init() {
+	load_plugin_textdomain( 'wp-bulk-pages-generator', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	new WBPG_API();
 	new WBPG_Admin();
 }

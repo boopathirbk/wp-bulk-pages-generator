@@ -117,9 +117,13 @@ class WBPG_API {
 		);
 
 		$post_id = wp_insert_post( $post_data );
-
+		
 		if ( is_wp_error( $post_id ) ) {
 			return new WP_Error( 'insert_failed', $post_id->get_error_message(), array( 'status' => 500 ) );
+		}
+
+		if ( ! $post_id ) {
+			return new WP_Error( 'insert_failed', __( 'Failed to create item. Unknown WordPress error.', 'wp-bulk-pages-generator' ), array( 'status' => 500 ) );
 		}
 
 		// Assign taxonomy if applicable

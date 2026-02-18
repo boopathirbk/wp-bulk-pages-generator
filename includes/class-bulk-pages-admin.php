@@ -12,6 +12,9 @@ class WBPG_Admin {
 	/** @var string Plugin version */
 	private $version = WBPG_VERSION;
 
+	/** @var string Admin theme mode */
+	private $theme_mode = 'light';
+
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'add_menu_page' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
@@ -60,6 +63,10 @@ class WBPG_Admin {
 				'none'            => __( 'None (Top Level)', 'wp-bulk-pages-generator' ),
 				'select_cat'      => __( 'Select Category', 'wp-bulk-pages-generator' ),
 				'configure'       => __( '2. Configure %s Details', 'wp-bulk-pages-generator' ),
+				'bulkDelete'      => __( 'Bulk Delete', 'wp-bulk-pages-generator' ),
+				'confirmDelete'   => __( 'Are you sure you want to delete the selected rows?', 'wp-bulk-pages-generator' ),
+				'darkMode'        => __( 'Dark Mode', 'wp-bulk-pages-generator' ),
+				'lightMode'       => __( 'Light Mode', 'wp-bulk-pages-generator' ),
 				'create_btn'      => __( 'Create All %ss', 'wp-bulk-pages-generator' ),
 				'confirm_remove'  => __( 'Remove %d rows?', 'wp-bulk-pages-generator' ),
 				'confirm_create'  => __( 'Create %d %s(s)?', 'wp-bulk-pages-generator' ),
@@ -88,11 +95,19 @@ class WBPG_Admin {
 	}
 
 	/**
+	 * Get Current Theme Mode from Cookie (for no-flash initial load).
+	 */
+	private function get_theme_mode() {
+		return isset( $_COOKIE['wbpg_theme'] ) ? sanitize_key( $_COOKIE['wbpg_theme'] ) : 'light';
+	}
+
+	/**
 	 * Render Admin Page.
 	 */
 	public function render_admin_page() {
+		$theme = $this->get_theme_mode();
 		?>
-		<div class="wrap wbpg-admin-wrap" data-theme="light" role="main" aria-labelledby="wbpg-main-title">
+		<div class="wrap wbpg-admin-wrap" data-theme="<?php echo esc_attr( $theme ); ?>" role="main" aria-labelledby="wbpg-main-title">
 			<header class="wbpg-header">
 				<div class="wbpg-header-main">
 					<h1 id="wbpg-main-title"><?php _e( 'WP Bulk Pages Generator', 'wp-bulk-pages-generator' ); ?></h1>
@@ -100,7 +115,13 @@ class WBPG_Admin {
 				</div>
 				<div class="wbpg-header-actions">
 					<button id="wbpg-theme-toggle" class="button button-secondary" aria-label="<?php esc_attr_e( 'Toggle Light/Dark Mode', 'wp-bulk-pages-generator' ); ?>">
-						<i class="fa-regular fa-lightbulb"></i>
+						<?php if ( 'dark' === $theme ) : ?>
+							<i class="fa-regular fa-sun"></i>
+							<span class="wbpg-toggle-text"><?php _e( 'Light Mode', 'wp-bulk-pages-generator' ); ?></span>
+						<?php else : ?>
+							<i class="fa-regular fa-moon"></i>
+							<span class="wbpg-toggle-text"><?php _e( 'Dark Mode', 'wp-bulk-pages-generator' ); ?></span>
+						<?php endif; ?>
 					</button>
 				</div>
 			</header>
@@ -175,34 +196,35 @@ class WBPG_Admin {
 						</div>
 						<p id="wbpg-progress-text" aria-live="polite"><?php _e( 'Creating pages: 0/0', 'wp-bulk-pages-generator' ); ?></p>
 					</div>
-				</div>
 
-				<aside class="wbpg-sidebar" aria-label="<?php esc_attr_e( 'Help and Documentation', 'wp-bulk-pages-generator' ); ?>">
-					<!-- User Guide Section -->
-					<div class="wbpg-card wbpg-guide">
-						<h2><?php _e( 'User Guide & Examples', 'wp-bulk-pages-generator' ); ?></h2>
-						<div class="wbpg-guide-content">
-							<div class="wbpg-guide-item">
-								<h3><?php _e( 'Basic Usage', 'wp-bulk-pages-generator' ); ?></h3>
-								<p><?php echo sprintf( __( 'Enter the number of pages, fill in titles, and click %s. If you leave the slug empty, WordPress will generate it from the title.', 'wp-bulk-pages-generator' ), '<strong>' . __( 'Create All', 'wp-bulk-pages-generator' ) . '</strong>' ); ?></p>
-							</div>
-							<div class="wbpg-guide-item">
-								<h3><?php _e( 'Block Content', 'wp-bulk-pages-generator' ); ?></h3>
-								<p><?php _e( 'Paste the markup below for a heading and paragraph:', 'wp-bulk-pages-generator' ); ?></p>
-								<code>&lt;!-- wp:heading --&gt;&lt;h2&gt;Hello&lt;/h2&gt;&lt;!-- /wp:heading --&gt;<br>&lt;!-- wp:paragraph --&gt;&lt;p&gt;Bulk page.&lt;/p&gt;&lt;!-- /wp:paragraph --&gt;</code>
-							</div>
-							<div class="wbpg-guide-item">
-								<h3><?php _e( 'Parent Pages', 'wp-bulk-pages-generator' ); ?></h3>
-								<p><?php echo sprintf( __( 'Select a %s for sub-pages. This is hidden for non-hierarchical types.', 'wp-bulk-pages-generator' ), '<strong>' . __( 'Parent', 'wp-bulk-pages-generator' ) . '</strong>' ); ?></p>
-							</div>
-							<div class="wbpg-guide-item">
-								<h3><?php _e( 'Bulk Actions', 'wp-bulk-pages-generator' ); ?></h3>
-								<p><?php echo sprintf( __( 'Select rows to delete them at once using the %s button.', 'wp-bulk-pages-generator' ), '<strong>' . __( 'Delete Selected', 'wp-bulk-pages-generator' ) . '</strong>' ); ?></p>
+					<aside class="wbpg-sidebar" aria-label="<?php esc_attr_e( 'Help and Documentation', 'wp-bulk-pages-generator' ); ?>">
+						<!-- User Guide Section -->
+						<div class="wbpg-card wbpg-guide">
+							<h2><?php _e( 'User Guide & Examples', 'wp-bulk-pages-generator' ); ?></h2>
+							<div class="wbpg-guide-content">
+								<div class="wbpg-guide-item">
+									<h3><?php _e( 'Basic Usage', 'wp-bulk-pages-generator' ); ?></h3>
+									<p><?php echo sprintf( __( 'Enter the number of pages, fill in titles, and click %s. If you leave the slug empty, WordPress will generate it from the title.', 'wp-bulk-pages-generator' ), '<strong>' . __( 'Create All', 'wp-bulk-pages-generator' ) . '</strong>' ); ?></p>
+								</div>
+								<div class="wbpg-guide-item">
+									<h3><?php _e( 'Block Content', 'wp-bulk-pages-generator' ); ?></h3>
+									<p><?php _e( 'Paste the markup below for a heading and paragraph:', 'wp-bulk-pages-generator' ); ?></p>
+									<code>&lt;!-- wp:heading --&gt;&lt;h2&gt;Hello&lt;/h2&gt;&lt;!-- /wp:heading --&gt;<br>&lt;!-- wp:paragraph --&gt;&lt;p&gt;Bulk page.&lt;/p&gt;&lt;!-- /wp:paragraph --&gt;</code>
+								</div>
+								<div class="wbpg-guide-item">
+									<h3><?php _e( 'Parent Pages', 'wp-bulk-pages-generator' ); ?></h3>
+									<p><?php echo sprintf( __( 'Select a %s for sub-pages. This is hidden for non-hierarchical types.', 'wp-bulk-pages-generator' ), '<strong>' . __( 'Parent', 'wp-bulk-pages-generator' ) . '</strong>' ); ?></p>
+								</div>
+								<div class="wbpg-guide-item">
+									<h3><?php _e( 'Bulk Actions', 'wp-bulk-pages-generator' ); ?></h3>
+									<p><?php echo sprintf( __( 'Select rows to delete them at once using the %s button.', 'wp-bulk-pages-generator' ), '<strong>' . __( 'Delete Selected', 'wp-bulk-pages-generator' ) . '</strong>' ); ?></p>
+								</div>
 							</div>
 						</div>
-					</div>
-				</aside>
+					</aside>
+				</main>
 			</div>
+			<div class="wbpg-footer-clear"></div>
 		</div>
 		<?php
 	}
