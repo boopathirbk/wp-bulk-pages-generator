@@ -10,6 +10,49 @@ jQuery(document).ready(function ($) {
 
     let parentOptionsHtml = '<option value="0">None (Top Level)</option>';
     let currentPostType = 'page';
+    let currentTaxonomy = '';
+    let availablePostTypes = {};
+
+    // Theme Toggle Logic
+    const $wrap = $('.wbpg-admin-wrap');
+    const $themeToggle = $('#wbpg-theme-toggle');
+    const $themeIcon = $themeToggle.find('.dashicons');
+
+    function setTheme(theme) {
+        $wrap.attr('data-theme', theme);
+        localStorage.setItem('wbpg-theme', theme);
+        if (theme === 'dark') {
+            $themeIcon.removeClass('dashicons-lightbulb').addClass('dashicons-visibility');
+        } else {
+            $themeIcon.removeClass('dashicons-visibility').addClass('dashicons-lightbulb');
+        }
+    }
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('wbpg-theme') || 'light';
+    setTheme(savedTheme);
+
+    $themeToggle.on('click', function () {
+        const newTheme = $wrap.attr('data-theme') === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+    });
+
+    function updateDynamicLabels() {
+        const typeData = availablePostTypes[currentPostType] || {};
+        const typeLabel = typeData.name || 'Page';
+        const taxLabel = typeData.tax_label || 'Category';
+        const isHierarchical = typeData.hierarchical;
+
+        $('#wbpg-configure-title').text(`2. Configure ${typeLabel} Details`);
+        $('#wbpg-create-all-btn').text(`Create All ${typeLabel}s`);
+
+        // Update Column Header
+        if (isHierarchical) {
+            $('#wbpg-parent-column-head').text('Parent');
+        } else if (typeData.taxonomy) {
+            $('#wbpg-parent-column-head').text(taxLabel);
+        }
+    }
 
     // Load Post Types
     function loadPostTypes() {
@@ -18,35 +61,96 @@ jQuery(document).ready(function ($) {
             method: 'GET',
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('X-WP-Nonce', wbpgData.nonce);
+                $generateBtn.prop('disabled', true).text('Loading...');
             },
             success: function (types) {
                 const $selector = $('#wbpg-post-type');
                 $selector.empty();
                 types.forEach(function (type) {
+                    availablePostTypes[type.slug] = type;
                     $selector.append(`<option value="${type.slug}" data-hierarchical="${type.hierarchical ? '1' : '0'}" ${type.slug === 'page' ? 'selected' : ''}>${type.name}</option>`);
                 });
                 toggleParentColumn();
+                updateDynamicLabels();
+                loadParents(currentPostType);
+                $generateBtn.prop('disabled', false).text('Generate List');
             }
         });
     }
     loadPostTypes();
 
     function toggleParentColumn() {
-        const isHierarchical = $('#wbpg-post-type option:selected').data('hierarchical') === 1;
-        if (isHierarchical) {
+        const typeData = availablePostTypes[currentPostType] || { hierarchical: true };
+        const isHierarchical = typeData.hierarchical;
+        const hasTaxonomy = !!typeData.taxonomy;
+
+        if (isHierarchical || hasTaxonomy) {
             $('.col-parent').show();
-            $('.wbpg-row-parent').prop('disabled', false).css('opacity', '1');
+            $('.wbpg-row-parent').prop('disabled', false);
         } else {
             $('.col-parent').hide();
-            $('.wbpg-row-parent').prop('disabled', true).css('opacity', '0.5');
+            $('.wbpg-row-parent').prop('disabled', true);
         }
     }
+
+    // Load parent pages or terms for a specific post type
+    function loadParents(postType = 'page') {
+        const typeData = availablePostTypes[postType] || { hierarchical: true };
+        const isHierarchical = typeData.hierarchical;
+        currentTaxonomy = typeData.taxonomy || '';
+
+        if (isHierarchical) {
+            parentOptionsHtml = '<option value="0">None (Top Level)</option>';
+            $.ajax({
+                url: wbpgData.apiUrl + '/parents',
+                method: 'GET',
+                data: { post_type: postType },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-WP-Nonce', wbpgData.nonce);
+                },
+                success: function (parents) {
+                    parents.forEach(function (parent) {
+                        parentOptionsHtml += `<option value="${parent.id}">${parent.title}</option>`;
+                    });
+                    refreshDropdowns();
+                }
+            });
+        } else if (currentTaxonomy) {
+            parentOptionsHtml = '<option value="0">Select Category</option>';
+            $.ajax({
+                url: wbpgData.apiUrl + '/terms',
+                method: 'GET',
+                data: { taxonomy: currentTaxonomy },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-WP-Nonce', wbpgData.nonce);
+                },
+                success: function (terms) {
+                    terms.forEach(function (term) {
+                        parentOptionsHtml += `<option value="${term.id}">${term.title}</option>`;
+                    });
+                    refreshDropdowns();
+                }
+            });
+        }
+    }
+
+    function refreshDropdowns() {
+        $('.wbpg-row .wbpg-row-parent').each(function () {
+            const $select = $(this);
+            if ($select.closest('tr').find('.wbpg-status-icon').hasClass('pending')) {
+                const currentVal = $select.val();
+                $select.html(parentOptionsHtml).val(currentVal);
+            }
+        });
+    }
+
 
     // Handle Post Type Change
     $('#wbpg-post-type').on('change', function () {
         currentPostType = $(this).val();
         toggleParentColumn();
         loadParents(currentPostType);
+        updateDynamicLabels();
     });
 
     // Generate List Rows
@@ -54,13 +158,11 @@ jQuery(document).ready(function ($) {
         let count = parseInt($countInput.val());
         if (isNaN(count) || count < 1) return;
 
-        // Safety cap for stability
         if (count > 100) {
             count = 100;
             $countInput.val(100);
         }
 
-        // Optionally clear or append? User request said "create the number of list"
         $rowsContainer.empty();
         for (let i = 0; i < count; i++) {
             addRow();
@@ -84,7 +186,7 @@ jQuery(document).ready(function ($) {
                 <td class="col-status"><span class="wbpg-status-icon pending" title="Pending"></span></td>
                 <td><input type="text" class="wbpg-row-title" placeholder="Enter title..." value="${data.title || ''}" required></td>
                 <td><input type="text" class="wbpg-row-slug" placeholder="slug" value="${data.slug || ''}"></td>
-                <td><select class="wbpg-row-parent">${parentOptionsHtml}</select></td>
+                <td class="col-parent"><select class="wbpg-row-parent">${parentOptionsHtml}</select></td>
                 <td><textarea class="wbpg-row-content" placeholder="Content...">${data.content || ''}</textarea></td>
                 <td class="col-action"><span class="wbpg-row-remove dashicons dashicons-trash" title="Remove"></span></td>
             </tr>
@@ -94,29 +196,24 @@ jQuery(document).ready(function ($) {
             $row.find('.wbpg-row-parent').val(data.parent);
         }
         $rowsContainer.append($row);
+        toggleParentColumn();
     }
 
-    // Demo Data
-    $('#wbpg-load-demo-btn').on('click', function () {
-        $rowsContainer.empty();
-        const demoData = [
-            { title: 'Our Solutions', slug: 'solutions', content: '<!-- wp:heading --><h2>Solutions</h2><!-- /wp:heading --><!-- wp:paragraph --><p>We solve problems.</p><!-- /wp:paragraph -->' },
-            { title: 'Case Studies', slug: 'case-studies', content: '<!-- wp:paragraph --><p>Real results for real clients.</p><!-- /wp:paragraph -->' },
-            { title: 'Tech Stack', slug: 'tech', content: '<!-- wp:paragraph --><p>Our modern development stack.</p><!-- /wp:paragraph -->' }
-        ];
-        demoData.forEach(data => addRow(data));
-        $listWrapper.show();
-        $summaryBox.hide();
-    });
-
-    // Bulk Selection Logic
+    // Selection Logic Fixes
     $('#wbpg-select-all').on('change', function () {
         const isChecked = $(this).is(':checked');
-        $('.wbpg-row-check').prop('checked', isChecked);
-        toggleBulkActions();
+        $('.wbpg-row-check').prop('checked', isChecked).trigger('change');
     });
 
     $rowsContainer.on('change', '.wbpg-row-check', function () {
+        const checkbox = $(this);
+        const row = checkbox.closest('tr');
+        if (checkbox.is(':checked')) {
+            row.addClass('selected');
+        } else {
+            row.removeClass('selected');
+            $('#wbpg-select-all').prop('checked', false);
+        }
         toggleBulkActions();
     });
 
@@ -159,18 +256,21 @@ jQuery(document).ready(function ($) {
     $createBtn.on('click', async function () {
         const rows = $('.wbpg-row');
         const pendingRows = rows.filter(function () {
-            return $(this).find('.wbpg-status-icon').hasClass('pending');
+            const $statusIcon = $(this).find('.wbpg-status-icon');
+            return $statusIcon.hasClass('pending') || $statusIcon.hasClass('error');
         });
 
         if (pendingRows.length === 0) return;
 
-        if (!confirm(`Create ${pendingRows.length} ${currentPostType}(s)?`)) return;
+        const typeLabel = $('#wbpg-post-type option:selected').text();
+        if (!confirm(`Create ${pendingRows.length} ${typeLabel}(s)?`)) return;
 
         $createBtn.prop('disabled', true).text('Creating...');
         $summaryBox.show();
         $progressBar.css('width', '0%');
 
         let completed = 0;
+        let successCount = 0;
         const total = pendingRows.length;
 
         for (let i = 0; i < pendingRows.length; i++) {
@@ -180,35 +280,36 @@ jQuery(document).ready(function ($) {
             const data = {
                 title: $row.find('.wbpg-row-title').val().trim(),
                 slug: $row.find('.wbpg-row-slug').val().trim(),
-                parent: parseInt($row.find('.wbpg-row-parent').val()),
+                parent: availablePostTypes[currentPostType].hierarchical ? parseInt($row.find('.wbpg-row-parent').val()) : 0,
+                term_id: !availablePostTypes[currentPostType].hierarchical ? parseInt($row.find('.wbpg-row-parent').val()) : 0,
+                taxonomy: currentTaxonomy,
                 content: $row.find('.wbpg-row-content').val(),
                 post_type: currentPostType
             };
 
-            // Basic Client Side Validation
+            // Reset UI state before attempt
+            $row.find('.wbpg-row-title').css('border-color', 'var(--wbpg-border)');
+            $statusIcon.attr('class', 'wbpg-status-icon loading').attr('title', 'Creating...');
+
+            // Strict Validation
             if (!data.title) {
                 $statusIcon.attr('class', 'wbpg-status-icon error').attr('title', 'Title is missing or empty');
                 $row.find('.wbpg-row-title').css('border-color', 'var(--wbpg-error)');
                 completed++;
-                updateProgress(completed, total);
+                updateProgress(successCount, total, completed);
                 continue;
             }
-
-            // Reset border if it was erroring before
-            $row.find('.wbpg-row-title').css('border-color', 'var(--wbpg-border)');
-            $statusIcon.attr('class', 'wbpg-status-icon loading').attr('title', 'Creating...');
 
             try {
                 const response = await createPage(data);
                 if (response.success && response.id) {
                     $statusIcon.attr('class', 'wbpg-status-icon success').attr('title', 'Created successfully');
-                    // Add link below the title if not already there
                     if ($row.find('.wbpg-view-link').length === 0) {
-                        $row.find('.wbpg-row-title').after(`<div class="wbpg-view-link" style="font-size:11px; margin-top:4px;"><a href="${response.link}" target="_blank">View Page</a></div>`);
+                        $row.find('.wbpg-row-title').after(`<div class="wbpg-view-link" style="font-size:11px; margin-top:4px;"><a href="${response.link}" target="_blank">View ${typeLabel}</a></div>`);
                     }
-                    // Disable inputs for success rows
                     $row.find('input, select, textarea').prop('disabled', true).css('opacity', '0.6');
                     $row.find('.wbpg-row-remove').hide();
+                    successCount++;
                 } else {
                     const errorMsg = (response && response.message) ? response.message : 'Unknown error';
                     $statusIcon.attr('class', 'wbpg-status-icon error').attr('title', errorMsg);
@@ -222,10 +323,10 @@ jQuery(document).ready(function ($) {
             }
 
             completed++;
-            updateProgress(completed, total);
+            updateProgress(successCount, total, completed);
         }
 
-        $createBtn.prop('disabled', false).text('Create All Pages');
+        $createBtn.prop('disabled', false).text(`Create All ${typeLabel}s`);
     });
 
     function createPage(data) {
@@ -240,9 +341,19 @@ jQuery(document).ready(function ($) {
         });
     }
 
-    function updateProgress(completed, total) {
-        const percentage = (completed / total) * 100;
+    function updateProgress(successCount, total, attempted) {
+        const percentage = (attempted / total) * 100;
+        const typeLabel = $('#wbpg-post-type option:selected').text();
         $progressBar.css('width', percentage + '%');
-        $progressText.text(`Creating pages: ${completed}/${total}`);
+        $progressText.text(`Successfully created ${successCount} out of ${total} ${typeLabel}(s).`);
+
+        if (attempted === total && successCount < total) {
+            $progressText.append(` (${total - successCount} failed or skipped)`);
+            $progressText.css('color', 'var(--wbpg-error)');
+        } else if (attempted === total) {
+            $progressText.css('color', 'var(--wbpg-success)');
+        } else {
+            $progressText.css('color', 'var(--wbpg-text-muted)');
+        }
     }
 });

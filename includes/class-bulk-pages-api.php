@@ -61,6 +61,19 @@ class WBPG_API {
 			),
 		) );
 
+		register_rest_route( 'wp-bulk-pages/v1', '/terms', array(
+			'methods'             => 'GET',
+			'callback'            => array( $this, 'get_terms' ),
+			'permission_callback' => array( $this, 'check_permission' ),
+			'args'                => array(
+				'taxonomy' => array(
+					'type'     => 'string',
+					'default'  => 'category',
+					'required' => false,
+				),
+			),
+		) );
+
 		register_rest_route( 'wp-bulk-pages/v1', '/post-types', array(
 			'methods'             => 'GET',
 			'callback'            => array( $this, 'get_post_types' ),
@@ -76,7 +89,7 @@ class WBPG_API {
 	}
 
 	/**
-	 * Create a single page.
+	 * Create a single item (page, post, or CPT).
 	 */
 	public function create_page( $request ) {
 		$params    = $request->get_json_params();
@@ -85,6 +98,8 @@ class WBPG_API {
 		$parent    = intval( $params['parent'] );
 		$content   = $params['content'];
 		$post_type = ! empty( $params['post_type'] ) ? sanitize_key( $params['post_type'] ) : 'page';
+		$term_id   = ! empty( $params['term_id'] ) ? intval( $params['term_id'] ) : 0;
+		$taxonomy  = ! empty( $params['taxonomy'] ) ? sanitize_key( $params['taxonomy'] ) : '';
 
 		if ( empty( $title ) ) {
 			return new WP_Error( 'missing_title', 'Title is required.', array( 'status' => 400 ) );
@@ -102,7 +117,12 @@ class WBPG_API {
 		$post_id = wp_insert_post( $post_data );
 
 		if ( is_wp_error( $post_id ) ) {
-			return $post_id;
+			return new WP_Error( 'insert_failed', $post_id->get_error_message(), array( 'status' => 500 ) );
+		}
+
+		// Assign taxonomy if applicable
+		if ( $post_id && $term_id > 0 && ! empty( $taxonomy ) ) {
+			wp_set_post_terms( $post_id, array( $term_id ), $taxonomy );
 		}
 
 		return array(
@@ -144,6 +164,30 @@ class WBPG_API {
 	}
 
 	/**
+	 * Get list of terms for taxonomy.
+	 */
+	public function get_terms( $request ) {
+		$taxonomy = $request->get_param( 'taxonomy' ) ?: 'category';
+		
+		$terms = get_terms( array(
+			'taxonomy'   => $taxonomy,
+			'hide_empty' => false,
+		) );
+
+		$results = array();
+		if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+			foreach ( $terms as $term ) {
+				$results[] = array(
+					'id'    => $term->term_id,
+					'title' => $term->name,
+				);
+			}
+		}
+
+		return $results;
+	}
+
+	/**
 	 * Get list of public post types.
 	 */
 	public function get_post_types() {
@@ -151,14 +195,35 @@ class WBPG_API {
 		$results = array();
 
 		foreach ( $post_types as $slug => $post_type ) {
-			// Skip media and other non-standard CPTs if needed
 			if ( in_array( $slug, array( 'attachment', 'revision', 'nav_menu_item' ) ) ) {
 				continue;
 			}
+
+			// Get taxonomies for this post type
+			$taxonomies = get_object_taxonomies( $slug, 'objects' );
+			$primary_taxonomy = '';
+			foreach ( $taxonomies as $tax_slug => $tax_obj ) {
+				if ( $tax_obj->hierarchical && $tax_obj->public ) {
+					$primary_taxonomy = $tax_slug;
+					break;
+				}
+			}
+			// Fallback to first public taxonomy if no hierarchical one found
+			if ( empty( $primary_taxonomy ) ) {
+				foreach ( $taxonomies as $tax_slug => $tax_obj ) {
+					if ( $tax_obj->public ) {
+						$primary_taxonomy = $tax_slug;
+						break;
+					}
+				}
+			}
+
 			$results[] = array(
 				'slug'         => $slug,
 				'name'         => $post_type->labels->singular_name ?: $post_type->labels->name,
 				'hierarchical' => (bool) $post_type->hierarchical,
+				'taxonomy'     => $primary_taxonomy,
+				'tax_label'    => ! empty( $primary_taxonomy ) ? $taxonomies[ $primary_taxonomy ]->labels->singular_name : '',
 			);
 		}
 
