@@ -51,8 +51,14 @@ jQuery(document).ready(function ($) {
 
     // Generate List Rows
     $generateBtn.on('click', function () {
-        const count = parseInt($countInput.val());
+        let count = parseInt($countInput.val());
         if (isNaN(count) || count < 1) return;
+
+        // Safety cap for stability
+        if (count > 100) {
+            count = 100;
+            $countInput.val(100);
+        }
 
         // Optionally clear or append? User request said "create the number of list"
         $rowsContainer.empty();
