@@ -32,7 +32,9 @@ class WBPG_API {
 				),
 				'slug'    => array(
 					'type'              => 'string',
-					'sanitize_callback' => 'sanitize_title',
+					'sanitize_callback' => function( $param ) {
+						return sanitize_title( $param );
+					},
 				),
 				'parent'  => array(
 					'type'              => 'integer',
@@ -66,9 +68,10 @@ class WBPG_API {
 			'permission_callback' => array( $this, 'check_permission' ),
 			'args'                => array(
 				'post_type' => array(
-					'type'     => 'string',
-					'default'  => 'page',
-					'required' => false,
+					'type'              => 'string',
+					'default'           => 'page',
+					'required'          => false,
+					'sanitize_callback' => 'sanitize_key',
 				),
 			),
 		) );
@@ -79,9 +82,10 @@ class WBPG_API {
 			'permission_callback' => array( $this, 'check_permission' ),
 			'args'                => array(
 				'taxonomy' => array(
-					'type'     => 'string',
-					'default'  => 'category',
-					'required' => false,
+					'type'              => 'string',
+					'default'           => 'category',
+					'required'          => false,
+					'sanitize_callback' => 'sanitize_key',
 				),
 			),
 		) );
@@ -104,14 +108,14 @@ class WBPG_API {
 	 * Create a single item (page, post, or CPT).
 	 */
 	public function create_page( $request ) {
-		$params    = $request->get_json_params();
-		$title     = ! empty( $params['title'] ) ? sanitize_text_field( $params['title'] ) : '';
-		$slug      = ! empty( $params['slug'] ) ? sanitize_title( $params['slug'] ) : '';
-		$parent    = ! empty( $params['parent'] ) ? absint( $params['parent'] ) : 0;
-		$content   = ! empty( $params['content'] ) ? wp_kses_post( $params['content'] ) : '';
-		$post_type = ! empty( $params['post_type'] ) ? sanitize_key( $params['post_type'] ) : 'page';
-		$term_id   = ! empty( $params['term_id'] ) ? absint( $params['term_id'] ) : 0;
-		$taxonomy  = ! empty( $params['taxonomy'] ) ? sanitize_key( $params['taxonomy'] ) : '';
+		$params    = $request->get_params();
+		$title     = ! empty( $params['title'] ) ? $params['title'] : '';
+		$slug      = ! empty( $params['slug'] ) ? $params['slug'] : '';
+		$parent    = ! empty( $params['parent'] ) ? $params['parent'] : 0;
+		$content   = ! empty( $params['content'] ) ? $params['content'] : '';
+		$post_type = ! empty( $params['post_type'] ) ? $params['post_type'] : 'page';
+		$term_id   = ! empty( $params['term_id'] ) ? $params['term_id'] : 0;
+		$taxonomy  = ! empty( $params['taxonomy'] ) ? $params['taxonomy'] : '';
 
 		if ( empty( $title ) ) {
 			return new WP_Error( 'missing_title', __( 'Title is required.', 'wp-bulk-pages-generator' ), array( 'status' => 400 ) );
@@ -126,7 +130,7 @@ class WBPG_API {
 			'post_status'  => 'publish',
 		);
 
-		$post_id = wp_insert_post( $post_data );
+		$post_id = wp_insert_post( $post_data, true );
 		
 		if ( is_wp_error( $post_id ) ) {
 			return new WP_Error( 'insert_failed', $post_id->get_error_message(), array( 'status' => 500 ) );

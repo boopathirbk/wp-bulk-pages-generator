@@ -119,27 +119,20 @@
 }
 
 #wbpg-theme-toggle {
-    background: var(--wbpg-bg-card) !important;
-    border: 1px solid var(--wbpg-border) !important;
-    color: var(--wbpg-text) !important;
-    width: 40px;
-    padding: 0 !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--wbpg-transition);
-}
-
-#wbpg-theme-toggle {
     display: inline-flex !important;
     align-items: center !important;
+    justify-content: center !important;
     gap: 8px !important;
     padding: 0 16px !important;
     height: 36px !important;
     border-radius: 8px !important;
+    background: var(--wbpg-bg-card) !important;
+    border: 1px solid var(--wbpg-border) !important;
+    color: var(--wbpg-text) !important;
     font-size: 13px !important;
     font-weight: 500 !important;
     transition: var(--wbpg-transition);
+    cursor: pointer;
 }
 
 #wbpg-theme-toggle i {
@@ -560,6 +553,9 @@
     font-size: 11px;
     display: block;
     border: 1px solid var(--wbpg-border);
+    overflow-x: auto;
+    word-break: break-all;
+    white-space: pre-wrap;
 }
 
 /* Row Animation */
@@ -619,4 +615,56 @@
     display: block !important;
     width: 100% !important;
     content: "" !important;
+}
+
+/* Modern Progress Summary Section */
+.wbpg-card.wbpg-summary {
+    background: var(--wbpg-bg-card);
+    border: 1px solid var(--wbpg-border);
+    margin-top: 32px;
+    padding: 24px;
+    box-shadow: var(--wbpg-shadow);
+    transition: var(--wbpg-transition);
+}
+
+.wbpg-summary h2 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    color: var(--wbpg-text);
+}
+
+#wbpg-progress-bar-container {
+    height: 6px;
+    background: var(--wbpg-bg-page);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+#wbpg-progress-bar {
+    height: 100%;
+    background: var(--wbpg-accent);
+    width: 0%;
+    transition: width 0.4s cubic-bezier(0.1, 0.7, 1, 0.1);
+    border-radius: 10px;
+}
+
+#wbpg-progress-text {
+    font-size: 13px;
+    margin: 0;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+#wbpg-progress-text i {
+    font-size: 16px;
+    margin-right: 8px;
+}
+
+.wbpg-status-icon.skipped {
+    background: transparent;
+    border: 1px solid var(--wbpg-border);
+    color: var(--wbpg-text-muted);
 }

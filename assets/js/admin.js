@@ -111,8 +111,8 @@ jQuery(document).ready(function ($) {
         }
 
         // Update Tooltips
-        $('#tip-title').attr('aria-label', i18n.tip_title.replace('item', typeLabel.toLowerCase()));
-        $('.wbpg-row-title').attr('placeholder', i18n.placeholder_title.replace('%s', typeLabel));
+        $('#tip-title').attr('aria-label', i18n.tip_title.replace('item', escapeHtml(typeLabel.toLowerCase())));
+        $('.wbpg-row-title').attr('placeholder', i18n.placeholder_title.replace('%s', escapeHtml(typeLabel)));
     }
 
     // Load Post Types
@@ -274,10 +274,10 @@ jQuery(document).ready(function ($) {
             <tr id="row-${rowId}" class="wbpg-row">
                 <td class="col-check"><input type="checkbox" class="wbpg-row-check"></td>
                 <td class="col-status"><div class="wbpg-status-icon pending" title="Pending"><i class="fa-regular fa-clock"></i></div></td>
-                <td><input type="text" class="wbpg-row-title" placeholder="${i18n.placeholder_title.replace('%s', typeLabel)}" value="${data.title || ''}" required></td>
-                <td><input type="text" class="wbpg-row-slug" placeholder="${i18n.placeholder_slug}" value="${data.slug || ''}"></td>
+                <td><input type="text" class="wbpg-row-title" placeholder="${i18n.placeholder_title.replace('%s', escapeHtml(typeLabel))}" value="${escapeHtml(data.title || '')}" required></td>
+                <td><input type="text" class="wbpg-row-slug" placeholder="${i18n.placeholder_slug}" value="${escapeHtml(data.slug || '')}"></td>
                 <td class="col-parent"><select class="wbpg-row-parent">${parentOptionsHtml}</select></td>
-                <td><textarea class="wbpg-row-content" placeholder="${i18n.placeholder_content}">${data.content || ''}</textarea></td>
+                <td><textarea class="wbpg-row-content" placeholder="${i18n.placeholder_content}">${escapeHtml(data.content || '')}</textarea></td>
                 <td class="col-action"><span class="wbpg-row-remove fa-solid fa-trash-can" title="Remove"></span></td>
             </tr>
         `;
@@ -340,27 +340,45 @@ jQuery(document).ready(function ($) {
     // Create All Pages
     $createBtn.on('click', async function () {
         const rows = $('.wbpg-row');
-        const pendingRows = rows.filter(function () {
-            const $statusIcon = $(this).find('.wbpg-status-icon');
-            return $statusIcon.hasClass('pending') || $statusIcon.hasClass('error');
+        const totalInList = rows.length;
+
+        // Filter rows that have a title and are not already successfully created
+        const toCreate = rows.filter(function () {
+            const $row = $(this);
+            const title = $row.find('.wbpg-row-title').val().trim();
+            const $statusIcon = $row.find('.wbpg-status-icon');
+            const isPendingOrError = $statusIcon.hasClass('pending') || $statusIcon.hasClass('error');
+            return title !== '' && isPendingOrError;
         });
 
-        if (pendingRows.length === 0) return;
+        if (toCreate.length === 0) {
+            alert(i18n.error_no_title || 'No rows with titles found.');
+            return;
+        }
 
         const typeLabel = $('#wbpg-post-type option:selected').text();
-        if (!confirm(i18n.confirm_create.replace('%d', pendingRows.length).replace('%s', typeLabel))) return;
+        const confirmMsg = i18n.confirm_filled
+            ? i18n.confirm_filled.replace('%d', toCreate.length).replace('%d', totalInList)
+            : `${toCreate.length} out of ${totalInList} is filled, can I create?`;
+
+        if (!confirm(confirmMsg)) return;
 
         isCreating = true;
         $createBtn.prop('disabled', true).text(i18n.creating);
         $summaryBox.show();
         $progressBar.css('width', '0%');
 
+        // Smooth scroll to summary
+        $('html, body').animate({
+            scrollTop: $summaryBox.offset().top - 100
+        }, 600);
+
         let completed = 0;
         let successCount = 0;
-        const total = pendingRows.length;
+        const total = toCreate.length;
 
-        for (let i = 0; i < pendingRows.length; i++) {
-            const $row = $(pendingRows[i]);
+        for (let i = 0; i < toCreate.length; i++) {
+            const $row = $(toCreate[i]);
             const $statusIcon = $row.find('.wbpg-status-icon');
 
             const data = {
@@ -379,7 +397,11 @@ jQuery(document).ready(function ($) {
 
             // Quick Client-Side Slug Collision Check (within the current list)
             const slug = data.slug.toLowerCase();
-            if (slug && pendingRows.toArray().some((r, idx) => idx !== i && $(r).find('.wbpg-row-slug').val().trim().toLowerCase() === slug)) {
+            if (slug && rows.toArray().some((r, idx) => {
+                const $otherRow = $(r);
+                if ($otherRow.is($row)) return false;
+                return $otherRow.find('.wbpg-row-slug').val().trim().toLowerCase() === slug;
+            })) {
                 $statusIcon.attr('class', 'wbpg-status-icon error').attr('title', i18n.error_duplicate_slug || 'Duplicate slug in list').html('<i class="fa-solid fa-clone"></i>');
                 $row.find('.wbpg-row-slug').css('border-color', 'var(--wbpg-error)');
                 completed++;
@@ -401,7 +423,7 @@ jQuery(document).ready(function ($) {
                 if (response.success && response.id) {
                     $statusIcon.attr('class', 'wbpg-status-icon success').attr('title', i18n.success_created).html('<i class="fa-solid fa-circle-check"></i>');
                     $row.find('.wbpg-view-link').remove(); // Prevent duplicates
-                    $row.find('.wbpg-row-title').after(`<div class="wbpg-view-link" style="font-size:11px; margin-top:4px;"><a href="${response.link}" target="_blank">${i18n.view.replace('%s', typeLabel)}</a></div>`);
+                    $row.find('.wbpg-row-title').after(`<div class="wbpg-view-link" style="font-size:11px; margin-top:4px;"><a href="${escapeHtml(response.link)}" target="_blank">${i18n.view.replace('%s', escapeHtml(typeLabel))}</a></div>`);
                     $row.find('input, select, textarea').prop('disabled', true).css('opacity', '0.6');
                     $row.find('.wbpg-row-remove').hide();
                     successCount++;
@@ -413,6 +435,10 @@ jQuery(document).ready(function ($) {
                 let msg = i18n.network_error;
                 if (error.responseJSON && error.responseJSON.message) {
                     msg = error.responseJSON.message;
+                } else if (error.statusText) {
+                    msg = `${error.status} ${error.statusText}`;
+                } else if (error.responseText) {
+                    msg = error.responseText.substring(0, 100);
                 }
                 $statusIcon.attr('class', 'wbpg-status-icon error').attr('title', msg).html('<i class="fa-solid fa-triangle-exclamation"></i>');
             }
@@ -420,6 +446,15 @@ jQuery(document).ready(function ($) {
             completed++;
             updateProgress(successCount, total, completed);
         }
+
+        // Show skipped status for rows we are not processing
+        rows.not(toCreate).each(function () {
+            const $row = $(this);
+            const $statusIcon = $row.find('.wbpg-status-icon');
+            if ($statusIcon.hasClass('pending')) {
+                $statusIcon.attr('class', 'wbpg-status-icon skipped').attr('title', i18n.skipped || 'Skipped').html('<i class="fa-solid fa-forward-step"></i>');
+            }
+        });
 
         isCreating = false;
         $createBtn.prop('disabled', false).text(i18n.create_btn.replace('%s', typeLabel));
@@ -446,7 +481,7 @@ jQuery(document).ready(function ($) {
         let formatted = i18n.success_msg
             .replace('%d', successCount)
             .replace('%d', total)
-            .replace('%s', typeLabel);
+            .replace('%s', escapeHtml(typeLabel));
 
         $progressText.html(`${$icon}${formatted}`);
 

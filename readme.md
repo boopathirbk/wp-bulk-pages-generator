@@ -23,6 +23,8 @@
 - **📐 Pixel-Perfect Table Engine**: `table-layout: fixed` architecture ensures 100% alignment and full column visibility across all viewports.
 - **♿ WCAG 3.0 Preparedness**: Enhanced focus indicators, semantic landmarking, and automated focus management for high-speed accessibility.
 - **⚡ Performance First**: Zero layout thrash via `DocumentFragment` batching and optimized `async/await` sequential processing.
+- **🎯 Precise Creation Logic**: Intelligent row-filtering that skips empty entries while providing a descriptive "X out of Y filled" confirmation prompt.
+- **🚀 Automated UX Flow**: Smooth auto-scrolling to the progress summary on execution, ensuring immediate feedback for large content batches.
 
 ---
 
@@ -30,7 +32,8 @@
 
 1. **Build Your List**: Select your target content type. The system identifies hierarchical structures and available taxonomies automatically.
 2. **Configure Details**: Fill in titles, slugs, and content. The UI dynamically focuses your cursor and validates titles in real-time.
-3. **Smart Execution**: Click "Create All" to trigger the sequential generation engine with live visual progress tracking.
+3. **Smart Execution**: Click "Create All". The system will calculate how many rows are filled, ask for confirmation, and skip any empty rows while marking them as "Skipped" in the status column.
+4. **Instant Feedback**: The page auto-scrolls to the progress summary, providing a real-time count of successes, failures, and skipped items.
 
 ---
 
