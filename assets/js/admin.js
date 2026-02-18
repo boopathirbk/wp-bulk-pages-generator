@@ -19,7 +19,7 @@ jQuery(document).ready(function ($) {
     const $themeToggle = $('#wbpg-theme-toggle');
 
     let parentOptionsHtml = '<option value="0">None (Top Level)</option>';
-    let currentPostType = 'page';
+    let currentPostType = '';
     let currentTaxonomy = '';
     let availablePostTypes = {};
     let isCreating = false;
@@ -127,14 +127,15 @@ jQuery(document).ready(function ($) {
             success: function (types) {
                 const $selector = $('#wbpg-post-type');
                 $selector.empty();
+                $selector.append(`<option value="">${i18n.select_type || 'Select Post Type...'}</option>`);
                 types.forEach(function (type) {
                     availablePostTypes[type.slug] = type;
-                    $selector.append(`<option value="${escapeHtml(type.slug)}" data-hierarchical="${type.hierarchical ? '1' : '0'}" ${type.slug === 'page' ? 'selected' : ''}>${escapeHtml(type.name)}</option>`);
+                    $selector.append(`<option value="${escapeHtml(type.slug)}" data-hierarchical="${type.hierarchical ? '1' : '0'}">${escapeHtml(type.name)}</option>`);
                 });
                 toggleParentColumn();
                 updateDynamicLabels();
-                loadParents(currentPostType);
-                $generateBtn.prop('disabled', false).text(i18n.generate);
+                if (currentPostType) loadParents(currentPostType);
+                $generateBtn.prop('disabled', false); // Initial label will be set by selection change
             }
         });
     }
@@ -197,24 +198,34 @@ jQuery(document).ready(function ($) {
 
 
     // Handle Post Type Change
-    $('#wbpg-post-type').on('change', function () {
-        if (isCreating) return; // Guard against concurrent operations
-        const $this = $(this);
-        if ($('.wbpg-row').length > 0) {
-            if (!confirm(i18n.confirm_type_change)) {
-                $this.val(currentPostType);
-                return;
-            }
-            $rowsContainer.empty();
-            $listWrapper.hide();
-            $summaryBox.hide();
-        }
+    const val = $this.val();
+    if (!val) {
+        currentPostType = '';
+        $('#wbpg-generate-row').hide();
+        $listWrapper.hide();
+        return;
+    }
 
-        currentPostType = $this.val();
-        toggleParentColumn();
-        loadParents(currentPostType);
-        updateDynamicLabels();
-    });
+    if (currentPostType && $('.wbpg-row').length > 0) {
+        if (!confirm(i18n.confirm_type_change)) {
+            $this.val(currentPostType);
+            return;
+        }
+        $rowsContainer.empty();
+        $listWrapper.hide();
+        $summaryBox.hide();
+    }
+
+    currentPostType = val;
+    const typeData = availablePostTypes[currentPostType] || {};
+    const typeLabel = typeData.name || 'Item';
+
+    $generateBtn.text(i18n.generate_btn.replace('%s', typeLabel));
+    $('#wbpg-generate-row').fadeIn(300);
+
+    toggleParentColumn();
+    loadParents(currentPostType);
+    updateDynamicLabels();
 
     // Enforce count limits on input
     $countInput.on('input', function () {
@@ -257,12 +268,8 @@ jQuery(document).ready(function ($) {
         $('#wbpg-select-all').prop('checked', false);
         $('#wbpg-delete-selected-btn').hide();
 
-        $('html, body').animate({
-            scrollTop: $listWrapper.offset().top - 50
-        }, 500, function () {
-            // Set focus to the first title input for accessibility
-            $rowsContainer.find('.wbpg-row-title').first().focus();
-        });
+        // Removed auto-scroll to summary as requested
+        $rowsContainer.find('.wbpg-row-title').first().focus();
     });
 
     function createRowHtml(data = {}) {
@@ -272,13 +279,13 @@ jQuery(document).ready(function ($) {
 
         return `
             <tr id="row-${rowId}" class="wbpg-row">
-                <td class="col-check"><input type="checkbox" class="wbpg-row-check"></td>
-                <td class="col-status"><div class="wbpg-status-icon pending" title="Pending"><i class="fa-regular fa-clock"></i></div></td>
-                <td><input type="text" class="wbpg-row-title" placeholder="${i18n.placeholder_title.replace('%s', escapeHtml(typeLabel))}" value="${escapeHtml(data.title || '')}" required></td>
-                <td><input type="text" class="wbpg-row-slug" placeholder="${i18n.placeholder_slug}" value="${escapeHtml(data.slug || '')}"></td>
-                <td class="col-parent"><select class="wbpg-row-parent">${parentOptionsHtml}</select></td>
-                <td><textarea class="wbpg-row-content" placeholder="${i18n.placeholder_content}">${escapeHtml(data.content || '')}</textarea></td>
-                <td class="col-action"><span class="wbpg-row-remove fa-solid fa-trash-can" title="Remove"></span></td>
+                <td class="col-check" data-label="Select"><input type="checkbox" class="wbpg-row-check"></td>
+                <td class="col-status" data-label="Status"><div class="wbpg-status-icon pending" title="Pending"><i class="fa-regular fa-clock" aria-hidden="true"></i></div></td>
+                <td data-label="${i18n.title || 'Title'}"><input type="text" class="wbpg-row-title" placeholder="${i18n.placeholder_title.replace('%s', escapeHtml(typeLabel))}" value="${escapeHtml(data.title || '')}" required></td>
+                <td data-label="${i18n.slug || 'Slug'}"><input type="text" class="wbpg-row-slug" placeholder="${i18n.placeholder_slug}" value="${escapeHtml(data.slug || '')}"></td>
+                <td class="col-parent" data-label="${i18n.parent || 'Parent'}"><select class="wbpg-row-parent">${parentOptionsHtml}</select></td>
+                <td data-label="${i18n.content || 'Content'}"><textarea class="wbpg-row-content" placeholder="${i18n.placeholder_content}">${escapeHtml(data.content || '')}</textarea></td>
+                <td class="col-action" data-label="Remove"><span class="wbpg-row-remove fa-solid fa-trash-can" title="Remove" role="button" tabindex="0"></span></td>
             </tr>
         `;
     }
@@ -305,7 +312,7 @@ jQuery(document).ready(function ($) {
     function toggleBulkActions() {
         const selectedCount = $('.wbpg-row-check:checked').length;
         if (selectedCount > 0) {
-            $('#wbpg-delete-selected-btn').show().html(`<i class="fa-solid fa-trash-can" style="margin-right:4px;"></i> ${i18n.delete_selected.replace('%d', selectedCount)}`);
+            $('#wbpg-delete-selected-btn').show().html(`<i class="fa-solid fa-trash-can" aria-hidden="true" style="margin-right:4px;"></i> ${i18n.delete_selected.replace('%d', selectedCount)}`);
         } else {
             $('#wbpg-delete-selected-btn').hide();
         }
@@ -328,12 +335,17 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    // Remove row
-    $rowsContainer.on('click', '.wbpg-row-remove', function () {
+    // Remove row with Accessibility support (Enter/Space)
+    $rowsContainer.on('click keydown', '.wbpg-row-remove', function (e) {
+        if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+
         $(this).closest('tr').fadeOut(300, function () {
             $(this).remove();
             toggleBulkActions();
-            if ($('.wbpg-row').length === 0) $listWrapper.hide();
+            if ($('.wbpg-row').length === 0) {
+                $listWrapper.hide();
+                $('#wbpg-select-all').prop('checked', false);
+            }
         });
     });
 
@@ -368,10 +380,7 @@ jQuery(document).ready(function ($) {
         $summaryBox.show();
         $progressBar.css('width', '0%');
 
-        // Smooth scroll to summary
-        $('html, body').animate({
-            scrollTop: $summaryBox.offset().top - 100
-        }, 600);
+        // Removed auto-scroll to summary during creation as requested
 
         let completed = 0;
         let successCount = 0;
@@ -393,7 +402,7 @@ jQuery(document).ready(function ($) {
 
             // Reset UI state before attempt
             $row.find('.wbpg-row-title, .wbpg-row-slug').css('border-color', 'var(--wbpg-border)');
-            $statusIcon.attr('class', 'wbpg-status-icon loading').attr('title', i18n.creating).html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
+            $statusIcon.attr('class', 'wbpg-status-icon loading').attr('title', i18n.creating).html('<i class="fa-solid fa-circle-notch fa-spin" aria-hidden="true"></i>');
 
             // Quick Client-Side Slug Collision Check (within the current list)
             const slug = data.slug.toLowerCase();
@@ -452,7 +461,7 @@ jQuery(document).ready(function ($) {
             const $row = $(this);
             const $statusIcon = $row.find('.wbpg-status-icon');
             if ($statusIcon.hasClass('pending')) {
-                $statusIcon.attr('class', 'wbpg-status-icon skipped').attr('title', i18n.skipped || 'Skipped').html('<i class="fa-solid fa-forward-step"></i>');
+                $statusIcon.attr('class', 'wbpg-status-icon skipped').attr('title', i18n.skipped || 'Skipped').html('<i class="fa-solid fa-forward-step" aria-hidden="true"></i>');
             }
         });
 
@@ -492,8 +501,8 @@ jQuery(document).ready(function ($) {
                         <span class="wbpg-result-title" title="${escapeHtml(title)}">${escapeHtml(title)}</span>
                         <span class="wbpg-result-type">${escapeHtml(typeLabel)}</span>
                     </div>
-                    <a href="${escapeHtml(link)}" target="_blank" class="wbpg-result-link" title="Open in new tab">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    <a href="${escapeHtml(link)}" target="_blank" class="wbpg-result-link" title="Open in new tab" aria-label="Open ${escapeHtml(title)} in new tab">
+                        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
                     </a>
                 </div>
             `;
@@ -518,6 +527,11 @@ jQuery(document).ready(function ($) {
         $('#wbpg-select-all').prop('checked', false);
         $('#wbpg-delete-selected-btn').hide();
 
+        // Reset selection
+        $('#wbpg-post-type').val('');
+        $('#wbpg-generate-row').hide();
+        currentPostType = '';
+
         // Reset Progress
         $progressBar.css('width', '0%');
         updateProgress(0, 0, 0);
@@ -525,10 +539,12 @@ jQuery(document).ready(function ($) {
         // Reset Create Button
         $createBtn.prop('disabled', false).text(i18n.create_btn.replace('%s', typeLabel));
 
-        // Scroll back to top setup
+        // Scroll and focus
         $('html, body').animate({
             scrollTop: $('.wbpg-setup').offset().top - 50
-        }, 500);
+        }, 500, function () {
+            $('#wbpg-post-type').focus();
+        });
     });
 
     function createPage(data) {
@@ -546,8 +562,9 @@ jQuery(document).ready(function ($) {
     function updateProgress(successCount, total, attempted) {
         const percentage = total > 0 ? (attempted / total) * 100 : 0;
         const typeLabel = $('#wbpg-post-type option:selected').text();
-        const $icon = (attempted === total && successCount === total) ? '<i class="fa-solid fa-circle-check" style="margin-right:8px;"></i>' : '';
+        const $icon = (attempted === total && successCount === total) ? '<i class="fa-solid fa-circle-check" aria-hidden="true" style="margin-right:8px;"></i>' : '';
         $progressBar.css('width', percentage + '%');
+        $('#wbpg-progress-bar-container').attr('aria-valuenow', Math.round(percentage));
 
         let formatted = i18n.success_msg
             .replace('%d', successCount)

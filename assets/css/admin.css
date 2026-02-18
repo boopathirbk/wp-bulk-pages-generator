@@ -11,13 +11,16 @@
     --wbpg-bg-card: #ffffff;
     --wbpg-border: #e5e7eb;
     --wbpg-text: #111827;
-    --wbpg-text-muted: #52525b;
-    /* Increased contrast for WCAG AA (was #6b7280) */
+    --wbpg-text-muted: #4b5563;
+    /* Updated for WP 6.9.1 standards (Feb 2026) */
     --wbpg-primary: #000000;
     --wbpg-primary-hover: #1f2937;
-    --wbpg-accent: #3b82f6;
-    --wbpg-success: #10b981;
-    --wbpg-error: #ef4444;
+    --wbpg-accent: #2271b1;
+    /* WP-Native Blue for premium familiarity */
+    --wbpg-success: #008a20;
+    /* WP-Native Success Green */
+    --wbpg-error: #d63638;
+    /* WP-Native Error Red */
     --wbpg-radius: 12px;
     --wbpg-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
     --wbpg-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -72,16 +75,21 @@
     box-sizing: border-box !important;
 }
 
-/* Enhanced Focus States for A11y */
+/* Enhanced Focus States for A11y (WP 6.9.1 Standard) */
 .wbpg-admin-wrap *:focus-visible {
-    outline: 3px solid var(--wbpg-accent) !important;
-    outline-offset: 3px !important;
-    box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.2) !important;
+    outline: 2px solid transparent !important;
+    outline-offset: -2px !important;
+    box-shadow: 0 0 0 1px #fff, 0 0 0 3px var(--wbpg-accent) !important;
 }
 
-/* Ensure focus is visible on buttons even with theme changes */
-.wbpg-admin-wrap .button:focus-visible {
-    box-shadow: 0 0 0 3px var(--wbpg-bg-card), 0 0 0 6px var(--wbpg-accent) !important;
+/* Ensure focus is visible on buttons and interactive elements */
+.wbpg-admin-wrap .button:focus-visible,
+.wbpg-admin-wrap button:focus-visible,
+.wbpg-admin-wrap input:focus-visible,
+.wbpg-admin-wrap select:focus-visible,
+.wbpg-admin-wrap textarea:focus-visible {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 3px var(--wbpg-accent) !important;
+    outline: none !important;
 }
 
 /* Reduced Motion Support */
@@ -194,11 +202,19 @@
 }
 
 /* Inputs */
+.wbpg-input-group {
+    margin-bottom: 24px;
+}
+
+.wbpg-input-group:last-child {
+    margin-bottom: 0;
+}
+
 .wbpg-input-group label {
     display: flex;
     align-items: center;
-    gap: 6px;
-    margin-bottom: 8px;
+    gap: 8px;
+    margin-bottom: 10px;
     font-size: 13px;
     font-weight: 500;
     color: var(--wbpg-text-muted);
@@ -214,20 +230,23 @@
     background: var(--wbpg-bg-card);
     border: 1px solid var(--wbpg-border);
     color: var(--wbpg-text);
-    border-radius: 8px;
+    border-radius: 6px;
+    /* Slightly tighter radius for WP 6.9 compatibility */
     padding: 8px 12px;
     font-size: 14px;
+    /* Increased for better mobile legibility */
     width: 100%;
+    height: 40px;
+    /* WordPress 6.9.1 Standard */
+    transition: all 0.2s ease;
 }
 
 .wbpg-setup select {
-    max-width: 200px;
-    height: 40px;
+    max-width: 220px;
 }
 
 .wbpg-input-row input[type="number"] {
     max-width: 100px;
-    height: 40px;
 }
 
 /* Buttons */
@@ -236,16 +255,20 @@
     background: var(--wbpg-primary) !important;
     color: var(--wbpg-bg-card) !important;
     border: none !important;
-    border-radius: 8px !important;
+    border-radius: 6px !important;
     padding: 0 20px !important;
     height: 40px !important;
     font-weight: 500 !important;
-    transition: var(--wbpg-transition);
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .wbpg-admin-wrap .button-primary:hover {
     background: var(--wbpg-primary-hover) !important;
     transform: translateY(-1px);
+}
+
+.wbpg-admin-wrap .button-primary:active {
+    transform: scale(0.98);
 }
 
 .button-link-delete {
@@ -255,19 +278,24 @@
     background: transparent !important;
     color: var(--wbpg-error) !important;
     border: 1px solid var(--wbpg-error) !important;
-    border-radius: 8px !important;
+    border-radius: 6px !important;
     padding: 0 16px !important;
-    height: 38px !important;
+    height: 40px !important;
+    /* Standardized to 40px for WP 6.9 */
     font-size: 13px !important;
     font-weight: 500 !important;
     text-decoration: none !important;
-    transition: all 0.2s ease !important;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1) !important;
     cursor: pointer !important;
 }
 
 .button-link-delete:hover {
     background: var(--wbpg-error) !important;
     color: #fff !important;
+}
+
+.button-link-delete:active {
+    transform: scale(0.98);
 }
 
 .button-link-delete i {
@@ -673,8 +701,10 @@
 
 #wbpg-start-over-btn {
     font-size: 13px !important;
-    height: 32px !important;
-    padding: 0 12px !important;
+    height: 36px !important;
+    /* Increased for better touch/clickability */
+    padding: 0 16px !important;
+    border-radius: 6px !important;
 }
 
 .wbpg-results-title {
@@ -746,4 +776,101 @@
 
 .wbpg-result-link:hover {
     transform: scale(1.1);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 782px) {
+    .wbpg-admin-wrap {
+        padding: 0 10px !important;
+    }
+
+    .wbpg-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .wbpg-input-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .wbpg-setup select,
+    .wbpg-input-row input[type="number"],
+    #wbpg-generate-btn {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    /* Table Stacking (Card View) */
+    .wbpg-table thead {
+        display: none !important;
+    }
+
+    .wbpg-table,
+    .wbpg-table tbody,
+    .wbpg-table tr,
+    .wbpg-table td {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .wbpg-table tr {
+        margin-bottom: 24px;
+        border: 1px solid var(--wbpg-border);
+        border-radius: 8px;
+        padding: 16px;
+        background: var(--wbpg-bg-card);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .wbpg-row.selected {
+        border-left: 4px solid var(--wbpg-accent) !important;
+    }
+
+    .wbpg-table td {
+        border: none !important;
+        padding: 12px 0 !important;
+        position: relative;
+        padding-left: 40% !important;
+        text-align: left !important;
+        min-height: 48px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    }
+
+    .wbpg-table td:last-child {
+        border-bottom: none !important;
+    }
+
+    .wbpg-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 35%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: 600;
+        font-size: 11px;
+        text-transform: uppercase;
+        color: var(--wbpg-text-muted);
+        top: 16px;
+    }
+
+    .wbpg-table td input,
+    .wbpg-table td select,
+    .wbpg-table td textarea {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    .wbpg-layout {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .wbpg-sidebar {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-top: 24px;
+    }
 }

@@ -1,31 +1,31 @@
 # WP Bulk Pages Generator 🚀
 ### The Ultimate 2026-Ready Bulk Content Engine for WordPress
 
-[![WordPress Version](https://img.shields.io/badge/WordPress-6.0%2B-blue.svg?style=flat-square&logo=wordpress)](https://wordpress.org)
+[![WordPress Version](https://img.shields.io/badge/WordPress-6.9.1-blue.svg?style=flat-square&logo=wordpress)](https://wordpress.org)
 [![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-777bb4.svg?style=flat-square&logo=php)](https://php.net)
 [![UI Design](https://img.shields.io/badge/UI-Geist--Minimal-black.svg?style=flat-square)](https://vercel.com/design)
-[![Accessibility](https://img.shields.io/badge/WCAG-3.0%20Ready-success.svg?style=flat-square)](https://www.w3.org/WAI/standards-guidelines/wcag/)
-[![Tooltips](https://img.shields.io/badge/UI-Tippy.js--Popper-blue.svg?style=flat-square)](https://atomiks.github.io/tippyjs/)
+[![Accessibility](https://img.shields.io/badge/WCAG-2.2%20Level%20AA-success.svg?style=flat-square)](https://www.w3.org/WAI/standards-guidelines/wcag/)
+[![A11y Notifications](https://img.shields.io/badge/A11y-ARIA%20Live-orange.svg?style=flat-square)](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions)
 
-**WP Bulk Pages Generator** is an enterprise-grade WordPress plugin engineered for 2026 performance, security, and accessibility standards. Built on the **Geist Design System**, it provides a frictionless, high-speed interface for bulk-deploying Pages, Posts, and Custom Post Types (CPT) with precision taxonomy integration.
+**WP Bulk Pages Generator** is an enterprise-grade WordPress plugin engineered for 2026 performance, security, and accessibility standards. Built on the **Geist Design System** and fully optimized for **WordPress 6.9.1**, it provides a frictionless, high-speed interface for bulk-deploying Pages, Posts, and Custom Post Types (CPT) with precision taxonomy integration.
 
 ---
 
 ## 🎨 2026-Ready Feature Set
 
 - **💎 Modern Geist Architecture**: A high-density, minimalist interface designed for rapid data entry and zero cognitive load.
+- **📱 Mobile-First Card View**: Intelligent responsive engine that transforms data tables into clean, scannable cards on mobile devices.
 - **🌗 Intelligent Dark Mode**: Automated theme persistence with high-contrast optimization for low-light environments.
 - **🛡️ State Armor (Operation Lock)**: Prevents accidental navigation or refresh during bulk creation, protecting your content batches from interruption.
 - **🧱 Block-Native Engine**: Full validation for **Gutenberg Block Markup**, ensuring your bulk content renders perfectly in the modern editor.
 - **🔄 Dynamic Context Branding**: Real-time dashboard rebranding that adapts titles, instructions, and tooltips based on the selected post type.
 - **🍱 Advanced Taxonomy Layer**: Deep integration with hierarchical (Categories) and flat (Tags) taxonomies across all public post types.
-- **💬 Robust Popper Tooltips**: Integrated **Tippy.js** for unclipped, context-aware interactive help that escapes parent container bounds.
-- **📐 Pixel-Perfect Table Engine**: `table-layout: fixed` architecture ensures 100% alignment and full column visibility across all viewports.
-- **♿ WCAG 3.0 Preparedness**: Enhanced focus indicators, semantic landmarking, and automated focus management for high-speed accessibility.
+- **📐 40px Component Standard**: All buttons and inputs follow the latest **WP 6.9 Design System** height standards for optimal reach and clickability.
+- **♿ WCAG 2.2 Level AA Compliance**: High-visibility focus rings, ARIA landmarks, keyboard support (Enter/Space), and automated focus management.
+- **📢 Real-Time A11y Announcements**: Integrated `aria-live` regions that announce creation progress and success/error status to screen reader users.
 - **⚡ Performance First**: Zero layout thrash via `DocumentFragment` batching and optimized `async/await` sequential processing.
 - **🎯 Precise Creation Logic**: Intelligent row-filtering that skips empty entries while providing a descriptive "X out of Y filled" confirmation prompt.
-- **🚀 Automated UX Flow**: Smooth auto-scrolling to the progress summary on execution, followed by a fluid UI transition to a high-density results list upon completion.
-- **🔄 Instant Reset (Start Over)**: A dedicated recovery flow that resets the entire workspace without page reloads, enabling rapid batch processing.
+- **🔄 Instant Reset (Start Over)**: A dedicated recovery flow that resets the entire workspace without page reloads, with automatic focus management.
 
 ---
 
@@ -33,8 +33,8 @@
 
 1. **Build Your List**: Select your target content type. The system identifies hierarchical structures and available taxonomies automatically.
 2. **Configure Details**: Fill in titles, slugs, and content. The UI dynamically focuses your cursor and validates titles in real-time.
-3. **Smart Execution**: Click "Create All". The system will calculate how many rows are filled, ask for confirmation, and skip any empty rows while marking them as "Skipped" in the status column.
-4. **Instant Feedback**: The page auto-scrolls to the progress summary, providing a real-time count of successes, failures, and skipped items.
+3. **Smart Execution**: Click "Create All". The system calculates how many rows are filled, asks for confirmation, and skip any empty rows while marking them as "Skipped".
+4. **Instant Feedback**: The Progress Summary provides a real-time count of successes, failures, and skipped items via a modern progress bar and live text announcements.
 
 ---
 
@@ -50,7 +50,7 @@
 - **Geist UI Layer**: Vanilla CSS optimization (zero bloat) with CSS Containment for lag-free interactions.
 - **Tippy.js & Popper.js**: Industry-standard tooltip positioning for unclipped interactive hints.
 - **Speed**: Sequential `async/await` loop ensures no server-side bottlenecks or database lockouts.
-- **A11y Core**: Accessible status icons, ARIA-live announcements, and `:focus-visible` high-contrast support.
+- **A11y Core**: Accessible status icons, ARIA-live announcements, and high-visibility native focus rings.
 
 ---
 
