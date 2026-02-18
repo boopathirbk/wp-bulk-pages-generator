@@ -248,6 +248,14 @@ class WBPG_Admin {
 									<li><?php _e( 'The **Start Over** button clears all data—use it to quickly start a new batch.', 'wp-bulk-pages-generator' ); ?></li>
 								</ul>
 							</div>
+
+							<!-- GitHub Link -->
+							<div class="wbpg-guide-item">
+								<a href="https://github.com/boopathirbk/wp-bulk-pages-generator" target="_blank" class="button button-secondary" style="width:100%; display:inline-flex; align-items:center; justify-content:center; gap:8px;">
+									<i class="fa-brands fa-github"></i>
+									<?php _e( 'View on GitHub', 'wp-bulk-pages-generator' ); ?>
+								</a>
+							</div>
 						</div>
 					</div>
 				</aside>
