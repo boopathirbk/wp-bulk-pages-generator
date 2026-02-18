@@ -169,12 +169,12 @@
 
 /* Cards */
 .wbpg-card {
-    background: var(--wbpg-bg-card);
-    border: 1px solid var(--wbpg-border);
-    border-radius: var(--wbpg-radius);
-    padding: 24px;
-    margin-bottom: 24px;
-    box-shadow: var(--wbpg-shadow);
+    background: var(--wbpg-bg-card) !important;
+    border: 1px solid var(--wbpg-border) !important;
+    border-radius: 8px !important;
+    padding: 24px !important;
+    margin-bottom: 24px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
     transition: var(--wbpg-transition);
     /* Removed contain: layout style to allow tooltips to escape card bounds */
 }
@@ -239,14 +239,6 @@
 }
 
 /* Buttons */
-.wbpg-card {
-    background: var(--wbpg-bg-card) !important;
-    border-radius: 8px !important;
-    padding: 24px !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
-    margin-bottom: 24px !important;
-    border: 1px solid var(--wbpg-border) !important;
-}
 
 .wbpg-admin-wrap .button-primary {
     background: var(--wbpg-primary) !important;
@@ -391,9 +383,10 @@
 }
 
 .wbpg-table td {
-    padding: 12px !important;
+    padding: 16px 10px !important;
     vertical-align: middle !important;
     border-bottom: 1px solid var(--wbpg-border) !important;
+    background: var(--wbpg-bg-card);
     transition: var(--wbpg-transition);
 }
 
@@ -424,12 +417,7 @@
     width: auto !important;
 }
 
-.wbpg-table td {
-    padding: 16px 10px !important;
-    border-bottom: 1px solid var(--wbpg-border) !important;
-    vertical-align: middle !important;
-    background: var(--wbpg-bg-card);
-}
+
 
 .wbpg-table input[type="text"],
 .wbpg-table select,

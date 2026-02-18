@@ -12,8 +12,7 @@ class WBPG_Admin {
 	/** @var string Plugin version */
 	private $version = WBPG_VERSION;
 
-	/** @var string Admin theme mode */
-	private $theme_mode = 'light';
+
 
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'add_menu_page' ) );
@@ -197,32 +196,33 @@ class WBPG_Admin {
 						<p id="wbpg-progress-text" aria-live="polite"><?php _e( 'Creating pages: 0/0', 'wp-bulk-pages-generator' ); ?></p>
 					</div>
 
-					<aside class="wbpg-sidebar" aria-label="<?php esc_attr_e( 'Help and Documentation', 'wp-bulk-pages-generator' ); ?>">
-						<!-- User Guide Section -->
-						<div class="wbpg-card wbpg-guide">
-							<h2><?php _e( 'User Guide & Examples', 'wp-bulk-pages-generator' ); ?></h2>
-							<div class="wbpg-guide-content">
-								<div class="wbpg-guide-item">
-									<h3><?php _e( 'Basic Usage', 'wp-bulk-pages-generator' ); ?></h3>
-									<p><?php echo sprintf( __( 'Enter the number of pages, fill in titles, and click %s. If you leave the slug empty, WordPress will generate it from the title.', 'wp-bulk-pages-generator' ), '<strong>' . __( 'Create All', 'wp-bulk-pages-generator' ) . '</strong>' ); ?></p>
-								</div>
-								<div class="wbpg-guide-item">
-									<h3><?php _e( 'Block Content', 'wp-bulk-pages-generator' ); ?></h3>
-									<p><?php _e( 'Paste the markup below for a heading and paragraph:', 'wp-bulk-pages-generator' ); ?></p>
-									<code>&lt;!-- wp:heading --&gt;&lt;h2&gt;Hello&lt;/h2&gt;&lt;!-- /wp:heading --&gt;<br>&lt;!-- wp:paragraph --&gt;&lt;p&gt;Bulk page.&lt;/p&gt;&lt;!-- /wp:paragraph --&gt;</code>
-								</div>
-								<div class="wbpg-guide-item">
-									<h3><?php _e( 'Parent Pages', 'wp-bulk-pages-generator' ); ?></h3>
-									<p><?php echo sprintf( __( 'Select a %s for sub-pages. This is hidden for non-hierarchical types.', 'wp-bulk-pages-generator' ), '<strong>' . __( 'Parent', 'wp-bulk-pages-generator' ) . '</strong>' ); ?></p>
-								</div>
-								<div class="wbpg-guide-item">
-									<h3><?php _e( 'Bulk Actions', 'wp-bulk-pages-generator' ); ?></h3>
-									<p><?php echo sprintf( __( 'Select rows to delete them at once using the %s button.', 'wp-bulk-pages-generator' ), '<strong>' . __( 'Delete Selected', 'wp-bulk-pages-generator' ) . '</strong>' ); ?></p>
-								</div>
+				</main>
+
+				<aside class="wbpg-sidebar" aria-label="<?php esc_attr_e( 'Help and Documentation', 'wp-bulk-pages-generator' ); ?>">
+					<!-- User Guide Section -->
+					<div class="wbpg-card wbpg-guide">
+						<h2><?php _e( 'User Guide & Examples', 'wp-bulk-pages-generator' ); ?></h2>
+						<div class="wbpg-guide-content">
+							<div class="wbpg-guide-item">
+								<h3><?php _e( 'Basic Usage', 'wp-bulk-pages-generator' ); ?></h3>
+								<p><?php echo sprintf( __( 'Enter the number of pages, fill in titles, and click %s. If you leave the slug empty, WordPress will generate it from the title.', 'wp-bulk-pages-generator' ), '<strong>' . __( 'Create All', 'wp-bulk-pages-generator' ) . '</strong>' ); ?></p>
+							</div>
+							<div class="wbpg-guide-item">
+								<h3><?php _e( 'Block Content', 'wp-bulk-pages-generator' ); ?></h3>
+								<p><?php _e( 'Paste the markup below for a heading and paragraph:', 'wp-bulk-pages-generator' ); ?></p>
+								<code>&lt;!-- wp:heading --&gt;&lt;h2&gt;Hello&lt;/h2&gt;&lt;!-- /wp:heading --&gt;<br>&lt;!-- wp:paragraph --&gt;&lt;p&gt;Bulk page.&lt;/p&gt;&lt;!-- /wp:paragraph --&gt;</code>
+							</div>
+							<div class="wbpg-guide-item">
+								<h3><?php _e( 'Parent Pages', 'wp-bulk-pages-generator' ); ?></h3>
+								<p><?php echo sprintf( __( 'Select a %s for sub-pages. This is hidden for non-hierarchical types.', 'wp-bulk-pages-generator' ), '<strong>' . __( 'Parent', 'wp-bulk-pages-generator' ) . '</strong>' ); ?></p>
+							</div>
+							<div class="wbpg-guide-item">
+								<h3><?php _e( 'Bulk Actions', 'wp-bulk-pages-generator' ); ?></h3>
+								<p><?php echo sprintf( __( 'Select rows to delete them at once using the %s button.', 'wp-bulk-pages-generator' ), '<strong>' . __( 'Delete Selected', 'wp-bulk-pages-generator' ) . '</strong>' ); ?></p>
 							</div>
 						</div>
-					</aside>
-				</main>
+					</div>
+				</aside>
 			</div>
 			<div class="wbpg-footer-clear"></div>
 		</div>

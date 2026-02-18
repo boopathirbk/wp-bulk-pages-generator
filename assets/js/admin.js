@@ -1,4 +1,12 @@
 jQuery(document).ready(function ($) {
+    // HTML escaping utility to prevent XSS
+    function escapeHtml(str) {
+        if (!str) return '';
+        const div = document.createElement('div');
+        div.appendChild(document.createTextNode(str));
+        return div.innerHTML;
+    }
+
     const $rowsContainer = $('#wbpg-rows');
     const $listWrapper = $('#wbpg-list-container');
     const $generateBtn = $('#wbpg-generate-btn');
@@ -121,7 +129,7 @@ jQuery(document).ready(function ($) {
                 $selector.empty();
                 types.forEach(function (type) {
                     availablePostTypes[type.slug] = type;
-                    $selector.append(`<option value="${type.slug}" data-hierarchical="${type.hierarchical ? '1' : '0'}" ${type.slug === 'page' ? 'selected' : ''}>${type.name}</option>`);
+                    $selector.append(`<option value="${escapeHtml(type.slug)}" data-hierarchical="${type.hierarchical ? '1' : '0'}" ${type.slug === 'page' ? 'selected' : ''}>${escapeHtml(type.name)}</option>`);
                 });
                 toggleParentColumn();
                 updateDynamicLabels();
@@ -153,7 +161,7 @@ jQuery(document).ready(function ($) {
                 },
                 success: function (parents) {
                     parents.forEach(function (parent) {
-                        parentOptionsHtml += `<option value="${parent.id}">${parent.title}</option>`;
+                        parentOptionsHtml += `<option value="${parent.id}">${escapeHtml(parent.title)}</option>`;
                     });
                     refreshDropdowns();
                 }
@@ -169,7 +177,7 @@ jQuery(document).ready(function ($) {
                 },
                 success: function (terms) {
                     terms.forEach(function (term) {
-                        parentOptionsHtml += `<option value="${term.id}">${term.title}</option>`;
+                        parentOptionsHtml += `<option value="${term.id}">${escapeHtml(term.title)}</option>`;
                     });
                     refreshDropdowns();
                 }
@@ -258,7 +266,7 @@ jQuery(document).ready(function ($) {
     });
 
     function createRowHtml(data = {}) {
-        const rowId = Math.random().toString(36).substr(2, 9);
+        const rowId = Math.random().toString(36).substring(2, 11);
         const typeData = availablePostTypes[currentPostType] || {};
         const typeLabel = typeData.name || 'Page';
 

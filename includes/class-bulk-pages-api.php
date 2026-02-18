@@ -47,6 +47,16 @@ class WBPG_API {
 					'default'           => 'page',
 					'sanitize_callback' => 'sanitize_key',
 				),
+				'term_id' => array(
+					'type'              => 'integer',
+					'default'           => 0,
+					'sanitize_callback' => 'absint',
+				),
+				'taxonomy' => array(
+					'type'              => 'string',
+					'default'           => '',
+					'sanitize_callback' => 'sanitize_key',
+				),
 			),
 		) );
 
@@ -150,10 +160,11 @@ class WBPG_API {
 			'sort_column' => 'post_title',
 		) );
 
-		$results = array();
-		if ( is_wp_error( $pages ) ) {
-			return new WP_Error( 'fetch_failed', __( 'Failed to load parent pages.', 'wp-bulk-pages-generator' ), array( 'status' => 500 ) );
+		if ( empty( $pages ) ) {
+			return array();
 		}
+
+		$results = array();
 
 		if ( ! empty( $pages ) ) {
 			foreach ( $pages as $page ) {

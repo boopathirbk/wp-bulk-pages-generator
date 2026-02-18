@@ -10,7 +10,7 @@
  * Requires at least: 6.0
  * Tested up to:      6.9.1
  * Requires PHP:      7.4
- * License:     GPL v2 or later
+ * License:     Apache 2.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
