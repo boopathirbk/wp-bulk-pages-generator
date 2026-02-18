@@ -1,61 +1,61 @@
 # WP Bulk Pages Generator 🚀
-### The Ultimate Geist-Inspired Bulk Content Engine for WordPress
+### The Ultimate 2026-Ready Bulk Content Engine for WordPress
 
 [![WordPress Version](https://img.shields.io/badge/WordPress-6.0%2B-blue.svg?style=flat-square&logo=wordpress)](https://wordpress.org)
-[![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-777bb4.svg?style=flat-square&logo=php)](https://php.net)
+[![PHP Version](https://img.shields.io/badge/PHP-8.2%2B-777bb4.svg?style=flat-square&logo=php)](https://php.net)
 [![UI Design](https://img.shields.io/badge/UI-Geist--Minimal-black.svg?style=flat-square)](https://vercel.com/design)
-[![Theme](https://img.shields.io/badge/Support-Dark%20Mode-success.svg?style=flat-square)](https://github.com/)
-[![Standards](https://img.shields.io/badge/WCAG-2.1%20AA-blueviolet.svg?style=flat-square)](https://www.w3.org/WAI/standards-guidelines/wcag/)
+[![Accessibility](https://img.shields.io/badge/WCAG-3.0%20Ready-success.svg?style=flat-square)](https://www.w3.org/WAI/standards-guidelines/wcag/)
+[![Security](https://img.shields.io/badge/Hardened-Nonce%20Locked-blue.svg?style=flat-square)](https://github.com/)
 [![License](https://img.shields.io/badge/License-GPL--v2-orange.svg?style=flat-square)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
-**WP Bulk Pages Generator** is a premium-grade WordPress plugin designed for high-speed site building, silo construction, and SEO content deployment. Featuring a world-class **Geist design system**, it offers a flawless bulk creation experience for Pages, Posts, and any Custom Post Type (CPT) with full taxonomy support.
+**WP Bulk Pages Generator** is an enterprise-grade WordPress plugin engineered for 2026 performance, security, and accessibility standards. Built on the **Geist Design System**, it provides a frictionless, high-speed interface for bulk-deploying Pages, Posts, and Custom Post Types (CPT) with precision taxonomy integration.
 
 ---
 
-## 🎨 Professional Features
+## 🎨 2026-Ready Feature Set
 
-- **💎 Geist Design System**: A high-contrast, minimalist interface focused on information density and speed.
-- **🌗 Universal Dark Mode**: Seamless dark/light theme switching with automated persistence.
-- **📚 Premium Iconography**: Powered by **Font Awesome 6** for an intuitive, modern UI experience.
-- **📌 Interactive Guide Sidebar**: Real-time documentation and Gutenberg block examples pinned as you work.
-- **🔄 Smart Labeling**: The entire dashboard dynamically rebrands titles, columns, and buttons based on your selected Post Type.
-- **🧱 Rich Content Support**: Full support for **Block Editor (Gutenberg) Markup** and raw HTML.
-- **🍱 Intelligent Taxonomy Logic**: Automatically detects and handles Categories, Tags, and Custom Hierarchical Taxonomies.
-- **🛡️ Enterprise-Grade Security**: Fully Nonce-protected REST API endpoints with strict capability checks.
-
----
-
-## 🛠️ Efficient Workflow
-
-1. **Build Your List**: Select your target Post Type (Page, Post, or CPT) and row count.
-2. **Configure Details**: Fill in titles, slugs, and rich content. The interface adapts to show "Parent" pages for hierarchical types or "Terms" for others.
-3. **Execution**: Click "Create All" and monitor real-time progress via the live status summary.
+- **💎 Modern Geist Architecture**: A high-density, minimalist interface designed for rapid data entry and zero cognitive load.
+- **🌗 intelligent Dark Mode**: Automated theme persistence with high-contrast optimization for low-light environments.
+- **🛡️ State Armor (Operation Lock)**: Prevents accidental navigation or refresh during bulk creation, protecting your content batches from interruption.
+- **🧱 Block-Native Engine**: Full validation for **Gutenberg Block Markup**, ensuring your bulk content renders perfectly in the modern editor.
+- **🔄 Dynamic Context Branding**: Real-time dashboard rebranding that adapts titles, instructions, and tooltips based on the selected post type.
+- **🍱 Advanced Taxonomy Layer**: Deep integration with hierarchical (Categories) and flat (Tags) taxonomies across all public post types.
+- **♿ WCAG 3.0 Preparedness**: Enhanced focus indicators, semantic landmarking, and automated focus management for high-speed accessibility.
+- **⚡ Performance First**: Zero layout thrash via `DocumentFragment` batching and optimized `async/await` sequential processing.
 
 ---
 
-## 📈 SEO & Performance Hardening
+## 🛠️ Deployment Workflow
 
-Built for SEO professionals, agencies, and performance-minded developers:
-- **Zero Layout Thrash**: Uses `DocumentFragment` batch rendering for instantaneous UI response even with 100+ rows.
-- **Sequential API Processing**: Prevents server timeouts and database deadlocks by processing content in a smart `async/await` loop.
-- **CSS Containment**: Leverages modern browser rendering optimizations for a lag-free experience.
-- **Silo Specialist**: Build complex hierarchical content structures (Service -> City -> Suburbs) in seconds.
+1. **Build Your List**: Select your target content type. The system identifies hierarchical structures and available taxonomies automatically.
+2. **Configure Details**: Fill in titles, slugs, and content. The UI dynamically focuses your cursor and validates titles in real-time.
+3. **Smart Execution**: Click "Create All" to trigger the sequential generation engine with live visual progress tracking.
 
 ---
 
-## ♿ Accessibility & Standards
+## 🏗️ Technical Architecture
 
-- **WCAG 2.1 AA Compliant**: High-contrast ratios, semantic HTML5 landmarks, and ARIA-live status updates.
-- **Keyboard Optimized**: Full `:focus-visible` support for high-visibility navigation without a mouse.
-- **Reduced Motion Support**: Respects system-level motion preferences for inclusive usage.
-- **MDN & Google Web Dev Driven**: Follows strict coding standards for future-proof WordPress compatibility.
+### Backend: Hardened PHP 8.2+
+- **Strictly Typed**: Fully compatible with PHP 8.2+ dynamic property deprecations.
+- **Security First**: Nonce-locked REST API endpoints with managed capability drifts and strict sanitization.
+- **Resilient API**: Structured error handling for taxonomy and parent-page retrieval with graceful failovers.
+
+### Frontend: Modern Asset Stack
+- **Geist UI Layer**: Vanilla CSS optimization (zero bloat) with CSS Containment for lag-free interactions.
+- **Speed**: Sequential `async/await` loop ensures no server-side bottlenecks or database lockouts.
+- **A11y Core**: Accessible status icons, ARIA-live announcements, and `:focus-visible` high-contrast support.
 
 ---
 
 ## 📥 Quick Installation
 
-1. Upload the plugin folder to your `/wp-content/plugins/` directory.
+1. Upload the `wp-bulk-pages-generator` folder to your `/wp-content/plugins/` directory.
 2. Activate the plugin in the **Plugins** menu.
-3. Navigate to **"Bulk Pages"** in your admin sidebar to begin.
+3. Navigate to **"Bulk Pages"** in your admin sidebar to begin bulk deployment.
 
-*Engineered for the modern, high-performance WordPress ecosystem.*
+---
+
+## 👨‍💻 Developer Support
+The plugin exposes several endpoints under the `wp-bulk-pages/v1` namespace for external automation or integration workflows.
+
+*Engineered for speed. Hardened for the future.*

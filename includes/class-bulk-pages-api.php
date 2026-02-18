@@ -145,7 +145,11 @@ class WBPG_API {
 		) );
 
 		$results = array();
-		if ( ! empty( $pages ) && ! is_wp_error( $pages ) ) {
+		if ( is_wp_error( $pages ) ) {
+			return new WP_Error( 'fetch_failed', __( 'Failed to load parent pages.', 'wp-bulk-pages-generator' ), array( 'status' => 500 ) );
+		}
+
+		if ( ! empty( $pages ) ) {
 			foreach ( $pages as $page ) {
 				$prefix = '';
 				$ancestors = get_post_ancestors( $page->ID );
@@ -175,7 +179,11 @@ class WBPG_API {
 		) );
 
 		$results = array();
-		if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+		if ( is_wp_error( $terms ) ) {
+			return new WP_Error( 'fetch_failed', __( 'Failed to load taxonomy terms.', 'wp-bulk-pages-generator' ), array( 'status' => 500 ) );
+		}
+
+		if ( ! empty( $terms ) ) {
 			foreach ( $terms as $term ) {
 				$results[] = array(
 					'id'    => $term->term_id,

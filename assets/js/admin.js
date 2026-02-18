@@ -12,6 +12,7 @@ jQuery(document).ready(function ($) {
     let currentPostType = 'page';
     let currentTaxonomy = '';
     let availablePostTypes = {};
+    let isCreating = false;
     const i18n = wbpgData.i18n;
 
     // Theme Toggle Logic
@@ -28,6 +29,12 @@ jQuery(document).ready(function ($) {
 
     // Initialize Theme
     setTheme(localStorage.getItem('wbpg-theme') || 'light');
+    $('#wbpg-theme-toggle').attr('aria-label', i18n.toggle_theme);
+
+    // Prevent navigation during creation
+    $(window).on('beforeunload', function () {
+        if (isCreating) return i18n.confirm_leave;
+    });
 
     // Use delegated listener for theme toggle
     $(document).on('click', '#wbpg-theme-toggle', function (e) {
@@ -52,6 +59,16 @@ jQuery(document).ready(function ($) {
         } else if (typeData.taxonomy) {
             $('#wbpg-parent-column-head').text(taxLabel);
         }
+
+        // Update Tooltips
+        $('#tip-type').attr('aria-label', i18n.tip_type);
+        $('#tip-count').attr('aria-label', i18n.tip_count);
+        $('#tip-title').attr('aria-label', i18n.tip_title.replace('item', typeLabel.toLowerCase()));
+        $('#tip-slug').attr('aria-label', i18n.tip_slug);
+        $('#tip-content').attr('aria-label', i18n.tip_content);
+
+        // Update existing row placeholders if any
+        $('.wbpg-row-title').attr('placeholder', i18n.placeholder_title.replace('%s', typeLabel));
     }
 
     // Load Post Types
@@ -147,10 +164,28 @@ jQuery(document).ready(function ($) {
 
     // Handle Post Type Change
     $('#wbpg-post-type').on('change', function () {
-        currentPostType = $(this).val();
+        const $this = $(this);
+        if ($('.wbpg-row').length > 0) {
+            if (!confirm(i18n.confirm_type_change)) {
+                $this.val(currentPostType);
+                return;
+            }
+            $rowsContainer.empty();
+            $listWrapper.hide();
+            $summaryBox.hide();
+        }
+
+        currentPostType = $this.val();
         toggleParentColumn();
         loadParents(currentPostType);
         updateDynamicLabels();
+    });
+
+    // Enforce count limits on input
+    $countInput.on('input', function () {
+        let val = parseInt($(this).val());
+        if (val > 100) $(this).val(100);
+        if (val < 1 && $(this).val() !== '') $(this).val(1);
     });
 
     // Generate List Rows
@@ -167,11 +202,13 @@ jQuery(document).ready(function ($) {
 
         // Performance Optimization: Use DocumentFragment for batch insertion
         const fragment = document.createDocumentFragment();
+        const tempTable = document.createElement('table');
+        const tempTbody = document.createElement('tbody');
+
         for (let i = 0; i < count; i++) {
             const rowHtml = createRowHtml();
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = rowHtml.trim();
-            fragment.appendChild(tempDiv.firstChild);
+            tempTbody.innerHTML = rowHtml.trim();
+            fragment.appendChild(tempTbody.firstChild);
         }
         $rowsContainer[0].appendChild(fragment);
 
@@ -182,19 +219,25 @@ jQuery(document).ready(function ($) {
 
         $('html, body').animate({
             scrollTop: $listWrapper.offset().top - 50
-        }, 500);
+        }, 500, function () {
+            // Set focus to the first title input for accessibility
+            $rowsContainer.find('.wbpg-row-title').first().focus();
+        });
     });
 
     function createRowHtml(data = {}) {
         const rowId = Date.now() + Math.random().toString(36).substr(2, 9);
+        const typeData = availablePostTypes[currentPostType] || {};
+        const typeLabel = typeData.name || 'Page';
+
         return `
             <tr id="row-${rowId}" class="wbpg-row">
                 <td class="col-check"><input type="checkbox" class="wbpg-row-check"></td>
                 <td class="col-status"><div class="wbpg-status-icon pending" title="Pending"><i class="fa-regular fa-clock"></i></div></td>
-                <td><input type="text" class="wbpg-row-title" placeholder="Enter title..." value="${data.title || ''}" required></td>
-                <td><input type="text" class="wbpg-row-slug" placeholder="slug" value="${data.slug || ''}"></td>
+                <td><input type="text" class="wbpg-row-title" placeholder="${i18n.placeholder_title.replace('%s', typeLabel)}" value="${data.title || ''}" required></td>
+                <td><input type="text" class="wbpg-row-slug" placeholder="${i18n.placeholder_slug}" value="${data.slug || ''}"></td>
                 <td class="col-parent"><select class="wbpg-row-parent">${parentOptionsHtml}</select></td>
-                <td><textarea class="wbpg-row-content" placeholder="Block content or HTML...">${data.content || ''}</textarea></td>
+                <td><textarea class="wbpg-row-content" placeholder="${i18n.placeholder_content}">${data.content || ''}</textarea></td>
                 <td class="col-action"><span class="wbpg-row-remove fa-solid fa-trash-can" title="Remove"></span></td>
             </tr>
         `;
@@ -275,6 +318,7 @@ jQuery(document).ready(function ($) {
         const typeLabel = $('#wbpg-post-type option:selected').text();
         if (!confirm(i18n.confirm_create.replace('%d', pendingRows.length).replace('%s', typeLabel))) return;
 
+        isCreating = true;
         $createBtn.prop('disabled', true).text(i18n.creating);
         $summaryBox.show();
         $progressBar.css('width', '0%');
@@ -335,6 +379,7 @@ jQuery(document).ready(function ($) {
             updateProgress(successCount, total, completed);
         }
 
+        isCreating = false;
         $createBtn.prop('disabled', false).text(i18n.create_btn.replace('%s', typeLabel));
     });
 
@@ -353,7 +398,7 @@ jQuery(document).ready(function ($) {
     function updateProgress(successCount, total, attempted) {
         const percentage = (attempted / total) * 100;
         const typeLabel = $('#wbpg-post-type option:selected').text();
-        const $icon = (attempted === total) ? '<i class="fa-solid fa-circle-check" style="margin-right:8px;"></i>' : '';
+        const $icon = (attempted === total && successCount === total) ? '<i class="fa-solid fa-circle-check" style="margin-right:8px;"></i>' : '';
         $progressBar.css('width', percentage + '%');
 
         let formatted = i18n.success_msg

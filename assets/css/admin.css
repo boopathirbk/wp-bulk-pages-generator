@@ -72,9 +72,14 @@
 
 /* Enhanced Focus States for A11y */
 .wbpg-admin-wrap *:focus-visible {
-    outline: 2px solid var(--wbpg-accent) !important;
-    outline-offset: 2px !important;
-    box-shadow: none !important;
+    outline: 3px solid var(--wbpg-accent) !important;
+    outline-offset: 3px !important;
+    box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.2) !important;
+}
+
+/* Ensure focus is visible on buttons even with theme changes */
+.wbpg-admin-wrap .button:focus-visible {
+    box-shadow: 0 0 0 3px var(--wbpg-bg-card), 0 0 0 6px var(--wbpg-accent) !important;
 }
 
 /* Reduced Motion Support */
@@ -150,7 +155,7 @@
     margin-bottom: 24px;
     box-shadow: var(--wbpg-shadow);
     transition: var(--wbpg-transition);
-    contain: layout style;
+    /* Removed contain: layout style to allow tooltips to escape card bounds */
 }
 
 .wbpg-card h2 {
@@ -241,7 +246,7 @@
 /* Table Card Customization */
 .wbpg-list {
     padding: 0 !important;
-    overflow: hidden;
+    /* Removed overflow: hidden to allow tooltips to float */
 }
 
 .wbpg-list-header {
@@ -258,6 +263,7 @@
     border-collapse: separate;
     border-spacing: 0;
     table-layout: fixed;
+    /* Ensure tooltips aren't clipped by table layout */
 }
 
 .wbpg-table-responsive {
@@ -432,14 +438,19 @@
     color: #fff;
     padding: 8px 12px;
     border-radius: 6px;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
-    white-space: nowrap;
+    width: max-content;
+    max-width: 200px;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.4;
     opacity: 0;
     visibility: hidden;
     transition: var(--wbpg-transition);
-    z-index: 9999;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 10000;
+    /* Higher than WP admin bars if needed */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     pointer-events: none;
     font-style: normal;
 }
@@ -510,8 +521,12 @@
 }
 
 .wbpg-row.selected {
-    background: var(--wbpg-bg-page);
-    border-color: var(--wbpg-accent);
+    background: rgba(59, 130, 246, 0.05);
+    border-left: 3px solid var(--wbpg-accent);
+}
+
+.wbpg-admin-wrap[data-theme="dark"] .wbpg-row.selected {
+    background: rgba(59, 130, 246, 0.1);
 }
 
 .wbpg-row-remove {
