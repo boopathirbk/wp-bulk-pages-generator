@@ -17,6 +17,9 @@
     --accents-8: #111111;
 
     --geist-success: #0070f3;
+    /* Primary Blue */
+    --geist-success-green: #00e074;
+    /* Standard Success Green */
     --geist-success-light: #3291ff;
     --geist-error: #ee0000;
     --geist-warning: #f5a623;
@@ -58,6 +61,7 @@
     --accents-7: #ebebeb;
     --accents-8: #ffffff;
 
+    --geist-success-green: #00e074;
     --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.6);
     --shadow-lg: 0 40px 80px rgba(0, 0, 0, 0.8);
     --geist-success: #0070f3;
@@ -77,9 +81,15 @@ body {
     font-family: var(--font-sans);
     line-height: 1.5;
     overflow-x: hidden;
+    width: 100%;
     transition: background var(--theme-ease), color var(--theme-ease);
     scroll-padding-top: var(--header-height);
     /* WCAG 2.2: Focus Not Obscured */
+}
+
+html {
+    overflow-x: hidden;
+    width: 100%;
 }
 
 /* Accessible Focus States */
@@ -151,6 +161,25 @@ header {
     gap: 12px;
 }
 
+.cta-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+@media (max-width: 600px) {
+    .cta-group {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .cta-group .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
 .nav-links {
     display: flex;
     gap: 32px;
@@ -193,17 +222,24 @@ header {
         background: var(--background);
         flex-direction: column;
         justify-content: center;
+        align-items: center;
         gap: 40px;
-        transition: right 0.4s var(--ease);
+        transition: right 0.4s var(--ease), visibility 0.4s var(--ease);
         z-index: 1000;
+        visibility: hidden;
+        display: none;
+        /* Force hide to prevent overflow contribution */
     }
 
     .nav-links.active {
         right: 0;
+        visibility: visible;
+        display: flex;
     }
 
     .nav-link {
         font-size: 24px;
+        color: var(--foreground);
     }
 }
 
@@ -353,19 +389,21 @@ header {
 
 .hero h1 {
     font-family: var(--font-heading);
-    font-size: clamp(42px, 10vw, 88px);
+    font-size: clamp(38px, 10vw, 88px);
     font-weight: 900;
-    letter-spacing: -0.07em;
-    line-height: 0.95;
+    letter-spacing: -0.06em;
+    line-height: 1;
     margin-bottom: 32px;
     background: linear-gradient(to bottom, var(--foreground) 60%, var(--accents-5));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    word-break: break-word;
+    /* Ensure long words wrap */
 }
 
 .hero p {
-    font-size: 20px;
+    font-size: clamp(16px, 4vw, 20px);
     color: var(--accents-5);
     max-width: 720px;
     margin: 0 auto 56px;
@@ -412,11 +450,27 @@ header {
     gap: 40px;
 }
 
+@media (max-width: 768px) {
+    .comparison {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+
 .comp-box {
     padding: 48px;
     border-radius: 16px;
     border: 1px solid var(--accents-2);
     position: relative;
+    width: 100%;
+    /* Ensure full width */
+    overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+    .comp-box {
+        padding: 32px 24px;
+    }
 }
 
 .comp-box.negative {
@@ -442,13 +496,19 @@ header {
 .comp-list li {
     display: flex;
     gap: 16px;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     font-size: 15px;
     color: var(--accents-5);
+    line-height: 1.5;
+    align-items: flex-start;
+    /* Ensure top alignment for wrapping text */
 }
 
 .comp-list i {
-    margin-top: 4px;
+    flex-shrink: 0;
+    margin-top: 0.25em;
+    /* Precisely align with first line regardless of text length */
+    font-size: 16px;
 }
 
 .negative i {
@@ -456,7 +516,7 @@ header {
 }
 
 .positive i {
-    color: var(--geist-success);
+    color: var(--geist-success-green);
 }
 
 /* --- Author Card Responsiveness --- */
@@ -643,6 +703,39 @@ footer {
     margin-bottom: 80px;
 }
 
+@media (max-width: 1024px) {
+    .footer-grid {
+        grid-template-columns: 1.5fr 1fr;
+        gap: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        margin-bottom: 40px;
+    }
+
+    .footer-brand {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-col {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-links li a {
+        justify-content: center;
+    }
+}
+
 .footer-brand p {
     margin-top: 16px;
     font-size: 14px;
@@ -708,11 +801,11 @@ footer {
 
 @media (max-width: 768px) {
     .container {
-        padding: 0 32px;
+        padding: 0 24px;
     }
 
     .hero h1 {
-        font-size: 48px;
+        font-size: clamp(32px, 10vw, 48px);
     }
 
     .bento-card {
@@ -722,10 +815,6 @@ footer {
     .span-8,
     .span-4 {
         grid-column: span 12;
-    }
-
-    .footer-grid {
-        grid-template-columns: 1fr;
     }
 
     .footer-bottom {
