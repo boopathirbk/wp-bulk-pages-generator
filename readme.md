@@ -153,7 +153,7 @@ graph LR
 ## 🚀 Deployment Guide
 
 ### Prerequisites
-- **WordPress**: 6.0+ (Fully optimized for **6.9.1**)
+- **WordPress**: 6.0+ (Fully optimized for **6.7**)
 - **PHP**: 7.4 through 8.2+
 - **Privileges**: Administrator or user with `manage_options`.
 

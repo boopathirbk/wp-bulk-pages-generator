@@ -8,7 +8,7 @@
  * Author URI:  https://github.com/boopathirbk
  * Text Domain: wp-bulk-pages-generator
  * Requires at least: 6.0
- * Tested up to:      6.9.1
+ * Tested up to:      6.7
  * Requires PHP:      7.4
  * License:     Apache 2.0
  */
