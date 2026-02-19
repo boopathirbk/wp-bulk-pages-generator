@@ -99,6 +99,7 @@ jQuery(document).ready(function ($) {
 
         $('#wbpg-configure-title').text(i18n.configure.replace('%s', typeLabel));
         $('#wbpg-create-all-btn').text(i18n.create_btn.replace('%s', typeLabel));
+        $('#wbpg-generate-btn').text(i18n.generate_btn.replace('%s', typeLabel));
 
         // Update Column Header and Visibility
         if (isHierarchical || hasTaxonomy) {
@@ -589,4 +590,20 @@ jQuery(document).ready(function ($) {
             $progressText.css('color', 'var(--wbpg-text-muted)');
         }
     }
+    // Clipboard Utility
+    $(document).on('click', '.wbpg-copy-btn', function (e) {
+        e.preventDefault();
+        const $btn = $(this);
+        const targetId = `pattern-${$btn.data('clipboard')}`;
+        const code = document.getElementById(targetId).innerText;
+
+        navigator.clipboard.writeText(code).then(() => {
+            const originalText = $btn.text();
+            $btn.text(i18n.copied || 'Copied!').addClass('is-copied');
+
+            setTimeout(() => {
+                $btn.text(originalText).removeClass('is-copied');
+            }, 2000);
+        });
+    });
 });

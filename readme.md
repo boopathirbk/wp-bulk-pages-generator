@@ -189,7 +189,7 @@ Yes. We've implemented a **Geist-inspired Dark Theme** that respects your OS/Wor
 ### Part B: Batch Entry
 1. Type your **Titles** in the Title column.
 2. (*Optional*) Assign a **Parent** or **Category**.
-3. (*Pro Tip*) Paste a **Block Pattern** in the Content column (find examples in the sidebar guide!).
+3. (*Pro Tip*) Paste a **Block Pattern** in the Content column (find examples in the **User Guide** page!).
 
 ### Part C: The Big Red Button
 1. Review your data.

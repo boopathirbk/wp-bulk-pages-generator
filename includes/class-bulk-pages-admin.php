@@ -20,7 +20,7 @@ class WBPG_Admin {
 	}
 
 	/**
-	 * Add Admin Menu Page.
+	 * Add Admin Menu Page and Submenus.
 	 */
 	public function add_menu_page() {
 		add_menu_page(
@@ -32,27 +32,45 @@ class WBPG_Admin {
 			'dashicons-plus-alt',
 			25
 		);
+
+		add_submenu_page(
+			'wp-bulk-pages-generator',
+			__( 'Generator', 'wp-bulk-pages-generator' ),
+			__( 'Generator', 'wp-bulk-pages-generator' ),
+			'manage_options',
+			'wp-bulk-pages-generator',
+			array( $this, 'render_admin_page' )
+		);
+
+		add_submenu_page(
+			'wp-bulk-pages-generator',
+			__( 'User Guide & Strategy', 'wp-bulk-pages-generator' ),
+			__( 'User Guide', 'wp-bulk-pages-generator' ),
+			'manage_options',
+			'wp-bulk-pages-docs',
+			array( $this, 'render_docs_page' )
+		);
 	}
 
 	/**
 	 * Enqueue Admin Assets.
 	 */
 	public function enqueue_assets( $hook ) {
-		if ( false === strpos( $hook, 'wp-bulk-pages-generator' ) ) {
+		if ( false === strpos( $hook, 'wp-bulk-pages-generator' ) && false === strpos( $hook, 'wp-bulk-pages-docs' ) ) {
 			return;
 		}
 
-		// Enqueue Geist Font (System stacks favored, adding Inter as fallback)
+		// Enqueue Font Awesome
 		wp_enqueue_style( 'wbpg-font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css', array(), '6.5.1' );
 		
-		// Enqueue Tippy.js and Popper.js for robust tooltips
+		// Enqueue Tippy.js and Popper.js
 		wp_enqueue_script( 'wbpg-popper', 'https://unpkg.com/@popperjs/core@2', array(), '2.11.8', true );
 		wp_enqueue_script( 'wbpg-tippy', 'https://unpkg.com/tippy.js@6', array( 'wbpg-popper' ), '6.3.7', true );
 
 		wp_enqueue_style( 'wbpg-admin-style', WBPG_PLUGIN_URL . 'assets/css/admin.css', array(), WBPG_VERSION );
 		wp_enqueue_script( 'wbpg-admin-script', WBPG_PLUGIN_URL . 'assets/js/admin.js', array( 'jquery', 'wbpg-tippy' ), WBPG_VERSION, true );
 
-		// Localize Script for API and i18n
+		// Localize Script
 		wp_localize_script( 'wbpg-admin-script', 'wbpgData', array(
 			'apiUrl' => esc_url_raw( rest_url( 'wp-bulk-pages/v1' ) ),
 			'nonce'  => wp_create_nonce( 'wp_rest' ),
@@ -95,19 +113,21 @@ class WBPG_Admin {
 				'toggle_theme'       => __( 'Toggle Light/Dark Mode', 'wp-bulk-pages-generator' ),
 				'select_type'        => __( 'Select Post Type...', 'wp-bulk-pages-generator' ),
 				'generate_btn'       => __( 'Generate %ss', 'wp-bulk-pages-generator' ),
+				'copy'              => __( 'Copy', 'wp-bulk-pages-generator' ),
+				'copied'            => __( 'Copied!', 'wp-bulk-pages-generator' ),
 			)
 		) );
 	}
 
 	/**
-	 * Get Current Theme Mode from Cookie (for no-flash initial load).
+	 * Get Current Theme Mode.
 	 */
 	private function get_theme_mode() {
 		return isset( $_COOKIE['wbpg_theme'] ) ? sanitize_key( $_COOKIE['wbpg_theme'] ) : 'light';
 	}
 
 	/**
-	 * Render Admin Page.
+	 * Render Admin Page (Generator).
 	 */
 	public function render_admin_page() {
 		$theme = $this->get_theme_mode();
@@ -131,7 +151,7 @@ class WBPG_Admin {
 				</div>
 			</header>
 
-			<div class="wbpg-layout">
+			<div class="wbpg-layout wbpg-layout-full">
 				<main class="wbpg-main-content" id="wbpg-main">
 					<!-- Setup Card -->
 					<div class="wbpg-card wbpg-setup">
@@ -208,57 +228,105 @@ class WBPG_Admin {
 							<div id="wbpg-results-list" class="wbpg-results-list" aria-live="polite"></div>
 						</div>
 					</div>
-
 				</main>
+			</div>
+			<div class="wbpg-footer-clear"></div>
+		</div>
+		<?php
+	}
 
-				<aside class="wbpg-sidebar" aria-label="<?php esc_attr_e( 'Help and Documentation', 'wp-bulk-pages-generator' ); ?>">
-					<!-- User Guide Section -->
-					<div class="wbpg-card wbpg-guide">
-						<h2><?php _e( 'User Guide & Examples', 'wp-bulk-pages-generator' ); ?></h2>
-						<div class="wbpg-guide-content">
-							<!-- Basic Usage -->
-							<div class="wbpg-guide-item">
-								<h3><i class="fa-solid fa-play" aria-hidden="true" style="margin-right:8px;font-size:12px;"></i><?php _e( 'Quick Workflow', 'wp-bulk-pages-generator' ); ?></h3>
-								<p><?php echo sprintf( __( '1. Select a %1$s to begin. 2. Enter how many rows to add. 3. Fill in your content. 4. Click %2$s to start.', 'wp-bulk-pages-generator' ), '<strong>' . __( 'Post Type', 'wp-bulk-pages-generator' ) . '</strong>', '<strong>' . __( 'Create All', 'wp-bulk-pages-generator' ) . '</strong>' ); ?></p>
+	/**
+	 * Render Documentation Page.
+	 */
+	public function render_docs_page() {
+		$theme = $this->get_theme_mode();
+		?>
+		<div class="wrap wbpg-admin-wrap" data-theme="<?php echo esc_attr( $theme ); ?>" role="main" aria-labelledby="wbpg-docs-title">
+			<header class="wbpg-header">
+				<div class="wbpg-header-main">
+					<h1 id="wbpg-docs-title"><?php _e( 'User Guide & Strategy', 'wp-bulk-pages-generator' ); ?></h1>
+					<p><?php _e( 'Master bulk creation with professional guides and high-conversion block patterns.', 'wp-bulk-pages-generator' ); ?></p>
+				</div>
+				<div class="wbpg-header-actions">
+					<button id="wbpg-theme-toggle" class="button button-secondary" aria-label="<?php esc_attr_e( 'Toggle Light/Dark Mode', 'wp-bulk-pages-generator' ); ?>">
+						<?php if ( 'dark' === $theme ) : ?>
+							<i class="fa-regular fa-sun"></i>
+							<span class="wbpg-toggle-text"><?php _e( 'Light Mode', 'wp-bulk-pages-generator' ); ?></span>
+						<?php else : ?>
+							<i class="fa-regular fa-moon"></i>
+							<span class="wbpg-toggle-text"><?php _e( 'Dark Mode', 'wp-bulk-pages-generator' ); ?></span>
+						<?php endif; ?>
+					</button>
+				</div>
+			</header>
+
+			<div class="wbpg-docs-layout">
+				<!-- Quick Start Card -->
+				<div class="wbpg-card wbpg-docs-card">
+					<h2><i class="fa-solid fa-bolt" aria-hidden="true" style="margin-right:12px;color:var(--wbpg-accent);"></i><?php _e( 'Speed Workflow', 'wp-bulk-pages-generator' ); ?></h2>
+					<div class="wbpg-docs-content">
+						<p><?php echo sprintf( __( 'Deploy hundreds of pages in seconds with this high-performance sequence:', 'wp-bulk-pages-generator' ) ); ?></p>
+						<ol class="wbpg-docs-list">
+							<li><strong><?php _e( 'Select Post Type:', 'wp-bulk-pages-generator' ); ?></strong> <?php _e( 'Choose between Pages, Posts, or custom types.', 'wp-bulk-pages-generator' ); ?></li>
+							<li><strong><?php _e( 'Define Volume:', 'wp-bulk-pages-generator' ); ?></strong> <?php _e( 'Enter the number of items you wish to create.', 'wp-bulk-pages-generator' ); ?></li>
+							<li><strong><?php _e( 'Fill Details:', 'wp-bulk-pages-generator' ); ?></strong> <?php _e( 'Enter titles, slugs, and optional block content.', 'wp-bulk-pages-generator' ); ?></li>
+							<li><strong><?php _e( 'Bulk Create:', 'wp-bulk-pages-generator' ); ?></strong> <?php _e( 'Click "Create All" and watch the engine process in real-time.', 'wp-bulk-pages-generator' ); ?></li>
+						</ol>
+					</div>
+				</div>
+
+				<!-- Strategy & Patterns Card -->
+				<div class="wbpg-card wbpg-docs-card">
+					<h2><i class="fa-solid fa-layer-group" aria-hidden="true" style="margin-right:12px;color:var(--wbpg-accent);"></i><?php _e( 'Content Architecture', 'wp-bulk-pages-generator' ); ?></h2>
+					<div class="wbpg-docs-content">
+						<p><?php _e( 'Use these high-fidelity snippets to create professional layouts instantly:', 'wp-bulk-pages-generator' ); ?></p>
+						
+						<div class="wbpg-pattern-item">
+							<div class="wbpg-pattern-header">
+								<strong><i class="fa-regular fa-circle-question" style="margin-right:8px;"></i><?php _e( 'Professional FAQ Section', 'wp-bulk-pages-generator' ); ?></strong>
+								<button class="wbpg-copy-btn button button-small" data-clipboard="faq"><?php _e( 'Copy Code', 'wp-bulk-pages-generator' ); ?></button>
 							</div>
+							<code id="pattern-faq">&lt;!-- wp:details {"summary":"Is this free?"} --&gt;&lt;details open&gt;&lt;summary&gt;Is this free?&lt;/summary&gt;&lt;!-- wp:paragraph --&gt;&lt;p&gt;Yes, fully open source.&lt;/p&gt;&lt;!-- /wp:paragraph --&gt;&lt;/details&gt;&lt;!-- /wp:details --&gt;</code>
+						</div>
 
-							<!-- Block Patterns -->
-							<div class="wbpg-guide-item">
-								<h3><i class="fa-solid fa-cubes" aria-hidden="true" style="margin-right:8px;font-size:12px;"></i><?php _e( 'Advanced Block Patterns', 'wp-bulk-pages-generator' ); ?></h3>
-								<p><?php _e( 'Paste these snippets into the Content field for professional layouts:', 'wp-bulk-pages-generator' ); ?></p>
-								
-								<div class="wbpg-code-example">
-									<strong><?php _e( 'FAQ Section:', 'wp-bulk-pages-generator' ); ?></strong>
-									<code>&lt;!-- wp:details {"summary":"Is this free?"} --&gt;&lt;details open&gt;&lt;summary&gt;Is this free?&lt;/summary&gt;&lt;!-- wp:paragraph --&gt;&lt;p&gt;Yes, fully open source.&lt;/p&gt;&lt;!-- /wp:paragraph --&gt;&lt;/details&gt;&lt;!-- /wp:details --&gt;</code>
-								</div>
-
-								<div class="wbpg-code-example" style="margin-top:10px;">
-									<strong><?php _e( 'Call to Action:', 'wp-bulk-pages-generator' ); ?></strong>
-									<code>&lt;!-- wp:buttons --&gt;&lt;div class="wp-block-buttons"&gt;&lt;!-- wp:button --&gt;&lt;div class="wp-block-button"&gt;&lt;a class="wp-block-button__link wp-element-button"&gt;Start Now&lt;/a&gt;&lt;/div&gt;&lt;!-- /wp:button --&gt;&lt;/div&gt;&lt;!-- /wp:buttons --&gt;</code>
-								</div>
+						<div class="wbpg-pattern-item">
+							<div class="wbpg-pattern-header">
+								<strong><i class="fa-solid fa-bullseye" style="margin-right:8px;"></i><?php _e( 'Modern Call to Action', 'wp-bulk-pages-generator' ); ?></strong>
+								<button class="wbpg-copy-btn button button-small" data-clipboard="cta"><?php _e( 'Copy Code', 'wp-bulk-pages-generator' ); ?></button>
 							</div>
-
-							<!-- Tips & Tricks -->
-							<div class="wbpg-guide-item">
-								<h3><i class="fa-solid fa-lightbulb" aria-hidden="true" style="margin-right:8px;font-size:12px;"></i><?php _e( 'Pro Tips & Accessibility', 'wp-bulk-pages-generator' ); ?></h3>
-								<ul style="margin: 0; padding-left: 18px; font-size: 13px; color: var(--wbpg-text-muted);">
-									<li><?php _e( 'Use **Tab** keys to navigate quickly between input fields.', 'wp-bulk-pages-generator' ); ?></li>
-									<li><?php _e( 'Press **Enter** or **Space** on the trash icon to remove a row via keyboard.', 'wp-bulk-pages-generator' ); ?></li>
-									<li><?php _e( 'Leave the **Slug** empty to let WordPress generate a search-friendly URL.', 'wp-bulk-pages-generator' ); ?></li>
-									<li><?php _e( 'The **Start Over** button clears all data—use it to quickly start a new batch.', 'wp-bulk-pages-generator' ); ?></li>
-								</ul>
-							</div>
-
-							<!-- GitHub Link -->
-							<div class="wbpg-guide-item">
-								<a href="https://github.com/boopathirbk/wp-bulk-pages-generator" target="_blank" class="button button-secondary" style="width:100%; display:inline-flex; align-items:center; justify-content:center; gap:8px;">
-									<i class="fa-brands fa-github"></i>
-									<?php _e( 'View on GitHub', 'wp-bulk-pages-generator' ); ?>
-								</a>
-							</div>
+							<code id="pattern-cta">&lt;!-- wp:buttons --&gt;&lt;div class="wp-block-buttons"&gt;&lt;!-- wp:button --&gt;&lt;div class="wb-block-button"&gt;&lt;a class="wp-block-button__link wp-element-button"&gt;Start Now&lt;/a&gt;&lt;/div&gt;&lt;!-- /wp:button --&gt;&lt;/div&gt;&lt;!-- /wp:buttons --&gt;</code>
 						</div>
 					</div>
-				</aside>
+				</div>
+
+				<!-- Pro Tips & A11y Card -->
+				<div class="wbpg-card wbpg-docs-card">
+					<h2><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true" style="margin-right:12px;color:var(--wbpg-accent);"></i><?php _e( 'Pro Tips & Access', 'wp-bulk-pages-generator' ); ?></h2>
+					<div class="wbpg-docs-content">
+						<ul class="wbpg-docs-list">
+							<li><i class="fa-solid fa-keyboard" style="margin-right:8px;opacity:0.6;"></i><?php _e( 'Use **Tab** keys to navigate quickly between input fields.', 'wp-bulk-pages-generator' ); ?></li>
+							<li><i class="fa-solid fa-trash-can" style="margin-right:8px;opacity:0.6;"></i><?php _e( 'Press **Enter** or **Space** on the trash icon to remove a row via keyboard.', 'wp-bulk-pages-generator' ); ?></li>
+							<li><i class="fa-solid fa-tag" style="margin-right:8px;opacity:0.6;"></i><?php _e( 'Leave the **Slug** empty to let WordPress generate a search-friendly URL.', 'wp-bulk-pages-generator' ); ?></li>
+							<li><i class="fa-solid fa-rotate-left" style="margin-right:8px;opacity:0.6;"></i><?php _e( 'The **Start Over** button clears all data—use it to quickly start a new batch.', 'wp-bulk-pages-generator' ); ?></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- External Resources Card -->
+				<div class="wbpg-card wbpg-docs-card">
+					<h2><i class="fa-solid fa-code-branch" aria-hidden="true" style="margin-right:12px;color:var(--wbpg-accent);"></i><?php _e( 'Collaboration', 'wp-bulk-pages-generator' ); ?></h2>
+					<div class="wbpg-docs-content">
+						<p><?php _e( 'Need more help or want to contribute to the engine?', 'wp-bulk-pages-generator' ); ?></p>
+						<div class="wbpg-docs-links">
+							<a href="https://github.com/boopathirbk/wp-bulk-pages-generator" target="_blank" class="button button-primary">
+								<i class="fa-brands fa-github" style="margin-right:8px;"></i><?php _e( 'Official Repository', 'wp-bulk-pages-generator' ); ?>
+							</a>
+							<a href="https://github.com/boopathirbk/wp-bulk-pages-generator/issues" target="_blank" class="button button-secondary">
+								<i class="fa-solid fa-circle-exclamation" style="margin-right:8px;"></i><?php _e( 'Technical Support', 'wp-bulk-pages-generator' ); ?>
+							</a>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="wbpg-footer-clear"></div>
 		</div>
