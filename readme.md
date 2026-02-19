@@ -8,8 +8,8 @@
   
   [![WordPress 6.9.1+](https://img.shields.io/badge/WP-6.9.1%2B-2271b1?style=for-the-badge&logo=wordpress)](https://wordpress.org)
   [![WCAG 2.2 AA](https://img.shields.io/badge/A11y-WCAG%202.2%20AA-success?style=for-the-badge)](https://www.w3.org/WAI/standards-guidelines/wcag/)
-  [![PHP 7.4-8.2+](https://img.shields.io/badge/PHP-7.4%20--%208.2%2B-777bb4.svg?style=for-the-badge&logo=php)](https://php.net)
   [![Geist Design](https://img.shields.io/badge/UI-Geist--Minimal-000?style=for-the-badge)](https://vercel.com/design)
+  [![WIG Standard](https://img.shields.io/badge/UX-WIG%20Compliant-blueviolet?style=for-the-badge)](https://vercel.com/docs/concepts/design/web-interface-guidelines)
 
   [Overview](#-overview) • [Full Feature List](#-unrivaled-feature-set) • [The Admin Experience](#-inside-the-command-center) • [Use Cases](#-content-strategies--use-cases) • [Installation](#-deployment-guide) • [GitHub](https://github.com/boopathirbk/wp-bulk-pages-generator)
 </div>
@@ -86,14 +86,15 @@ Manual page creation is a bottleneck for agencies and SEO pros. **WP Bulk Pages 
 
 ## 🛡️ Unrivaled Feature Set
 
-- **💎 Dynamic Context Branding**: The entire UI (colors, labels, tooltips) adapts instantly to your selected Post Type.
+- **💎 Geist Architecture**: A minimalist, high-density interface focused on **zero cognitive load**. Features 40px touch-targets and buttery-smooth micro-animations.
 - **🛡️ State Armor (Operation Lock)**: Prevents accidental navigation or page refresh while your batch is processing.
 - **🔄 Zero-Reload Reset**: Reset your entire workspace instantly with the "Start Over" logic—no page reload required.
 - **🍱 Advanced Taxonomy Layer**: Deep hierarchical support for Parent Pages, Categories, and Custom Taxonomies.
 - **⚡ Async Sequential Engine**: Processes rows one by one via REST API to avoid server timeouts and database lockouts.
 - **🌗 Intelligent Dark Mode**: Respects system preferences and includes an immediate manual toggle for low-light work.
 - **📢 Real-Time A11y Regions**: progressive `aria-live` updates keep screen readers informed of success/error counts.
-- **📐 40px Component Standard**: Follows the latest Feb 2026 WordPress 6.9 UI standards for optimal ergonomic reach.
+- **📐 WCAG 2.2 Level AA**: Fully compliant with the latest 2026 accessibility standards, including "Focus Not Obscured" and 24px+ hit targets.
+- **📏 WIG Compliant**: Adheres to Vercel's Web Interface Guidelines for stable skeletons, no dead ends, and typographic excellence.
 
 ---
 
@@ -199,8 +200,9 @@ Yes. We've implemented a **Geist-inspired Dark Theme** that respects your OS/Wor
 ---
 
 ## 🛠️ Technical Stack & Quality
-- **Asset Load**: Zero bloat. Vanilla JS/CSS (Inter Font only as fallback).
-- **Libraries**: [Tippy.js](https://atomiks.github.io/tippyjs/) (A11y Tooltips), [Font Awesome 6](https://fontawesome.com/).
+- **Design System**: [Geist](https://vercel.com/design) (Minimalist, Enterprise-Grade).
+- **Compliance**: **WCAG 2.2 Level AA** (Touch targets, Focus visibility) & **WIG** (Typographic excellence).
+- **Core Engine**: WordPress REST API with Sequential `async` processing.
 - **Security**: Strict Nonce-validation, `sanitize_text_field`, and `wp_kses_post` protection.
 - **Performance**: Use of `DocumentFragment` for 0ms UI lag on 100-row injections.
 

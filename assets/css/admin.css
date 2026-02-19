@@ -7,55 +7,55 @@
 
 :root {
     /* UI Reset for WP Admin Defaults */
-    --wbpg-bg-page: #f9fafb;
+    --wbpg-bg-page: #fafafa;
     --wbpg-bg-card: #ffffff;
-    --wbpg-border: #e5e7eb;
-    --wbpg-text: #111827;
-    --wbpg-text-muted: #4b5563;
-    /* Updated for WP 6.9.1 standards (Feb 2026) */
+    --wbpg-border: #eaeaea;
+    --wbpg-text: #000000;
+    --wbpg-text-muted: #666666;
+    /* Geist Standard Colors */
     --wbpg-primary: #000000;
-    --wbpg-primary-hover: #1f2937;
-    --wbpg-accent: #2271b1;
-    /* WP-Native Blue for premium familiarity */
-    --wbpg-success: #008a20;
-    /* WP-Native Success Green */
-    --wbpg-error: #d63638;
-    /* WP-Native Error Red */
-    --wbpg-radius: 12px;
-    --wbpg-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
-    --wbpg-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    --wbpg-primary-hover: #111111;
+    --wbpg-accent: #0070f3;
+    --wbpg-success: #0070f3;
+    /* Geist Blue is often used for success/action */
+    --wbpg-error: #ee0000;
+    --wbpg-radius: 8px;
+    /* Geist Standard Radius */
+    --wbpg-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+    --wbpg-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .wbpg-admin-wrap[data-theme="dark"] {
-    --wbpg-bg-page: #0a0a0a;
-    --wbpg-bg-card: #141414;
+    --wbpg-bg-page: #000000;
+    --wbpg-bg-card: #111111;
     --wbpg-border: #333333;
-    /* Increased border contrast for dark mode */
-    --wbpg-text: #e5e7eb;
-    /* Off-white for readability */
-    --wbpg-text-muted: #9ca3af;
+    --wbpg-text: #ffffff;
+    --wbpg-text-muted: #888888;
     --wbpg-primary: #ffffff;
     --wbpg-primary-hover: #f3f4f6;
     --wbpg-accent: #0070f3;
     --wbpg-success: #0070f3;
-    --wbpg-error: #ff4d4d;
-    --wbpg-shadow: 0 0 0 1px #222;
+    --wbpg-error: #ff0000;
+    --wbpg-shadow: 0 0 0 1px #333;
 }
 
 /* Fix Dark Mode Select Visibility */
 .wbpg-admin-wrap[data-theme="dark"] select,
 .wbpg-admin-wrap[data-theme="dark"] select option {
     color: #ffffff !important;
-    background-color: #111111 !important;
+    background-color: #1a1a1a !important;
 }
 
 .wbpg-admin-wrap[data-theme="dark"] select {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%239ca3af'%3E%3Cpath d='M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.3c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 12px center !important;
+    background-size: 12px !important;
 }
 
 .wbpg-admin-wrap[data-theme="dark"] input::placeholder,
 .wbpg-admin-wrap[data-theme="dark"] textarea::placeholder {
-    color: #555555 !important;
+    color: #666666 !important;
 }
 
 [data-theme="dark"] #wbpg-theme-toggle {
@@ -239,22 +239,20 @@
     border: 1px solid var(--wbpg-border);
     color: var(--wbpg-text);
     border-radius: 6px;
-    /* Slightly tighter radius for WP 6.9 compatibility */
-    padding: 8px 32px 8px 12px;
+    padding: 8px 12px;
     font-size: 14px;
-    /* Increased for better mobile legibility */
     width: 100%;
     height: 40px;
-    /* WordPress 6.9.1 Standard */
+    transition: all 0.2s ease;
+}
+
+.wbpg-setup select {
     appearance: none !important;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%236b7280'%3E%3Cpath d='M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.3c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z'/%3E%3C/svg%3E") !important;
     background-repeat: no-repeat !important;
     background-position: right 12px center !important;
     background-size: 12px !important;
-    transition: all 0.2s ease;
-}
-
-.wbpg-setup select {
+    padding-right: 32px !important;
     max-width: 220px;
 }
 
@@ -526,6 +524,15 @@
     transition: var(--wbpg-transition);
 }
 
+.wbpg-table select {
+    appearance: none !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%236b7280'%3E%3Cpath d='M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.3c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 10px center !important;
+    background-size: 10px !important;
+    padding-right: 28px !important;
+}
+
 .wbpg-table input:focus,
 .wbpg-table textarea:focus {
     border-color: var(--wbpg-accent);
@@ -536,11 +543,18 @@
 .wbpg-admin-wrap[data-theme="dark"] .wbpg-table input[type="text"],
 .wbpg-admin-wrap[data-theme="dark"] .wbpg-table select,
 .wbpg-admin-wrap[data-theme="dark"] .wbpg-table textarea {
-    border: 2px solid #333 !important;
+    background-color: #1a1a1a !important;
+    border: 1px solid #333 !important;
+    color: #fff !important;
+}
+
+.wbpg-admin-wrap[data-theme="dark"] .wbpg-table select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%239ca3af'%3E%3Cpath d='M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.3c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z'/%3E%3C/svg%3E") !important;
 }
 
 .wbpg-admin-wrap[data-theme="dark"] .wbpg-table input[type="text"]:focus,
-.wbpg-admin-wrap[data-theme="dark"] .wbpg-table textarea:focus {
+.wbpg-admin-wrap[data-theme="dark"] .wbpg-table textarea:focus,
+.wbpg-admin-wrap[data-theme="dark"] .wbpg-table select:focus {
     border-color: var(--wbpg-accent) !important;
 }
 
@@ -618,10 +632,24 @@
     margin-left: 4px;
     vertical-align: middle;
     font-size: 14px;
+    width: 24px;
+    height: 24px;
 }
 
 .wbpg-tooltip-icon:hover {
     color: var(--wbpg-accent);
+}
+
+.wbpg-row-remove {
+    cursor: pointer;
+    color: var(--wbpg-text-muted);
+    transition: var(--wbpg-transition);
+    font-size: 16px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Documentation Page Elements */
@@ -779,6 +807,12 @@
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 12px;
+}
+
+#wbpg-progress-text,
+#wbpg-count,
+.wbpg-row-id {
+    font-variant-numeric: tabular-nums;
 }
 
 #wbpg-progress-bar {

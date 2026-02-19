@@ -12,8 +12,6 @@ class WBPG_Admin {
 	/** @var string Plugin version */
 	private $version = WBPG_VERSION;
 
-
-
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'add_menu_page' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );

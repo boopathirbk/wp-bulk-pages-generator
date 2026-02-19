@@ -230,7 +230,6 @@ jQuery(document).ready(function ($) {
         $generateBtn.text(i18n.generate_btn.replace('%s', typeLabel));
         $('#wbpg-generate-row').fadeIn(300);
 
-        toggleParentColumn();
         loadParents(currentPostType);
         updateDynamicLabels();
     });
