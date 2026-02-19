@@ -13,7 +13,7 @@
   [![Geist Design](https://img.shields.io/badge/UI-Geist--Minimal-000?style=for-the-badge)](https://vercel.com/design)
   [![WIG Standard](https://img.shields.io/badge/UX-WIG%20Compliant-blueviolet?style=for-the-badge)](https://vercel.com/docs/concepts/design/web-interface-guidelines)
 
-  [Overview](#-overview) • [Features](#-unrivaled-feature-set) • [Command Center](#-inside-the-command-center) • [Use Cases](#-content-strategies--use-cases) • [Installation](#-deployment-guide) • [GitHub ↗](https://github.com/boopathirbk/wp-bulk-pages-generator)
+  [Overview](#-overview) • [Features](#-unrivaled-feature-set) • [Command Center](#-inside-the-command-center) • [Use Cases](#-content-strategies--use-cases) • [Installation](#-deployment-guide) • [GitHub](https://github.com/boopathirbk/wp-bulk-pages-generator)
 </div>
 
 ---
@@ -23,8 +23,8 @@
 Manual page creation is a bottleneck for agencies and SEO pros. **WP Bulk Pages Generator** is engineered to eliminate that friction. Built on the **Geist Design System**, it provides a high-performance, single-page interface to bulk-generate hundreds of Pages, Posts, or Custom Post Types (CPT) with precision taxonomy and parent-page nesting.
 
 ### 🎮 Live Experience (No Installation)
-Want to see the engine in action without installing anything? Launch our **WordPress Playground Demo** ↗
-- [**Launch Live Demo ↗**](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/boopathirbk/wp-bulk-pages-generator/main/blueprints/demo.json)
+Want to see the engine in action without installing anything? Launch our **WordPress Playground Demo**:
+- [**Launch Live Demo**](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/boopathirbk/wp-bulk-pages-generator/main/blueprints/demo.json)
 - *Setup time: ~15 seconds. Runs entirely in your browser.*
 
 ---
@@ -205,8 +205,8 @@ Yes. We've implemented a **Geist-inspired Dark Theme** that respects your OS/Wor
 ---
 
 ## 🛠️ Technical Stack & Quality
-- **Design System**: [Geist ↗](https://vercel.com/design) (Minimalist, Enterprise-Grade).
-- **Compliance**: **WCAG 2.2 Level AA** (Touch targets, Focus visibility) & **WIG ↗** (Typographic excellence).
+- **Design System**: [Geist](https://vercel.com/design) (Minimalist, Enterprise-Grade).
+- **Compliance**: **WCAG 2.2 Level AA** (Touch targets, Focus visibility) & **WIG** (Typographic excellence).
 - **Core Engine**: WordPress REST API with Sequential `async` processing.
 - **Security**: Strict Nonce-validation, `sanitize_text_field`, and `wp_kses_post` protection.
 - **Performance**: Use of `DocumentFragment` for 0ms UI lag on 100-row injections.
@@ -225,9 +225,9 @@ Yes. We've implemented a **Geist-inspired Dark Theme** that respects your OS/Wor
       <p><b>Computer Science Engineer | 10+ Years Experience</b></p>
       <p>A dedicated software architect specializing in <b>WordPress, Web Design, and Enterprise IT</b>. My mission is to build software that is not just functional, but <i>beautifully engineered</i> and <i>universally accessible</i>.</p>
       <p>
-        <a href="https://linkedin.com/in/boopathirb" target="_blank"><img src="https://img.shields.io/badge/LinkedIn-Profile-0077B5?style=flat-square&logo=linkedin" alt="LinkedIn"></a>
-        <a href="https://github.com/boopathirbk" target="_blank"><img src="https://img.shields.io/badge/GitHub-Profile-181717?style=flat-square&logo=github" alt="GitHub"></a>
-        <a href="https://paypal.me/boopathirbk" target="_blank"><img src="https://img.shields.io/badge/Support-Donate-00457C?style=flat-square&logo=paypal" alt="Donate"></a>
+        <a href="https://linkedin.com/in/boopathirb"><img src="https://img.shields.io/badge/LinkedIn-Profile-0077B5?style=flat-square&logo=linkedin" alt="LinkedIn"></a>
+        <a href="https://github.com/boopathirbk"><img src="https://img.shields.io/badge/GitHub-Profile-181717?style=flat-square&logo=github" alt="GitHub"></a>
+        <a href="https://paypal.me/boopathirbk"><img src="https://img.shields.io/badge/Support-Donate-00457C?style=flat-square&logo=paypal" alt="Donate"></a>
       </p>
     </td>
   </tr>
