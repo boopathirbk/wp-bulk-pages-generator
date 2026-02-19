@@ -208,13 +208,28 @@ Yes. We've implemented a **Geist-inspired Dark Theme** that respects your OS/Wor
 
 ## 👨‍💻 Meet the Developer
 
-**Boopathi R** is a Computer Science Engineer with over **10 years** of professional experience in software design and development. With a deep focus on **WordPress, Web Design, and IT infrastructure** for the past 7 years, he specializes in building high-performance, accessible, and premium digital solutions.
+<table width="100%">
+  <tr>
+    <td width="20%" align="center" valign="middle">
+      <img src="https://raw.githubusercontent.com/fortawesome/Font-Awesome/6.x/svgs/solid/user-tie.svg" width="80" height="80" alt="Author Icon">
+    </td>
+    <td width="80%" valign="top">
+      <h3>Boopathi R</h3>
+      <p><b>Computer Science Engineer | 10+ Years Experience</b></p>
+      <p>A dedicated software architect specializing in <b>WordPress, Web Design, and Enterprise IT</b>. My mission is to build software that is not just functional, but <i>beautifully engineered</i> and <i>universally accessible</i>.</p>
+      <p>
+        <a href="https://linkedin.com/in/boopathirb"><img src="https://img.shields.io/badge/LinkedIn-Profile-0077B5?style=flat-square&logo=linkedin" alt="LinkedIn"></a>
+        <a href="https://github.com/boopathirbk"><img src="https://img.shields.io/badge/GitHub-Profile-181717?style=flat-square&logo=github" alt="GitHub"></a>
+        <a href="https://paypal.me/boopathirbk"><img src="https://img.shields.io/badge/Support-Donate-00457C?style=flat-square&logo=paypal" alt="Donate"></a>
+      </p>
+    </td>
+  </tr>
+</table>
 
-- **Vision**: Creating open-source tools that contribute positively to the planet.
-- **Craftsmanship**: Committed to smooth, rich, and beautiful code that follows strict industry standards.
-- **Custom Work**: Open for specialized software, websites, and apps based on your vision and budget.
-
-[**LinkedIn Profile**](https://linkedin.com/in/boopathirb) • [**GitHub**](https://github.com/boopathirbk) • [**Donate**](https://paypal.me/boopathirbk)
+### 💎 Philosophy & Vision
+- **Craftsmanship**: Guided by strict principles to ensure smooth, fast, and accessible code.
+- **Open Source**: Creating tools that contribute positively to the global community.
+- **Custom Projects**: Available for specialized software, high-performance websites, and app development.
 
 ---
 
