@@ -6,7 +6,8 @@
   
   **Deploy Landing Pages, SEO Silos, and Content Batches in Seconds with the Speed of Geist.**
   
-  [![WordPress 6.9.1+](https://img.shields.io/badge/WP-6.9.1%2B-2271b1?style=for-the-badge&logo=wordpress)](https://wordpress.org)
+  [![Latest Release](https://img.shields.io/github/v/release/boopathirbk/wp-bulk-pages-generator?style=for-the-badge&color=2271b1&label=Version)](https://github.com/boopathirbk/wp-bulk-pages-generator/releases/latest)
+  [![Download Latest](https://img.shields.io/badge/Download-Latest%20.ZIP-success?style=for-the-badge&logo=github)](https://github.com/boopathirbk/wp-bulk-pages-generator/releases/latest/download/wp-bulk-pages-generator.zip)
   [![WCAG 2.2 AA](https://img.shields.io/badge/A11y-WCAG%202.2%20AA-success?style=for-the-badge)](https://www.w3.org/WAI/standards-guidelines/wcag/)
   [![Geist Design](https://img.shields.io/badge/UI-Geist--Minimal-000?style=for-the-badge)](https://vercel.com/design)
   [![WIG Standard](https://img.shields.io/badge/UX-WIG%20Compliant-blueviolet?style=for-the-badge)](https://vercel.com/docs/concepts/design/web-interface-guidelines)
