@@ -98,8 +98,9 @@ Want to see the engine in action without installing anything? Launch our **WordP
 - **🔄 Zero-Reload Reset**: Reset your entire workspace instantly with the "Start Over" logic—no page reload required.
 - **🍱 Advanced Taxonomy Layer**: Deep hierarchical support for Parent Pages, Categories, and Custom Taxonomies.
 - **⚡ Async Sequential Engine**: Processes rows one by one via REST API to avoid server timeouts and database lockouts.
-- **🌗 Intelligent Dark Mode**: Respects system preferences and includes an immediate manual toggle for low-light work.
-- **📢 Real-Time A11y Regions**: progressive `aria-live` updates keep screen readers informed of success/error counts.
+- 🌗 **Intelligent Dark Mode**: Respects system preferences and includes an immediate manual toggle for low-light work.
+- 🛡️ **Duplicate Slug Guard**: Client-side collision detection prevents accidental creation of duplicate permalinks.
+- 📢 **Real-Time A11y Regions**: progressive `aria-live` updates keep screen readers informed of success/error counts.
 - **📐 WCAG 2.2 Level AA**: Fully compliant with the latest 2026 accessibility standards, including "Focus Not Obscured" and 24px+ hit targets.
 - **📏 WIG Compliant**: Adheres to Vercel's Web Interface Guidelines for stable skeletons, no dead ends, and typographic excellence.
 
