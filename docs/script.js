@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const setTheme = (theme) => {
         htmlElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
+        const themeText = document.getElementById('theme-text');
+        if (themeText) {
+            themeText.textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
+        }
     };
 
     const savedTheme = localStorage.getItem('theme') ||
