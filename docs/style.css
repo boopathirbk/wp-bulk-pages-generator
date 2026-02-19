@@ -8,8 +8,10 @@
     --accents-1: #fafafa;
     --accents-2: #eaeaea;
     --accents-3: #999999;
-    --accents-4: #888888;
-    --accents-5: #666666;
+    --accents-4: #707070;
+    /* Increased for 4.5:1 contrast on white */
+    --accents-5: #555555;
+    /* Increased for 4.5:1 contrast on white */
     --accents-6: #444444;
     --accents-7: #333333;
     --accents-8: #111111;
@@ -49,11 +51,12 @@
     --accents-1: #111111;
     --accents-2: #222222;
     --accents-3: #444444;
-    --accents-4: #666666;
-    --accents-5: #888888;
-    --accents-6: #999999;
-    --accents-7: #cccccc;
-    --accents-8: #f0f0f0;
+    --accents-4: #888888;
+    --accents-5: #a0a0a0;
+    /* Increased for contrast in dark mode */
+    --accents-6: #bcbcbc;
+    --accents-7: #ebebeb;
+    --accents-8: #ffffff;
 
     --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.6);
     --shadow-lg: 0 40px 80px rgba(0, 0, 0, 0.8);
@@ -75,6 +78,14 @@ body {
     line-height: 1.5;
     overflow-x: hidden;
     transition: background var(--theme-ease), color var(--theme-ease);
+    scroll-padding-top: var(--header-height);
+    /* WCAG 2.2: Focus Not Obscured */
+}
+
+/* Accessible Focus States */
+:focus-visible {
+    outline: 2px solid var(--geist-success);
+    outline-offset: 4px;
 }
 
 /* Noise Overlay - The Masterpiece Touch */
@@ -305,6 +316,7 @@ header {
     margin-bottom: 32px;
     background: linear-gradient(to bottom, var(--foreground) 60%, var(--accents-5));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -506,12 +518,13 @@ footer {
     padding: 120px 0 60px;
     background: var(--background-secondary);
     border-top: 1px solid var(--accents-2);
+    margin-top: 80px;
 }
 
 .footer-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 64px;
     margin-bottom: 80px;
 }
 
@@ -612,6 +625,18 @@ footer {
     opacity: 0;
     transform: translateY(30px);
     transition: all 0.8s var(--ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    html {
+        scroll-behavior: auto !important;
+    }
 }
 
 [data-reveal].visible {

@@ -48,7 +48,7 @@
     <header>
         <div class="container header-inner">
             <a href="#" class="logo">
-                <i class="fas fa-cube" style="color: var(--geist-success);"></i>
+                <i class="fas fa-cube" style="color: var(--geist-success);" aria-hidden="true"></i>
                 WBPG
             </a>
             <nav class="nav-links">
@@ -60,8 +60,8 @@
                 <div class="theme-toggle-wrap">
                     <span class="theme-text" id="theme-text">Light</span>
                     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
-                        <i class="fas fa-moon"></i>
-                        <i class="fas fa-sun"></i>
+                        <i class="fas fa-moon" aria-hidden="true"></i>
+                        <i class="fas fa-sun" aria-hidden="true"></i>
                     </button>
                 </div>
             </nav>
@@ -79,11 +79,11 @@
             <div class="cta-group" data-reveal>
                 <a href="https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/boopathirbk/wp-bulk-pages-generator/main/blueprints/demo.json"
                     class="btn btn-black" target="_blank">
-                    <i class="fab fa-wordpress"></i> Launch Live Demo
+                    <i class="fab fa-wordpress" aria-hidden="true"></i> Launch Live Demo
                 </a>
                 <a href="https://github.com/boopathirbk/wp-bulk-pages-generator/releases/latest/download/wp-bulk-pages-generator.zip"
                     class="btn btn-white">
-                    <i class="fas fa-download"></i> Get Plugin ZIP
+                    <i class="fas fa-download" aria-hidden="true"></i> Get Plugin ZIP
                 </a>
             </div>
         </section>
@@ -102,19 +102,26 @@
                 <div class="comp-box negative">
                     <h3>The Common "Paid" Experience</h3>
                     <ul class="comp-list">
-                        <li><i class="fas fa-times-circle"></i> Slow, clunky interfaces with too many ads.</li>
-                        <li><i class="fas fa-times-circle"></i> Server timeouts when creating more than 10 pages.</li>
-                        <li><i class="fas fa-times-circle"></i> Broken Gutenberg block support.</li>
-                        <li><i class="fas fa-times-circle"></i> Hidden costs and monthly subscription traps.</li>
+                        <li><i class="fas fa-times-circle" aria-hidden="true"></i> Slow, clunky interfaces with too many
+                            ads.</li>
+                        <li><i class="fas fa-times-circle" aria-hidden="true"></i> Server timeouts when creating more
+                            than 10 pages.</li>
+                        <li><i class="fas fa-times-circle" aria-hidden="true"></i> Broken Gutenberg block support.</li>
+                        <li><i class="fas fa-times-circle" aria-hidden="true"></i> Hidden costs and monthly subscription
+                            traps.</li>
                     </ul>
                 </div>
                 <div class="comp-box positive">
                     <h3>The WBPG Masterpiece</h3>
                     <ul class="comp-list">
-                        <li><i class="fas fa-check-circle"></i> Crisp, Geist-inspired UI for maximum focus.</li>
-                        <li><i class="fas fa-check-circle"></i> Async Sequential Engine: No timeouts, ever.</li>
-                        <li><i class="fas fa-check-circle"></i> 100% Block Compatible out of the box.</li>
-                        <li><i class="fas fa-check-circle"></i> Permanently free and open-source craftsmanship.</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Crisp, Geist-inspired UI for maximum
+                            focus.</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Async Sequential Engine: No timeouts,
+                            ever.</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> 100% Block Compatible out of the box.
+                        </li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Permanently free and open-source
+                            craftsmanship.</li>
                     </ul>
                 </div>
             </div>
@@ -128,25 +135,25 @@
             </div>
             <div class="bento-grid">
                 <div class="bento-card span-8" data-reveal>
-                    <i class="fas fa-bolt"></i>
+                    <i class="fas fa-bolt" aria-hidden="true"></i>
                     <h3>Zero-Lag Injection</h3>
                     <p>Our engine uses DocumentFragments and virtual DOM techniques to ensure that even if you're
                         injecting 100 rows, your browser stays fast and responsive.</p>
                 </div>
                 <div class="bento-card span-4" data-reveal>
-                    <i class="fas fa-lock"></i>
+                    <i class="fas fa-lock" aria-hidden="true"></i>
                     <h3>Accident-Proof</h3>
                     <p>Built-in lock detection. We prevent you from accidentally refreshing or navigating away during a
                         critical batch job.</p>
                 </div>
                 <div class="bento-card span-4" data-reveal>
-                    <i class="fas fa-sitemap"></i>
+                    <i class="fas fa-sitemap" aria-hidden="true"></i>
                     <h3>Hierarchy Support</h3>
                     <p>Easily nest pages under parents to build deep SEO silos or service directories in a single
                         operation.</p>
                 </div>
                 <div class="bento-card span-8" data-reveal>
-                    <i class="fas fa-universal-access"></i>
+                    <i class="fas fa-universal-access" aria-hidden="true"></i>
                     <h3>Accessible for Everyone</h3>
                     <p>Built to WCAG 2.2 AA standards. Keyboard navigable menus, focus visibility, and screen reader
                         support come standard.</p>
@@ -190,115 +197,128 @@
             <div class="faq-grid">
                 <!-- Group 1: Basics -->
                 <div class="faq-item" data-reveal>
-                    <button class="faq-btn">What exactly does this plugin do? <i class="fas fa-plus"></i></button>
-                    <div class="faq-answer">
+                    <button class="faq-btn" aria-expanded="false" aria-controls="faq-ans-1">What exactly does this
+                        plugin do? <i class="fas fa-plus" aria-hidden="true"></i></button>
+                    <div class="faq-answer" id="faq-ans-1" role="region">
                         <p>It allows you to create hundreds of WordPress pages, posts, or custom post types in one go.
                             Instead of clicking 'Add New' 50 times, you define them in a grid and deploy them all at
                             once.</p>
                     </div>
                 </div>
                 <div class="faq-item" data-reveal>
-                    <button class="faq-btn">Is it really free? <i class="fas fa-plus"></i></button>
-                    <div class="faq-answer">
+                    <button class="faq-btn" aria-expanded="false" aria-controls="faq-ans-2">Is it really free? <i
+                            class="fas fa-plus" aria-hidden="true"></i></button>
+                    <div class="faq-answer" id="faq-ans-2" role="region">
                         <p>Yes. No "Pro" versions, no hidden fees, no credit cards. It is an open-source project built
                             for the community.</p>
                     </div>
                 </div>
                 <div class="faq-item" data-reveal>
-                    <button class="faq-btn">Does it work with any theme? <i class="fas fa-plus"></i></button>
-                    <div class="faq-answer">
+                    <button class="faq-btn" aria-expanded="false" aria-controls="faq-ans-3">Does it work with any theme?
+                        <i class="fas fa-plus" aria-hidden="true"></i></button>
+                    <div class="faq-answer" id="faq-ans-3" role="region">
                         <p>Absolutely. Since it creates standard WordPress posts and pages, it is 100% compatible with
                             every theme in the market.</p>
                     </div>
                 </div>
                 <div class="faq-item" data-reveal>
-                    <button class="faq-btn">Do I need coding knowledge? <i class="fas fa-plus"></i></button>
-                    <div class="faq-answer">
+                    <button class="faq-btn" aria-expanded="false" aria-controls="faq-ans-4">Do I need coding knowledge?
+                        <i class="fas fa-plus" aria-hidden="true"></i></button>
+                    <div class="faq-answer" id="faq-ans-4" role="region">
                         <p>None. The interface is completely visual. If you can fill out a form, you can use this
                             plugin.</p>
                     </div>
                 </div>
                 <div class="faq-item" data-reveal>
-                    <button class="faq-btn">What is an "SEO Silo"? <i class="fas fa-plus"></i></button>
-                    <div class="faq-answer">
+                    <button class="faq-btn" aria-expanded="false" aria-controls="faq-ans-5">What is an "SEO Silo"? <i
+                            class="fas fa-plus" aria-hidden="true"></i></button>
+                    <div class="faq-answer" id="faq-ans-5" role="region">
                         <p>An SEO silo is a way of organizing your website content by category and sub-category. Our
                             plugin makes building these silos easy by allowing you to set "Parent Pages" for your
                             batches.</p>
                     </div>
                 </div>
 
-                <!-- Group 2: Advanced Technical -->
+                <!-- Group 2: Features -->
                 <div class="faq-item" data-reveal>
-                    <button class="faq-btn">What is the "Async Sequential Engine"? <i class="fas fa-plus"></i></button>
-                    <div class="faq-answer">
-                        <p>Standard bulk tools try to create all pages at the exact same time, which crashes servers.
-                            Our engine creates them one after another (sequentially), ensuring your server never gets
-                            overwhelmed.</p>
+                    <button class="faq-btn" aria-expanded="false" aria-controls="faq-ans-6">What is the "Async
+                        Sequential Engine"? <i class="fas fa-plus" aria-hidden="true"></i></button>
+                    <div class="faq-answer" id="faq-ans-6" role="region">
+                        <p>Standard bulk tools try to create all pages at once, which can crash servers. Our engine
+                            creates them one after another (sequentially), ensuring your server never gets overwhelmed,
+                            even on shared hosting.</p>
                     </div>
                 </div>
                 <div class="faq-item" data-reveal>
-                    <button class="faq-btn">Can I paste Gutenberg Block code? <i class="fas fa-plus"></i></button>
-                    <div class="faq-answer">
-                        <p>Yes! You can paste raw HTML or block markup into the content field, and WordPress will
-                            automatically render it as rich blocks.</p>
+                    <button class="faq-btn" aria-expanded="false" aria-controls="faq-ans-7">Can I paste Gutenberg Block
+                        code? <i class="fas fa-plus" aria-hidden="true"></i></button>
+                    <div class="faq-answer" id="faq-ans-7" role="region">
+                        <p>Yes! You can paste raw block markup into the content column, and WordPress will render it
+                            perfectly. We even provide pattern examples in the plugin's User Guide.</p>
                     </div>
                 </div>
                 <div class="faq-item" data-reveal>
-                    <button class="faq-btn">Does it support Custom Post Types (CPTs)? <i
-                            class="fas fa-plus"></i></button>
-                    <div class="faq-answer">
-                        <p>Yes. You can select any public post type on your site, including Products (WooCommerce),
-                            Portfolios, or Services.</p>
+                    <button class="faq-btn" aria-expanded="false" aria-controls="faq-ans-8">Does it support Custom Post
+                        Types (CPT)? <i class="fas fa-plus" aria-hidden="true"></i></button>
+                    <div class="faq-answer" id="faq-ans-8" role="region">
+                        <p>Yes. The plugin auto-detects all public post types on your site, including WooCommerce
+                            Products, Portfolios, and more.</p>
                     </div>
                 </div>
                 <div class="faq-item" data-reveal>
-                    <button class="faq-btn">Is there a limit to how many pages I can create? <i
-                            class="fas fa-plus"></i></button>
-                    <div class="faq-answer">
-                        <p>While the engine can handle more, we recommend batches of up to 100 rows at a time for the
-                            best performance and UI experience.</p>
+                    <button class="faq-btn" aria-expanded="false" aria-controls="faq-ans-9">Can I set "Parent Pages"? <i
+                            class="fas fa-plus" aria-hidden="true"></i></button>
+                    <div class="faq-answer" id="faq-ans-9" role="region">
+                        <p>Yes. You can assign any existing page as a parent for your new batch, making it easy to build
+                            deep site structures.</p>
                     </div>
                 </div>
                 <div class="faq-item" data-reveal>
-                    <button class="faq-btn">Does it use the REST API? <i class="fas fa-plus"></i></button>
-                    <div class="faq-answer">
-                        <p>Yes, it utilizes native WordPress REST API endpoints for secure, modern, and reliable data
-                            transmission.</p>
+                    <button class="faq-btn" aria-expanded="false" aria-controls="faq-ans-10">Does it support Categories?
+                        <i class="fas fa-plus" aria-hidden="true"></i></button>
+                    <div class="faq-answer" id="faq-ans-10" role="region">
+                        <p>Yes. For Posts and certain Custom Post Types, you can assign categories directly from the
+                            bulk grid.</p>
                     </div>
                 </div>
 
                 <!-- Group 3: Security & Performance -->
                 <div class="faq-item" data-reveal>
-                    <button class="faq-btn">Is my data secure? <i class="fas fa-plus"></i></button>
-                    <div class="faq-answer">
-                        <p>Yes. The plugin uses WordPress Nonces and User Capability checks to ensure only authorized
-                            administrators can create content.</p>
+                    <button class="faq-btn" aria-expanded="false" aria-controls="faq-ans-11">How secure is the creation
+                        process? <i class="fas fa-plus" aria-hidden="true"></i></button>
+                    <div class="faq-answer" id="faq-ans-11" role="region">
+                        <p>The plugin uses native WordPress REST API endpoints with strict Nonce validation and
+                            Administrator capability checks.</p>
                     </div>
                 </div>
                 <div class="faq-item" data-reveal>
-                    <button class="faq-btn">Will it slow down my site admin? <i class="fas fa-plus"></i></button>
-                    <div class="faq-answer">
-                        <p>No. The plugin only loads its assets on its own settings page. Your general WordPress
-                            dashboard will remain as fast as ever.</p>
+                    <button class="faq-btn" aria-expanded="false" aria-controls="faq-ans-12">What is "State Armor"? <i
+                            class="fas fa-plus" aria-hidden="true"></i></button>
+                    <div class="faq-answer" id="faq-ans-12" role="region">
+                        <p>It's our safety feature that prevents you from accidentally refreshing or navigating away
+                            while a batch is currently being processed.</p>
                     </div>
                 </div>
                 <div class="faq-item" data-reveal>
-                    <button class="faq-btn">What if I refresh during generation? <i class="fas fa-plus"></i></button>
-                    <div class="faq-answer">
-                        <p>The plugin has a "State Harbor" logic that warns you before leaving. If you do refresh, the
-                            pages already created stay created, and you can simply start a new batch for the rest.</p>
+                    <button class="faq-btn" aria-expanded="false" aria-controls="faq-ans-13">Will it slow down my site?
+                        <i class="fas fa-plus" aria-hidden="true"></i></button>
+                    <div class="faq-answer" id="faq-ans-13" role="region">
+                        <p>Not at all. The plugin assets only load on the specific "Bulk Pages" settings page, keeping
+                            your site fast.</p>
                     </div>
                 </div>
                 <div class="faq-item" data-reveal>
-                    <button class="faq-btn">Does it handle Slugs automatically? <i class="fas fa-plus"></i></button>
-                    <div class="faq-answer">
+                    <button class="faq-btn" aria-expanded="false" aria-controls="faq-ans-14">Does it handle Slugs
+                        automatically? <i class="fas fa-plus" aria-hidden="true"></i></button>
+                    <div class="faq-answer" id="faq-ans-14" role="region">
                         <p>Yes. If you don't provide a slug, WordPress will generate one from the title automatically
                             just like the standard editor.</p>
                     </div>
                 </div>
                 <div class="faq-item" data-reveal>
-                    <button class="faq-btn">Can I set multiple categories? <i class="fas fa-plus"></i></button>
-                    <div class="faq-answer">
+                    <button class="faq-btn" aria-expanded="false" aria-controls="faq-ans-15">Can I set multiple
+                        categories? <i class="fas fa-plus" aria-hidden="true"></i></button>
+                    <div class="faq-answer" id="faq-ans-15" role="region">
                         <p>Currently, v1.0.0 supports a primary category selection per batch. Advanced taxonomy mapping
                             is a future roadmap item.</p>
                     </div>
@@ -306,36 +326,41 @@
 
                 <!-- Group 4: Practical -->
                 <div class="faq-item" data-reveal>
-                    <button class="faq-btn">Is it mobile responsive? <i class="fas fa-plus"></i></button>
-                    <div class="faq-answer">
+                    <button class="faq-btn" aria-expanded="false" aria-controls="faq-ans-16">Is it mobile responsive? <i
+                            class="fas fa-plus" aria-hidden="true"></i></button>
+                    <div class="faq-answer" id="faq-ans-16" role="region">
                         <p>Yes. The admin interface transforms from a grid to a card view on smaller screens, making it
                             easy to create content on the go.</p>
                     </div>
                 </div>
                 <div class="faq-item" data-reveal>
-                    <button class="faq-btn">Can I use it for local SEO? <i class="fas fa-plus"></i></button>
-                    <div class="faq-answer">
+                    <button class="faq-btn" aria-expanded="false" aria-controls="faq-ans-17">Can I use it for local SEO?
+                        <i class="fas fa-plus" aria-hidden="true"></i></button>
+                    <div class="faq-answer" id="faq-ans-17" role="region">
                         <p>Definitely. Many of our users use it to create 50 city-specific landing pages for their local
                             businesses in minutes.</p>
                     </div>
                 </div>
                 <div class="faq-item" data-reveal>
-                    <button class="faq-btn">Where can I get support? <i class="fas fa-plus"></i></button>
-                    <div class="faq-answer">
+                    <button class="faq-btn" aria-expanded="false" aria-controls="faq-ans-18">Where can I get support? <i
+                            class="fas fa-plus" aria-hidden="true"></i></button>
+                    <div class="faq-answer" id="faq-ans-18" role="region">
                         <p>You can open an issue on our GitHub repository. We actively monitor and help our community
                             members.</p>
                     </div>
                 </div>
                 <div class="faq-item" data-reveal>
-                    <button class="faq-btn">How do I update the plugin? <i class="fas fa-plus"></i></button>
-                    <div class="faq-answer">
+                    <button class="faq-btn" aria-expanded="false" aria-controls="faq-ans-19">How do I update the plugin?
+                        <i class="fas fa-plus" aria-hidden="true"></i></button>
+                    <div class="faq-answer" id="faq-ans-19" role="region">
                         <p>Since you downloaded the ZIP, you'll need to upload the new version via WordPress or update
                             via GitHub. Automatic updates are planned for future versions.</p>
                     </div>
                 </div>
                 <div class="faq-item" data-reveal>
-                    <button class="faq-btn">What are the requirements? <i class="fas fa-plus"></i></button>
-                    <div class="faq-answer">
+                    <button class="faq-btn" aria-expanded="false" aria-controls="faq-ans-20">What are the requirements?
+                        <i class="fas fa-plus" aria-hidden="true"></i></button>
+                    <div class="faq-answer" id="faq-ans-20" role="region">
                         <p>WordPress 6.0 or higher and a modern browser (Chrome, Safari, Firefox, or Edge). It supports
                             PHP 7.4 through 8.2.</p>
                     </div>
@@ -353,7 +378,7 @@
                 <div class="author-card" style="grid-column: span 2; display: flex; gap: 40px; align-items: center;">
                     <div
                         style="width: 120px; height: 120px; border-radius: 50%; background: var(--accents-1); display: flex; align-items: center; justify-content: center; border: 1px solid var(--accents-2);">
-                        <i class="fas fa-user-tie fa-3x"></i>
+                        <i class="fas fa-user-tie fa-3x" aria-hidden="true"></i>
                     </div>
                     <div>
                         <h3 style="font-family: var(--font-heading); font-size: 32px; margin-bottom: 8px;">Boopathi R
@@ -365,10 +390,11 @@
                             a reflection of my decade-long journey in WordPress engineering.</p>
 
                         <div class="cta-group" style="justify-content: flex-start; margin-top: 32px;">
-                            <a href="mailto:genius@duck.com" class="btn btn-black"><i class="fas fa-envelope"></i> Hire
+                            <a href="mailto:genius@duck.com" class="btn btn-black"><i class="fas fa-envelope"
+                                    aria-hidden="true"></i> Hire
                                 for Projects</a>
                             <a href="https://linkedin.com/in/boopathirb" class="btn btn-white" target="_blank"><i
-                                    class="fab fa-linkedin"></i> Connect</a>
+                                    class="fab fa-linkedin" aria-hidden="true"></i> Connect</a>
                         </div>
                     </div>
                 </div>
@@ -381,48 +407,57 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <div class="logo">WBPG</div>
-                    <p>The Masterpiece Content Engine for WordPress Creator. Open-source, accessible, and
+                    <div class="logo"><i class="fas fa-cube" style="color: var(--geist-success);"
+                            aria-hidden="true"></i> WBPG</div>
+                    <p>The premium bulk content engine for WordPress creators. Open-source, accessible, and
                         high-performance.</p>
                 </div>
                 <div class="footer-col">
-                    <h4>Resources</h4>
+                    <h4>Direct Links</h4>
                     <ul class="footer-links">
                         <li><a
                                 href="https://github.com/boopathirbk/wp-bulk-pages-generator/releases/latest/download/wp-bulk-pages-generator.zip"><i
-                                    class="fas fa-download"></i> Download ZIP</a></li>
+                                    class="fas fa-download" aria-hidden="true"></i> Download ZIP</a></li>
                         <li><a href="https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/boopathirbk/wp-bulk-pages-generator/main/blueprints/demo.json"
-                                target="_blank"><i class="fab fa-wordpress"></i> Live Demo</a></li>
-                        <li><a href="https://github.com/boopathirbk/wp-bulk-pages-generator"><i
-                                    class="fab fa-github"></i> Repository</a></li>
+                                target="_blank"><i class="fab fa-wordpress" aria-hidden="true"></i> Playground Demo</a>
+                        </li>
+                        <li><a href="https://github.com/boopathirbk/wp-bulk-pages-generator"><i class="fab fa-github"
+                                    aria-hidden="true"></i> Source Code</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Community</h4>
                     <ul class="footer-links">
                         <li><a href="https://github.com/boopathirbk/wp-bulk-pages-generator/issues"><i
-                                    class="fas fa-bug"></i> Report Issues</a></li>
-                        <li><a href="https://paypal.me/boopathirbk" target="_blank"><i class="fab fa-paypal"></i>
-                                Support Project</a></li>
+                                    class="fas fa-circle-exclamation" aria-hidden="true"></i> Support & Issues</a></li>
+                        <li><a href="https://paypal.me/boopathirbk" target="_blank"><i class="fab fa-paypal"
+                                    aria-hidden="true"></i> Donate
+                                & Support</a></li>
                         <li><a href="https://github.com/boopathirbk/wp-bulk-pages-generator/stargazers"><i
-                                    class="fas fa-star"></i> Star Repo</a></li>
+                                    class="fas fa-star" aria-hidden="true"></i> Star Repository</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>Connect</h4>
+                    <h4>Architect</h4>
                     <ul class="footer-links">
-                        <li><a href="mailto:genius@duck.com"><i class="fas fa-paper-plane"></i> Email Author</a></li>
-                        <li><a href="https://linkedin.com/in/boopathirb" target="_blank"><i class="fab fa-linkedin"></i>
-                                LinkedIn</a></li>
-                        <li><a href="https://github.com/boopathirbk" target="_blank"><i class="fab fa-github-alt"></i>
-                                GitHub Profile</a></li>
+                        <li><a href="mailto:genius@duck.com"><i class="fas fa-envelope-open-text"
+                                    aria-hidden="true"></i> Email
+                                Boopathi</a></li>
+                        <li><a href="https://linkedin.com/in/boopathirb" target="_blank"><i class="fab fa-linkedin-in"
+                                    aria-hidden="true"></i> LinkedIn</a></li>
+                        <li><a href="https://github.com/boopathirbk" target="_blank"><i class="fab fa-github-alt"
+                                    aria-hidden="true"></i>
+                                Author Profile</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="footer-bottom">
-                <p>© 2026 Boopathi R. Distributed under Apache License 2.0.</p>
-                <p>Built with Geist Design System.</p>
+                <p>&copy; <span id="current-year">2026</span> Boopathi R. Distributed under Apache License 2.0.</p>
+                <div style="display: flex; gap: 24px;">
+                    <p>Geist UI System</p>
+                    <p>WIG Compliant</p>
+                </div>
             </div>
         </div>
     </footer>

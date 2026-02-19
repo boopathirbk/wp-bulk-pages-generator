@@ -101,6 +101,7 @@ class WBPG_Admin {
 				'success_msg'     => __( 'Successfully created %d out of %d %s(s).', 'wp-bulk-pages-generator' ),
 				'error_failed'    => __( ' (%d failed or skipped)', 'wp-bulk-pages-generator' ),
 				'error_no_title'  => __( 'Title is missing or empty', 'wp-bulk-pages-generator' ),
+				'error_duplicate_slug' => __( 'Duplicate slug detected in your list', 'wp-bulk-pages-generator' ),
 				'success_created' => __( 'Created successfully', 'wp-bulk-pages-generator' ),
 				'unknown_error'   => __( 'Unknown error', 'wp-bulk-pages-generator' ),
 				'network_error'   => __( 'Network Error', 'wp-bulk-pages-generator' ),

@@ -36,11 +36,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const isActive = btn.classList.contains('active');
 
             // Close all others
-            document.querySelectorAll('.faq-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.faq-btn').forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-expanded', 'false');
+            });
             document.querySelectorAll('.faq-answer').forEach(a => a.style.maxHeight = null);
 
             if (!isActive) {
                 btn.classList.add('active');
+                btn.setAttribute('aria-expanded', 'true');
                 answer.style.maxHeight = answer.scrollHeight + "px";
             }
         });
@@ -79,13 +83,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 const elementPosition = targetElement.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
+                // Respect reduced motion
+                const shouldReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
                 window.scrollTo({
                     top: offsetPosition,
-                    behavior: "smooth"
+                    behavior: shouldReduceMotion ? "auto" : "smooth"
                 });
             }
         });
     });
+
+    // --- UI Helpers ---
+    const yearEl = document.getElementById('current-year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
 
     console.log('🏛️ WBPG Masterpiece Loaded');
 });
