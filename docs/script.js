@@ -2,35 +2,48 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
     const htmlElement = document.documentElement;
 
-    // --- Theme Logic (Sun/Moon Toggle) ---
-    const initTheme = () => {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            htmlElement.setAttribute('data-theme', savedTheme);
-        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            htmlElement.setAttribute('data-theme', 'dark');
-        }
+    // --- Theme Master Engine ---
+    const setTheme = (theme) => {
+        htmlElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
     };
 
-    initTheme();
+    const savedTheme = localStorage.getItem('theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+    setTheme(savedTheme);
 
     themeToggle.addEventListener('click', () => {
         const currentTheme = htmlElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        setTheme(newTheme);
 
-        htmlElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-
-        // Icon animation burst
-        themeToggle.animate([
-            { transform: 'scale(1)' },
-            { transform: 'scale(1.15)' },
-            { transform: 'scale(1)' }
-        ], { duration: 300, easing: 'ease-out' });
+        // Haptic feedback simulation (Visual)
+        themeToggle.style.transform = 'scale(0.9)';
+        setTimeout(() => themeToggle.style.transform = 'scale(1)', 150);
     });
 
-    // --- Reveal On Scroll (Intersection Observer) ---
-    const revealOptions = {
+    // --- Master Accordion (FAQ) ---
+    const faqButtons = document.querySelectorAll('.faq-btn');
+
+    faqButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const answer = btn.nextElementSibling;
+            const isActive = btn.classList.contains('active');
+
+            // Close all others
+            document.querySelectorAll('.faq-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.faq-answer').forEach(a => a.style.maxHeight = null);
+
+            if (!isActive) {
+                btn.classList.add('active');
+                answer.style.maxHeight = answer.scrollHeight + "px";
+            }
+        });
+    });
+
+    // --- Scroll Transitions (Intersection Observer) ---
+    const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
@@ -39,60 +52,36 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                // Unobserve after showing (one-way animation)
+                // One-time reveal
                 revealObserver.unobserve(entry.target);
             }
         });
-    }, revealOptions);
+    }, observerOptions);
 
     document.querySelectorAll('[data-reveal]').forEach(el => {
         revealObserver.observe(el);
     });
 
-    // --- FAQ Accordion Logic ---
-    const faqTriggers = document.querySelectorAll('.faq-trigger');
+    // --- Smooth Scroll Logic ---
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
 
-    faqTriggers.forEach(trigger => {
-        trigger.addEventListener('click', () => {
-            const content = trigger.nextElementSibling;
-            const icon = trigger.querySelector('i');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                const headerOffset = 100;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-            // Toggle active state
-            const isOpen = content.style.maxHeight !== '0px' && content.style.maxHeight !== '';
-
-            // Close all others (optional)
-            document.querySelectorAll('.faq-content').forEach(c => c.style.maxHeight = '0px');
-            document.querySelectorAll('.faq-trigger i').forEach(i => {
-                i.classList.remove('fa-minus');
-                i.classList.add('fa-plus');
-            });
-
-            if (!isOpen) {
-                content.style.maxHeight = content.scrollHeight + 'px';
-                icon.classList.remove('fa-plus');
-                icon.classList.add('fa-minus');
-            } else {
-                content.style.maxHeight = '0px';
-                icon.classList.remove('fa-minus');
-                icon.classList.add('fa-plus');
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
             }
         });
     });
 
-    // --- Dynamic SEO: Title Observer ---
-    let lastScroll = 0;
-    const originalTitle = document.title;
-
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
-        if (currentScroll > 300 && currentScroll < lastScroll) {
-            // Scrolling up - show "Get Started" prompt in title
-            // document.title = "🚀 Start Your Batch | " + originalTitle;
-        } else {
-            document.title = originalTitle;
-        }
-        lastScroll = currentScroll;
-    }, { passive: true });
-
-    console.log('WP Bulk Pages Marketing Engine Initialized 🚁');
+    console.log('🏛️ WBPG Masterpiece Loaded');
 });
