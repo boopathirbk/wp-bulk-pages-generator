@@ -2,11 +2,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
     const htmlElement = document.documentElement;
 
-    // --- Theme Management ---
-    const savedTheme = localStorage.getItem('theme') ||
-        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    // --- Theme Logic (Sun/Moon Toggle) ---
+    const initTheme = () => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            htmlElement.setAttribute('data-theme', savedTheme);
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            htmlElement.setAttribute('data-theme', 'dark');
+        }
+    };
 
-    htmlElement.setAttribute('data-theme', savedTheme);
+    initTheme();
 
     themeToggle.addEventListener('click', () => {
         const currentTheme = htmlElement.getAttribute('data-theme');
@@ -15,33 +21,78 @@ document.addEventListener('DOMContentLoaded', () => {
         htmlElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
 
-        // Dynamic icon update (subtle)
-        themeToggle.style.transform = 'rotate(180deg)';
-        setTimeout(() => themeToggle.style.transform = 'rotate(0deg)', 300);
+        // Icon animation burst
+        themeToggle.animate([
+            { transform: 'scale(1)' },
+            { transform: 'scale(1.15)' },
+            { transform: 'scale(1)' }
+        ], { duration: 300, easing: 'ease-out' });
     });
 
-    // --- Smooth Scroll Reveal ---
-    const observerOptions = {
-        threshold: 0.1
+    // --- Reveal On Scroll (Intersection Observer) ---
+    const revealOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                entry.target.classList.add('visible');
+                // Unobserve after showing (one-way animation)
+                revealObserver.unobserve(entry.target);
             }
         });
-    }, observerOptions);
+    }, revealOptions);
 
-    document.querySelectorAll('.bento-card, .section-title, .hero > *').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
-        observer.observe(el);
+    document.querySelectorAll('[data-reveal]').forEach(el => {
+        revealObserver.observe(el);
     });
 
-    // --- Dynamic "Star" Count Simulation (Optional SEO) ---
-    // In a real scenario, you'd fetch this from the GitHub API
-    console.log('Marketing Engine v1.0.0 Initialized');
+    // --- FAQ Accordion Logic ---
+    const faqTriggers = document.querySelectorAll('.faq-trigger');
+
+    faqTriggers.forEach(trigger => {
+        trigger.addEventListener('click', () => {
+            const content = trigger.nextElementSibling;
+            const icon = trigger.querySelector('i');
+
+            // Toggle active state
+            const isOpen = content.style.maxHeight !== '0px' && content.style.maxHeight !== '';
+
+            // Close all others (optional)
+            document.querySelectorAll('.faq-content').forEach(c => c.style.maxHeight = '0px');
+            document.querySelectorAll('.faq-trigger i').forEach(i => {
+                i.classList.remove('fa-minus');
+                i.classList.add('fa-plus');
+            });
+
+            if (!isOpen) {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                icon.classList.remove('fa-plus');
+                icon.classList.add('fa-minus');
+            } else {
+                content.style.maxHeight = '0px';
+                icon.classList.remove('fa-minus');
+                icon.classList.add('fa-plus');
+            }
+        });
+    });
+
+    // --- Dynamic SEO: Title Observer ---
+    let lastScroll = 0;
+    const originalTitle = document.title;
+
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        if (currentScroll > 300 && currentScroll < lastScroll) {
+            // Scrolling up - show "Get Started" prompt in title
+            // document.title = "🚀 Start Your Batch | " + originalTitle;
+        } else {
+            document.title = originalTitle;
+        }
+        lastScroll = currentScroll;
+    }, { passive: true });
+
+    console.log('WP Bulk Pages Marketing Engine Initialized 🚁');
 });
