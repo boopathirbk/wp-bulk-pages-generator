@@ -208,7 +208,19 @@ Yes. We've implemented a **Geist-inspired Dark Theme** that respects your OS/Wor
 
 ---
 
-## 🔍 SEO Strategy Tags
+## �‍💻 Meet the Developer
+
+**Boopathi R** is a Computer Science Engineer with over **10 years** of professional experience in software design and development. With a deep focus on **WordPress, Web Design, and IT infrastructure** for the past 7 years, he specializes in building high-performance, accessible, and premium digital solutions.
+
+- **Vision**: Creating open-source tools that contribute positively to the planet.
+- **Craftsmanship**: Committed to smooth, rich, and beautiful code that follows strict industry standards.
+- **Custom Work**: Open for specialized software, websites, and apps based on your vision and budget.
+
+[**LinkedIn Profile**](https://linkedin.com/in/boopathirb) • [**GitHub**](https://github.com/boopathirbk) • [**Donate**](https://paypal.me/boopathirbk)
+
+---
+
+## �🔍 SEO Strategy Tags
 `WordPress Bulk Page Generator` `Batch Content Creator` `SEO Silo Builder` `Gutenberg Bulk Deployment` `Fast WordPress Setup` `WP REST API Plugin` `Geist UI WordPress` `WCAG 2.2 WordPress Plugin`.
 
 ---

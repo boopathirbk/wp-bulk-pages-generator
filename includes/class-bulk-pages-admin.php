@@ -48,13 +48,22 @@ class WBPG_Admin {
 			'wp-bulk-pages-docs',
 			array( $this, 'render_docs_page' )
 		);
+
+		add_submenu_page(
+			'wp-bulk-pages-generator',
+			__( 'About Author', 'wp-bulk-pages-generator' ),
+			__( 'About', 'wp-bulk-pages-generator' ),
+			'manage_options',
+			'wp-bulk-pages-about',
+			array( $this, 'render_about_page' )
+		);
 	}
 
 	/**
 	 * Enqueue Admin Assets.
 	 */
 	public function enqueue_assets( $hook ) {
-		if ( false === strpos( $hook, 'wp-bulk-pages-generator' ) && false === strpos( $hook, 'wp-bulk-pages-docs' ) ) {
+		if ( false === strpos( $hook, 'wp-bulk-pages-generator' ) && false === strpos( $hook, 'wp-bulk-pages-docs' ) && false === strpos( $hook, 'wp-bulk-pages-about' ) ) {
 			return;
 		}
 
@@ -310,17 +319,101 @@ class WBPG_Admin {
 					</div>
 				</div>
 
-				<!-- External Resources Card -->
-				<div class="wbpg-card wbpg-docs-card">
-					<h2><i class="fa-solid fa-code-branch" aria-hidden="true" style="margin-right:12px;color:var(--wbpg-accent);"></i><?php _e( 'Collaboration', 'wp-bulk-pages-generator' ); ?></h2>
-					<div class="wbpg-docs-content">
-						<p><?php _e( 'Need more help or want to contribute to the engine?', 'wp-bulk-pages-generator' ); ?></p>
+			</div>
+			<div class="wbpg-footer-clear"></div>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Render About Page.
+	 */
+	public function render_about_page() {
+		$theme = $this->get_theme_mode();
+		?>
+		<div class="wrap wbpg-admin-wrap" data-theme="<?php echo esc_attr( $theme ); ?>" role="main" aria-labelledby="wbpg-about-title">
+			<header class="wbpg-header">
+				<div class="wbpg-header-main">
+					<h1 id="wbpg-about-title"><?php _e( 'About the Creator', 'wp-bulk-pages-generator' ); ?></h1>
+					<p><?php _e( 'The philosophy, vision, and craftsmanship behind the engine.', 'wp-bulk-pages-generator' ); ?></p>
+				</div>
+				<div class="wbpg-header-actions">
+					<button id="wbpg-theme-toggle" class="button button-secondary" aria-label="<?php esc_attr_e( 'Toggle Light/Dark Mode', 'wp-bulk-pages-generator' ); ?>">
+						<?php if ( 'dark' === $theme ) : ?>
+							<i class="fa-regular fa-sun"></i>
+							<span class="wbpg-toggle-text"><?php _e( 'Light Mode', 'wp-bulk-pages-generator' ); ?></span>
+						<?php else : ?>
+							<i class="fa-regular fa-moon"></i>
+							<span class="wbpg-toggle-text"><?php _e( 'Dark Mode', 'wp-bulk-pages-generator' ); ?></span>
+						<?php endif; ?>
+					</button>
+				</div>
+			</header>
+
+			<div class="wbpg-about-layout">
+				<!-- Author Bio Card -->
+				<div class="wbpg-card wbpg-author-card">
+					<div class="wbpg-author-profile">
+						<div class="wbpg-author-info">
+							<h2>Boopathi R</h2>
+							<p class="wbpg-author-tagline"><?php _e( 'Open Source Architect & Craftsmanship Enthusiast', 'wp-bulk-pages-generator' ); ?></p>
+							<div class="wbpg-author-bio">
+								<p><?php _e( 'I am a Computer Science Engineer with over 10 years of professional experience in software design and development. For the past 7 years, I have focused my expertise on WordPress, web design, and IT infrastructure, building high-performance digital solutions.', 'wp-bulk-pages-generator' ); ?></p>
+								<p><?php _e( 'I find deep joy in creating open source tools that contribute positively to our planet. My work is guided by strict principles and a commitment to all industry guidelines to ensure the delivery of smooth, rich, beautiful, fast, and accessible code.', 'wp-bulk-pages-generator' ); ?></p>
+								<p><?php _e( 'I believe that software should not only be functional but should also feel premium and intuitive, respecting every micro-interaction and focus state to provide a truly superior user experience.', 'wp-bulk-pages-generator' ); ?></p>
+							</div>
+							<div class="wbpg-social-grid">
+								<a href="https://github.com/boopathirbk" target="_blank" class="wbpg-social-link" title="GitHub Profile">
+									<i class="fa-brands fa-github"></i>
+									<span>GitHub</span>
+								</a>
+								<a href="https://linkedin.com/in/boopathirb" target="_blank" class="wbpg-social-link" title="LinkedIn Profile">
+									<i class="fa-brands fa-linkedin"></i>
+									<span>LinkedIn</span>
+								</a>
+								<a href="mailto:genius@duck.com" class="wbpg-social-link" title="Send Email">
+									<i class="fa-solid fa-envelope"></i>
+									<span><?php _e( 'Email', 'wp-bulk-pages-generator' ); ?></span>
+								</a>
+							</div>
+							<p class="wbpg-security-note">
+								<i class="fa-solid fa-shield-halved" style="margin-right:6px;opacity:0.6;"></i>
+								<?php _e( 'Note: The email above is anonymized for security purposes. If your message is legitimate, I will reach back out from my primary address.', 'wp-bulk-pages-generator' ); ?>
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Support & Services -->
+				<div class="wbpg-about-side">
+					<!-- Custom Software -->
+					<div class="wbpg-card wbpg-services-card">
+						<h2><i class="fa-solid fa-wand-magic-sparkles" style="margin-right:12px;color:var(--wbpg-accent);"></i><?php _e( 'Custom Solutions', 'wp-bulk-pages-generator' ); ?></h2>
+						<p><?php _e( 'I’m available for building custom software, specialized tools, high-performance websites, and mobile applications tailored to your specific budget and vision.', 'wp-bulk-pages-generator' ); ?></p>
+						<a href="https://linkedin.com/in/boopathirb" target="_blank" class="button button-primary" style="width:100%;">
+							<?php _e( 'Hire for Custom Work', 'wp-bulk-pages-generator' ); ?>
+						</a>
+					</div>
+
+					<!-- Donate Section -->
+					<div class="wbpg-card wbpg-donate-card">
+						<h2><i class="fa-solid fa-mug-hot" style="margin-right:12px;color:var(--wbpg-accent);"></i><?php _e( 'Fuel the Creator', 'wp-bulk-pages-generator' ); ?></h2>
+						<p><?php _e( 'Supporting open source helps me dedicated more time to building tools like this for the community.', 'wp-bulk-pages-generator' ); ?></p>
+						<a href="https://paypal.me/boopathirbk" target="_blank" class="button button-secondary" style="width:100%;">
+							<i class="fa-brands fa-paypal" style="margin-right:8px;"></i>
+							<?php _e( 'Donate via PayPal', 'wp-bulk-pages-generator' ); ?>
+						</a>
+					</div>
+
+					<!-- Moved Collaboration Section -->
+					<div class="wbpg-card">
+						<h2><i class="fa-solid fa-code-branch" style="margin-right:12px;color:var(--wbpg-accent);"></i><?php _e( 'Technical Support', 'wp-bulk-pages-generator' ); ?></h2>
 						<div class="wbpg-docs-links">
-							<a href="https://github.com/boopathirbk/wp-bulk-pages-generator" target="_blank" class="button button-primary">
+							<a href="https://github.com/boopathirbk/wp-bulk-pages-generator" target="_blank" class="button button-secondary" style="margin-bottom:10px; width:100%;">
 								<i class="fa-brands fa-github" style="margin-right:8px;"></i><?php _e( 'Official Repository', 'wp-bulk-pages-generator' ); ?>
 							</a>
-							<a href="https://github.com/boopathirbk/wp-bulk-pages-generator/issues" target="_blank" class="button button-secondary">
-								<i class="fa-solid fa-circle-exclamation" style="margin-right:8px;"></i><?php _e( 'Technical Support', 'wp-bulk-pages-generator' ); ?>
+							<a href="https://github.com/boopathirbk/wp-bulk-pages-generator/issues" target="_blank" class="button button-secondary" style="width:100%;">
+								<i class="fa-solid fa-circle-exclamation" style="margin-right:8px;"></i><?php _e( 'Open an Issue', 'wp-bulk-pages-generator' ); ?>
 							</a>
 						</div>
 					</div>
