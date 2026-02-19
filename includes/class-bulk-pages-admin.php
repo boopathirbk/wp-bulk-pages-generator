@@ -335,7 +335,7 @@ class WBPG_Admin {
 			<header class="wbpg-header">
 				<div class="wbpg-header-main">
 					<h1 id="wbpg-about-title"><?php _e( 'About the Creator', 'wp-bulk-pages-generator' ); ?></h1>
-					<p><?php _e( 'The philosophy, vision, and craftsmanship behind the engine.', 'wp-bulk-pages-generator' ); ?></p>
+					<p><?php _e( 'The philosophy, vision, and craftsmanship behind the engine.', 'wp-bulk-pages-generator' ); ?> <span class="wbpg-version-badge">v<?php echo esc_html( $this->version ); ?></span></p>
 				</div>
 				<div class="wbpg-header-actions">
 					<button id="wbpg-theme-toggle" class="button button-secondary" aria-label="<?php esc_attr_e( 'Toggle Light/Dark Mode', 'wp-bulk-pages-generator' ); ?>">
@@ -390,7 +390,7 @@ class WBPG_Admin {
 					<div class="wbpg-card wbpg-services-card">
 						<h2><i class="fa-solid fa-wand-magic-sparkles" style="margin-right:12px;color:var(--wbpg-accent);"></i><?php _e( 'Custom Solutions', 'wp-bulk-pages-generator' ); ?></h2>
 						<p><?php _e( 'I’m available for building custom software, specialized tools, high-performance websites, and mobile applications tailored to your specific budget and vision.', 'wp-bulk-pages-generator' ); ?></p>
-						<a href="https://linkedin.com/in/boopathirb" target="_blank" class="button button-primary" style="width:100%;">
+						<a href="mailto:genius@duck.com" class="button button-primary" style="width:100%;">
 							<?php _e( 'Hire for Custom Work', 'wp-bulk-pages-generator' ); ?>
 						</a>
 					</div>
