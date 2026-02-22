@@ -3,7 +3,7 @@
  * Plugin Name: WP Bulk Pages Generator
  * Plugin URI:  https://github.com/boopathirbk/wp-bulk-pages-generator
  * Description: A modern, user-friendly plugin to bulk create pages with titles, slugs, parent pages, and block content.
- * Version:     1.0.0
+ * Version:     1.0.1
  * Author:      Boopathi R
  * Author URI:  https://github.com/boopathirbk
  * Text Domain: wp-bulk-pages-generator
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define Plugin Constants
-define( 'WBPG_VERSION', '1.0.0' );
+define( 'WBPG_VERSION', '1.0.1' );
 define( 'WBPG_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WBPG_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 

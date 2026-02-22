@@ -23,6 +23,7 @@ jQuery(document).ready(function ($) {
     let currentTaxonomy = '';
     let availablePostTypes = {};
     let isCreating = false;
+    let slimSelects = {}; // Track SS instances by row ID
     const i18n = wbpgData.i18n;
 
     // Theme Toggle Logic
@@ -187,12 +188,36 @@ jQuery(document).ready(function ($) {
         }
     }
 
+    function initSlimSelect($select, rowId) {
+        if (typeof SlimSelect !== 'function') return;
+
+        // Destroy existing instance if it exists
+        if (slimSelects[rowId]) {
+            slimSelects[rowId].destroy();
+        }
+
+        slimSelects[rowId] = new SlimSelect({
+            select: $select[0],
+            settings: {
+                placeholderText: i18n.search || 'Search...',
+                searchText: i18n.no_results || 'No results found',
+                searchHighlight: true
+            }
+        });
+    }
+
     function refreshDropdowns() {
         $('.wbpg-row .wbpg-row-parent').each(function () {
             const $select = $(this);
-            if ($select.closest('tr').find('.wbpg-status-icon').hasClass('pending')) {
+            const $row = $select.closest('tr');
+            const rowId = $row.attr('id');
+
+            if ($row.find('.wbpg-status-icon').hasClass('pending')) {
                 const currentVal = $select.val();
                 $select.html(parentOptionsHtml).val(currentVal);
+
+                // Re-init SlimSelect if hierarchy changed
+                initSlimSelect($select, rowId);
             }
         });
     }
@@ -218,9 +243,12 @@ jQuery(document).ready(function ($) {
                 $this.val(currentPostType);
                 return;
             }
-            $rowsContainer.empty();
             $listWrapper.hide();
             $summaryBox.hide();
+
+            // Clear all SS instances
+            Object.values(slimSelects).forEach(ss => ss.destroy());
+            slimSelects = {};
         }
 
         currentPostType = val;
@@ -268,6 +296,14 @@ jQuery(document).ready(function ($) {
             fragment.appendChild(tempTbody.firstChild);
         }
         $rowsContainer[0].appendChild(fragment);
+
+        // Batch initialize SlimSelect for performance
+        $rowsContainer.find('.wbpg-row-parent').each(function () {
+            const $select = $(this);
+            const rowId = $select.closest('tr').attr('id');
+            initSlimSelect($select, rowId);
+        });
+
         initTooltips(); // Re-init for new icons
 
         $listWrapper.show();
@@ -331,7 +367,13 @@ jQuery(document).ready(function ($) {
         if (selected.length === 0) return;
 
         if (confirm(i18n.confirm_remove.replace('%d', selected.length))) {
-            selected.closest('tr').fadeOut(300, function () {
+            selected.closest('tr').each(function () {
+                const rowId = $(this).attr('id');
+                if (slimSelects[rowId]) {
+                    slimSelects[rowId].destroy();
+                    delete slimSelects[rowId];
+                }
+            }).fadeOut(300, function () {
                 $(this).remove();
                 toggleBulkActions();
                 if ($('.wbpg-row').length === 0) {
@@ -346,7 +388,14 @@ jQuery(document).ready(function ($) {
     $rowsContainer.on('click keydown', '.wbpg-row-remove', function (e) {
         if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
 
-        $(this).closest('tr').fadeOut(300, function () {
+        const $row = $(this).closest('tr');
+        const rowId = $row.attr('id');
+
+        $row.fadeOut(300, function () {
+            if (slimSelects[rowId]) {
+                slimSelects[rowId].destroy();
+                delete slimSelects[rowId];
+            }
             $(this).remove();
             toggleBulkActions();
             if ($('.wbpg-row').length === 0) {
@@ -528,11 +577,11 @@ jQuery(document).ready(function ($) {
         $('#wbpg-results-container').hide();
         $('#wbpg-start-over-btn').hide();
 
-        // Reset Table
-        $rowsContainer.empty();
-        $listWrapper.hide();
-        $('#wbpg-select-all').prop('checked', false);
         $('#wbpg-delete-selected-btn').hide();
+
+        // Clear all SS instances
+        Object.values(slimSelects).forEach(ss => ss.destroy());
+        slimSelects = {};
 
         // Reset selection
         $('#wbpg-post-type').val('');

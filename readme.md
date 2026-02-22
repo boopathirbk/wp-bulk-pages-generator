@@ -2,7 +2,7 @@
   <img src="https://raw.githubusercontent.com/fortawesome/Font-Awesome/6.x/svgs/solid/rocket.svg" width="100" height="100" alt="WP Bulk Pages Generator Rocket Logo">
   
   # WP Bulk Pages Generator 🚀
-  ### *The Ultimate Enterprise-Grade Bulk Content Engine for WordPress 2026*
+  ### *The Ultimate Enterprise-Grade Bulk Content Engine for WordPress 2026 (v1.0.1)*
   
   **Deploy Landing Pages, SEO Silos, and Content Batches in Seconds with the Speed of Geist.**
   

@@ -74,8 +74,12 @@ class WBPG_Admin {
 		wp_enqueue_script( 'wbpg-popper', 'https://unpkg.com/@popperjs/core@2', array(), '2.11.8', true );
 		wp_enqueue_script( 'wbpg-tippy', 'https://unpkg.com/tippy.js@6', array( 'wbpg-popper' ), '6.3.7', true );
 
+		// Enqueue SlimSelect
+		wp_enqueue_style( 'wbpg-slimselect-css', 'https://unpkg.com/slim-select@2.8.2/dist/slimselect.css', array(), '2.8.2' );
+		wp_enqueue_script( 'wbpg-slimselect-js', 'https://unpkg.com/slim-select@2.8.2/dist/slimselect.min.js', array(), '2.8.2', true );
+
 		wp_enqueue_style( 'wbpg-admin-style', WBPG_PLUGIN_URL . 'assets/css/admin.css', array(), WBPG_VERSION );
-		wp_enqueue_script( 'wbpg-admin-script', WBPG_PLUGIN_URL . 'assets/js/admin.js', array( 'jquery', 'wbpg-tippy' ), WBPG_VERSION, true );
+		wp_enqueue_script( 'wbpg-admin-script', WBPG_PLUGIN_URL . 'assets/js/admin.js', array( 'jquery', 'wbpg-tippy', 'wbpg-slimselect-js' ), WBPG_VERSION, true );
 
 		// Localize Script
 		wp_localize_script( 'wbpg-admin-script', 'wbpgData', array(
@@ -123,6 +127,8 @@ class WBPG_Admin {
 				'generate_btn'       => __( 'Generate %ss', 'wp-bulk-pages-generator' ),
 				'copy'              => __( 'Copy', 'wp-bulk-pages-generator' ),
 				'copied'            => __( 'Copied!', 'wp-bulk-pages-generator' ),
+				'search'            => __( 'Search...', 'wp-bulk-pages-generator' ),
+				'no_results'        => __( 'No results found', 'wp-bulk-pages-generator' ),
 			)
 		) );
 	}

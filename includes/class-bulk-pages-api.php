@@ -175,7 +175,7 @@ class WBPG_API {
 				$prefix = '';
 				$ancestors = get_post_ancestors( $page->ID );
 				if ( ! empty( $ancestors ) ) {
-					$prefix = str_repeat( '&mdash; ', count( $ancestors ) );
+					$prefix = str_repeat( '- ', count( $ancestors ) );
 				}
 
 				$results[] = array(
