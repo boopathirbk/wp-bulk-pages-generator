@@ -170,19 +170,17 @@ class WBPG_API {
 
 		$results = array();
 
-		if ( ! empty( $pages ) ) {
-			foreach ( $pages as $page ) {
-				$prefix = '';
-				$ancestors = get_post_ancestors( $page->ID );
-				if ( ! empty( $ancestors ) ) {
-					$prefix = str_repeat( '- ', count( $ancestors ) );
-				}
-
-				$results[] = array(
-					'id'    => $page->ID,
-					'title' => $prefix . $page->post_title,
-				);
+		foreach ( $pages as $page ) {
+			$prefix = '';
+			$ancestors = get_post_ancestors( $page->ID );
+			if ( ! empty( $ancestors ) ) {
+				$prefix = str_repeat( '- ', count( $ancestors ) );
 			}
+
+			$results[] = array(
+				'id'    => $page->ID,
+				'title' => $prefix . $page->post_title,
+			);
 		}
 
 		return $results;

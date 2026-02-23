@@ -308,7 +308,7 @@ class WBPG_Admin {
 								<strong><i class="fa-solid fa-bullseye" style="margin-right:8px;"></i><?php _e( 'Modern Call to Action', 'wp-bulk-pages-generator' ); ?></strong>
 								<button class="wbpg-copy-btn button button-small" data-clipboard="cta"><?php _e( 'Copy Code', 'wp-bulk-pages-generator' ); ?></button>
 							</div>
-							<code id="pattern-cta">&lt;!-- wp:buttons --&gt;&lt;div class="wp-block-buttons"&gt;&lt;!-- wp:button --&gt;&lt;div class="wb-block-button"&gt;&lt;a class="wp-block-button__link wp-element-button"&gt;Start Now&lt;/a&gt;&lt;/div&gt;&lt;!-- /wp:button --&gt;&lt;/div&gt;&lt;!-- /wp:buttons --&gt;</code>
+							<code id="pattern-cta">&lt;!-- wp:buttons --&gt;&lt;div class="wp-block-buttons"&gt;&lt;!-- wp:button --&gt;&lt;div class="wp-block-button"&gt;&lt;a class="wp-block-button__link wp-element-button"&gt;Start Now&lt;/a&gt;&lt;/div&gt;&lt;!-- /wp:button --&gt;&lt;/div&gt;&lt;!-- /wp:buttons --&gt;</code>
 						</div>
 					</div>
 				</div>
@@ -341,8 +341,8 @@ class WBPG_Admin {
 		<div class="wrap wbpg-admin-wrap" data-theme="<?php echo esc_attr( $theme ); ?>" role="main" aria-labelledby="wbpg-about-title">
 			<header class="wbpg-header">
 				<div class="wbpg-header-main">
-					<h1 id="wbpg-about-title"><?php _e( 'About the Creator', 'wp-bulk-pages-generator' ); ?></h1>
-					<p><?php _e( 'The philosophy, vision, and craftsmanship behind the engine.', 'wp-bulk-pages-generator' ); ?> <span class="wbpg-version-badge">v<?php echo esc_html( $this->version ); ?></span></p>
+					<h1 id="wbpg-about-title"><?php _e( 'About', 'wp-bulk-pages-generator' ); ?></h1>
+					<p><?php _e( 'The engine, the architecture, and the vision behind it.', 'wp-bulk-pages-generator' ); ?> <span class="wbpg-version-badge">v<?php echo esc_html( $this->version ); ?></span></p>
 				</div>
 				<div class="wbpg-header-actions">
 					<button id="wbpg-theme-toggle" class="button button-secondary" aria-label="<?php esc_attr_e( 'Toggle Light/Dark Mode', 'wp-bulk-pages-generator' ); ?>">
@@ -357,6 +357,74 @@ class WBPG_Admin {
 				</div>
 			</header>
 
+			<!-- Plugin Identity Section -->
+			<div class="wbpg-plugin-hero">
+				<div class="wbpg-card wbpg-plugin-hero-card">
+					<div class="wbpg-plugin-hero-content">
+						<div class="wbpg-plugin-icon-wrap">
+							<i class="fa-solid fa-cube" aria-hidden="true"></i>
+						</div>
+						<div class="wbpg-plugin-hero-text">
+							<h2><?php _e( 'WP Bulk Pages Generator', 'wp-bulk-pages-generator' ); ?></h2>
+							<p class="wbpg-plugin-tagline"><?php _e( 'The high-performance bulk content engine for WordPress. Built on the Geist Design System with enterprise-grade reliability, WCAG 2.2 AA accessibility, and an async sequential architecture that eliminates server timeouts — even on shared hosting.', 'wp-bulk-pages-generator' ); ?></p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Capabilities Bento Grid -->
+			<div class="wbpg-capabilities-grid">
+				<div class="wbpg-card wbpg-capability-card">
+					<div class="wbpg-capability-icon"><i class="fa-solid fa-bolt" aria-hidden="true"></i></div>
+					<h3><?php _e( 'Async Sequential Engine', 'wp-bulk-pages-generator' ); ?></h3>
+					<p><?php _e( 'Creates items one by one via the REST API — no batch timeouts, no database locks, no server crashes. Processes up to 100 rows per session with real-time progress tracking.', 'wp-bulk-pages-generator' ); ?></p>
+				</div>
+				<div class="wbpg-card wbpg-capability-card">
+					<div class="wbpg-capability-icon"><i class="fa-solid fa-universal-access" aria-hidden="true"></i></div>
+					<h3><?php _e( 'WCAG 2.2 Level AA', 'wp-bulk-pages-generator' ); ?></h3>
+					<p><?php _e( 'Keyboard navigable, screen reader compatible, and focus-visible compliant. Every interactive element meets the 44px minimum touch target and supports reduced-motion preferences.', 'wp-bulk-pages-generator' ); ?></p>
+				</div>
+				<div class="wbpg-card wbpg-capability-card">
+					<div class="wbpg-capability-icon"><i class="fa-solid fa-sitemap" aria-hidden="true"></i></div>
+					<h3><?php _e( 'Deep Taxonomy Support', 'wp-bulk-pages-generator' ); ?></h3>
+					<p><?php _e( 'Supports Pages, Posts, and Custom Post Types. Assign parent pages for hierarchical types or categories for flat types — auto-detected from your site configuration.', 'wp-bulk-pages-generator' ); ?></p>
+				</div>
+				<div class="wbpg-card wbpg-capability-card">
+					<div class="wbpg-capability-icon"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></div>
+					<h3><?php _e( 'Security by Design', 'wp-bulk-pages-generator' ); ?></h3>
+					<p><?php _e( 'Nonce-validated REST endpoints, strict capability checks, input sanitization via sanitize_text_field and wp_kses_post, and client-side XSS prevention with HTML escaping.', 'wp-bulk-pages-generator' ); ?></p>
+				</div>
+			</div>
+
+			<!-- Technical Highlights -->
+			<div class="wbpg-tech-strip">
+				<div class="wbpg-tech-item">
+					<i class="fa-solid fa-palette" aria-hidden="true"></i>
+					<span><?php _e( 'Geist Design System', 'wp-bulk-pages-generator' ); ?></span>
+				</div>
+				<div class="wbpg-tech-item">
+					<i class="fa-solid fa-clipboard-check" aria-hidden="true"></i>
+					<span><?php _e( 'WIG Compliant', 'wp-bulk-pages-generator' ); ?></span>
+				</div>
+				<div class="wbpg-tech-item">
+					<i class="fa-solid fa-cube" aria-hidden="true"></i>
+					<span><?php _e( 'Gutenberg Block Ready', 'wp-bulk-pages-generator' ); ?></span>
+				</div>
+				<div class="wbpg-tech-item">
+					<i class="fa-solid fa-moon" aria-hidden="true"></i>
+					<span><?php _e( 'Intelligent Dark Mode', 'wp-bulk-pages-generator' ); ?></span>
+				</div>
+				<div class="wbpg-tech-item">
+					<i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>
+					<span><?php _e( 'Mobile-First Responsive', 'wp-bulk-pages-generator' ); ?></span>
+				</div>
+				<div class="wbpg-tech-item">
+					<i class="fa-solid fa-language" aria-hidden="true"></i>
+					<span><?php _e( 'Translation Ready', 'wp-bulk-pages-generator' ); ?></span>
+				</div>
+			</div>
+
+			<!-- Author + Sidebar Layout -->
 			<div class="wbpg-about-layout">
 				<!-- Author Bio Card -->
 				<div class="wbpg-card wbpg-author-card">
@@ -370,11 +438,11 @@ class WBPG_Admin {
 								<p><?php _e( 'I believe that software should not only be functional but should also feel premium and intuitive, respecting every micro-interaction and focus state to provide a truly superior user experience.', 'wp-bulk-pages-generator' ); ?></p>
 							</div>
 							<div class="wbpg-social-grid">
-								<a href="https://github.com/boopathirbk" target="_blank" class="wbpg-social-link" title="GitHub Profile">
+								<a href="https://github.com/boopathirbk" target="_blank" rel="noopener noreferrer" class="wbpg-social-link" title="GitHub Profile">
 									<i class="fa-brands fa-github"></i>
 									<span>GitHub</span>
 								</a>
-								<a href="https://linkedin.com/in/boopathirb" target="_blank" class="wbpg-social-link" title="LinkedIn Profile">
+								<a href="https://linkedin.com/in/boopathirb" target="_blank" rel="noopener noreferrer" class="wbpg-social-link" title="LinkedIn Profile">
 									<i class="fa-brands fa-linkedin"></i>
 									<span>LinkedIn</span>
 								</a>
@@ -405,8 +473,8 @@ class WBPG_Admin {
 					<!-- Donate Section -->
 					<div class="wbpg-card wbpg-donate-card">
 						<h2><i class="fa-solid fa-mug-hot" style="margin-right:12px;color:var(--wbpg-accent);"></i><?php _e( 'Fuel the Creator', 'wp-bulk-pages-generator' ); ?></h2>
-						<p><?php _e( 'Supporting open source helps me dedicated more time to building tools like this for the community.', 'wp-bulk-pages-generator' ); ?></p>
-						<a href="https://paypal.me/boopathirbk" target="_blank" class="button button-secondary" style="width:100%;">
+						<p><?php _e( 'Supporting open source helps me dedicate more time to building tools like this for the community.', 'wp-bulk-pages-generator' ); ?></p>
+						<a href="https://paypal.me/boopathirbk" target="_blank" rel="noopener noreferrer" class="button button-secondary" style="width:100%;">
 							<i class="fa-brands fa-paypal" style="margin-right:8px;"></i>
 							<?php _e( 'Donate via PayPal', 'wp-bulk-pages-generator' ); ?>
 						</a>
@@ -416,10 +484,10 @@ class WBPG_Admin {
 					<div class="wbpg-card">
 						<h2><i class="fa-solid fa-code-branch" style="margin-right:12px;color:var(--wbpg-accent);"></i><?php _e( 'Technical Support', 'wp-bulk-pages-generator' ); ?></h2>
 						<div class="wbpg-docs-links">
-							<a href="https://github.com/boopathirbk/wp-bulk-pages-generator" target="_blank" class="button button-secondary" style="margin-bottom:10px; width:100%;">
+							<a href="https://github.com/boopathirbk/wp-bulk-pages-generator" target="_blank" rel="noopener noreferrer" class="button button-secondary" style="margin-bottom:10px; width:100%;">
 								<i class="fa-brands fa-github" style="margin-right:8px;"></i><?php _e( 'Official Repository', 'wp-bulk-pages-generator' ); ?>
 							</a>
-							<a href="https://github.com/boopathirbk/wp-bulk-pages-generator/issues" target="_blank" class="button button-secondary" style="width:100%;">
+							<a href="https://github.com/boopathirbk/wp-bulk-pages-generator/issues" target="_blank" rel="noopener noreferrer" class="button button-secondary" style="width:100%;">
 								<i class="fa-solid fa-circle-exclamation" style="margin-right:8px;"></i><?php _e( 'Open an Issue', 'wp-bulk-pages-generator' ); ?>
 							</a>
 						</div>

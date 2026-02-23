@@ -3,7 +3,7 @@
  * Plugin Name: WP Bulk Pages Generator
  * Plugin URI:  https://github.com/boopathirbk/wp-bulk-pages-generator
  * Description: A modern, user-friendly plugin to bulk create pages with titles, slugs, parent pages, and block content.
- * Version:     1.0.1
+ * Version:     1.0.2
  * Author:      Boopathi R
  * Author URI:  https://github.com/boopathirbk
  * Text Domain: wp-bulk-pages-generator
@@ -18,13 +18,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define Plugin Constants
-define( 'WBPG_VERSION', '1.0.1' );
+define( 'WBPG_VERSION', '1.0.2' );
 define( 'WBPG_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WBPG_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 // Include necessary files
 require_once WBPG_PLUGIN_DIR . 'includes/class-bulk-pages-api.php';
 require_once WBPG_PLUGIN_DIR . 'includes/class-bulk-pages-admin.php';
+
+// Initialize GitHub Auto-Updater
+require_once WBPG_PLUGIN_DIR . 'vendor/plugin-update-checker/plugin-update-checker.php';
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
+$wbpgUpdateChecker = PucFactory::buildUpdateChecker(
+	'https://github.com/boopathirbk/wp-bulk-pages-generator/',
+	__FILE__,
+	'wp-bulk-pages-generator'
+);
+// Force update checks to look for tags/releases on the main branch
+$wbpgUpdateChecker->setBranch( 'main' );
+// Enable checking for compiled .zip assets in the GitHub release
+$wbpgUpdateChecker->getVcsApi()->enableReleaseAssets();
 
 // Initialize the plugin
 function wbpg_init() {

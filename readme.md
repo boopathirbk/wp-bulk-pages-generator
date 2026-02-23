@@ -2,7 +2,7 @@
   <img src="https://raw.githubusercontent.com/fortawesome/Font-Awesome/6.x/svgs/solid/rocket.svg" width="100" height="100" alt="WP Bulk Pages Generator Rocket Logo">
   
   # WP Bulk Pages Generator 🚀
-  ### *The Ultimate Enterprise-Grade Bulk Content Engine for WordPress 2026 (v1.0.1)*
+  ### *The Ultimate Enterprise-Grade Bulk Content Engine for WordPress 2026 (v1.0.2)*
   
   **Deploy Landing Pages, SEO Silos, and Content Batches in Seconds with the Speed of Geist.**
   
@@ -93,7 +93,7 @@ Want to see the engine in action without installing anything? Launch our **WordP
 
 ## 🛡️ Unrivaled Feature Set
 
-- **💎 Geist Architecture**: A minimalist, high-density interface focused on **zero cognitive load**. Features 40px touch-targets and buttery-smooth micro-animations.
+- **🚀 Native Auto-Updates**: One-click updates directly from your WordPress dashboard via GitHub releases. Features 40px touch-targets and buttery-smooth micro-animations.
 - **🛡️ State Armor (Operation Lock)**: Prevents accidental navigation or page refresh while your batch is processing.
 - **🔄 Zero-Reload Reset**: Reset your entire workspace instantly with the "Start Over" logic—no page reload required.
 - **🍱 Advanced Taxonomy Layer**: Deep hierarchical support for Parent Pages, Categories, and Custom Taxonomies.
