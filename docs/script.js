@@ -128,5 +128,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ── Lightbox ──
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const lb = document.getElementById('docs-lightbox');
+    const lbImg = document.getElementById('docs-lightbox-img');
+    const lbCap = document.getElementById('docs-lightbox-caption');
+    let lbIdx = 0;
+    const lbImgs = [];
+
+    galleryItems.forEach((item, i) => {
+        const img = item.querySelector('img');
+        const cap = item.querySelector('span');
+        lbImgs.push({ src: img.src, alt: img.alt, caption: cap ? cap.textContent : '' });
+        item.addEventListener('click', () => { lbIdx = i; lbShow(); lb.classList.add('active'); document.body.style.overflow = 'hidden'; });
+    });
+
+    function lbShow() { lbImg.src = lbImgs[lbIdx].src; lbImg.alt = lbImgs[lbIdx].alt; lbCap.textContent = lbImgs[lbIdx].caption; }
+    function lbClose() { lb.classList.remove('active'); document.body.style.overflow = ''; }
+
+    document.getElementById('docs-lightbox-close').addEventListener('click', lbClose);
+    document.getElementById('docs-lightbox-prev').addEventListener('click', () => { lbIdx = (lbIdx - 1 + lbImgs.length) % lbImgs.length; lbShow(); });
+    document.getElementById('docs-lightbox-next').addEventListener('click', () => { lbIdx = (lbIdx + 1) % lbImgs.length; lbShow(); });
+    lb.addEventListener('click', (e) => { if (e.target === lb) lbClose(); });
+    document.addEventListener('keydown', (e) => {
+        if (!lb.classList.contains('active')) return;
+        if (e.key === 'Escape') lbClose();
+        if (e.key === 'ArrowLeft') { lbIdx = (lbIdx - 1 + lbImgs.length) % lbImgs.length; lbShow(); }
+        if (e.key === 'ArrowRight') { lbIdx = (lbIdx + 1) % lbImgs.length; lbShow(); }
+    });
+
     console.log('🏛️ WBPG Masterpiece Loaded');
 });

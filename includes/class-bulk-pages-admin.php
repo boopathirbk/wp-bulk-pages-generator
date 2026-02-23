@@ -431,6 +431,63 @@ class WBPG_Admin {
 				</div>
 			</div>
 
+			<!-- Lightbox Overlay -->
+			<div class="wbpg-lightbox" id="wbpg-lightbox" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Screenshot Preview', 'wp-bulk-pages-generator' ); ?>">
+				<div class="wbpg-lightbox-inner">
+					<button class="wbpg-lightbox-close" id="wbpg-lightbox-close" aria-label="<?php esc_attr_e( 'Close', 'wp-bulk-pages-generator' ); ?>"><i class="fa-solid fa-xmark"></i></button>
+					<button class="wbpg-lightbox-nav wbpg-lightbox-prev" id="wbpg-lightbox-prev" aria-label="<?php esc_attr_e( 'Previous', 'wp-bulk-pages-generator' ); ?>"><i class="fa-solid fa-chevron-left"></i></button>
+					<img class="wbpg-lightbox-img" id="wbpg-lightbox-img" src="" alt="">
+					<button class="wbpg-lightbox-nav wbpg-lightbox-next" id="wbpg-lightbox-next" aria-label="<?php esc_attr_e( 'Next', 'wp-bulk-pages-generator' ); ?>"><i class="fa-solid fa-chevron-right"></i></button>
+					<div class="wbpg-lightbox-caption" id="wbpg-lightbox-caption"></div>
+				</div>
+			</div>
+			<script>
+			(function(){
+				var items = document.querySelectorAll('.wbpg-screenshot-item');
+				var lb = document.getElementById('wbpg-lightbox');
+				var lbImg = document.getElementById('wbpg-lightbox-img');
+				var lbCap = document.getElementById('wbpg-lightbox-caption');
+				var idx = 0;
+				var imgs = [];
+
+				items.forEach(function(item, i){
+					var img = item.querySelector('img');
+					var cap = item.querySelector('span');
+					imgs.push({ src: img.src, alt: img.alt, caption: cap ? cap.textContent : '' });
+					item.addEventListener('click', function(){ openLightbox(i); });
+				});
+
+				function openLightbox(i){
+					idx = i;
+					showSlide();
+					lb.classList.add('active');
+					document.body.style.overflow = 'hidden';
+				}
+
+				function closeLightbox(){
+					lb.classList.remove('active');
+					document.body.style.overflow = '';
+				}
+
+				function showSlide(){
+					lbImg.src = imgs[idx].src;
+					lbImg.alt = imgs[idx].alt;
+					lbCap.textContent = imgs[idx].caption;
+				}
+
+				document.getElementById('wbpg-lightbox-close').addEventListener('click', closeLightbox);
+				document.getElementById('wbpg-lightbox-prev').addEventListener('click', function(){ idx = (idx - 1 + imgs.length) % imgs.length; showSlide(); });
+				document.getElementById('wbpg-lightbox-next').addEventListener('click', function(){ idx = (idx + 1) % imgs.length; showSlide(); });
+
+				lb.addEventListener('click', function(e){ if(e.target === lb) closeLightbox(); });
+				document.addEventListener('keydown', function(e){
+					if(!lb.classList.contains('active')) return;
+					if(e.key === 'Escape') closeLightbox();
+					if(e.key === 'ArrowLeft'){ idx = (idx - 1 + imgs.length) % imgs.length; showSlide(); }
+					if(e.key === 'ArrowRight'){ idx = (idx + 1) % imgs.length; showSlide(); }
+				});
+			})();
+			</script>
 			<!-- Technical Highlights -->
 			<div class="wbpg-tech-strip">
 				<div class="wbpg-tech-item">
