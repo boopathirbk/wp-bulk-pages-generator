@@ -2,7 +2,7 @@
   <img src="https://raw.githubusercontent.com/fortawesome/Font-Awesome/6.x/svgs/solid/rocket.svg" width="100" height="100" alt="WP Bulk Pages Generator Rocket Logo">
   
   # WP Bulk Pages Generator 🚀
-  ### *The Ultimate Enterprise-Grade Bulk Content Engine for WordPress 2026 (v1.0.2)*
+  ### *The Ultimate Enterprise-Grade Bulk Content Engine for WordPress 2026 (v1.0.3)*
   
   **Deploy Landing Pages, SEO Silos, and Content Batches in Seconds with the Speed of Geist.**
   
@@ -34,30 +34,36 @@ Want to see the engine in action without installing anything? Launch our **WordP
 <table width="100%">
   <tr>
     <td width="33.3%" align="center">
-      <img src="screenshots/welcome.png" alt="Build Your List Screen">
-      <br/><b>1. Build Your List</b>
+      <img src="screenshots/Generate Page.png" alt="Generate Page">
+      <br/><b>1. Generate Pages</b>
     </td>
     <td width="33.3%" align="center">
-      <img src="screenshots/page-creation.png" alt="Configure Details Grid">
-      <br/><b>2. Configure Details</b>
+      <img src="screenshots/Parent and Category Search.png" alt="Parent and Category Search">
+      <br/><b>2. Parent & Category Search</b>
     </td>
     <td width="33.3%" align="center">
-      <img src="screenshots/summary.png" alt="Progress Summary">
-      <br/><b>Progress Summary</b>
+      <img src="screenshots/Progress Summary.png" alt="Progress Summary">
+      <br/><b>3. Progress Summary</b>
     </td>
   </tr>
   <tr>
     <td width="33.3%" align="center">
-      <img src="screenshots/dark-mode.png" alt="Dark Mode">
+      <img src="screenshots/Custom Post.png" alt="Custom Post Type Support">
+      <br/><b>Custom Post Types</b>
+    </td>
+    <td width="33.3%" align="center">
+      <img src="screenshots/Dark Mode.png" alt="Dark Mode">
       <br/><b>Premium Dark Mode</b>
     </td>
     <td width="33.3%" align="center">
-      <img src="screenshots/mobile-view.png" alt="Mobile View">
-      <br/><b>Mobile Responsive View</b>
+      <img src="screenshots/User Guide.png" alt="User Guide">
+      <br/><b>User Guide</b>
     </td>
-    <td width="33.3%" align="center">
-      <img src="screenshots/created-page.png" alt="Review Created Items">
-      <br/><b>Review Created Items</b>
+  </tr>
+  <tr>
+    <td width="100%" align="center" colspan="3">
+      <img src="screenshots/About.png" alt="About Page">
+      <br/><b>About Page</b>
     </td>
   </tr>
 </table>
@@ -153,8 +159,8 @@ graph LR
 ## 🚀 Deployment Guide
 
 ### Prerequisites
-- **WordPress**: 6.0+ (Fully optimized for **6.7**)
-- **PHP**: 7.4 through 8.2+
+- **WordPress**: 6.0+ (Fully optimized for **6.9**)
+- **PHP**: 7.4 through 8.5+
 - **Privileges**: Administrator or user with `manage_options`.
 
 ### Installation Steps

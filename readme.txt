@@ -1,9 +1,9 @@
 === WP Bulk Pages Generator ===
 Contributors: boopathirbk
 Requires at least: 6.0
-Tested up to: 6.7
+Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: Apache 2.0
 License URI: https://www.apache.org/licenses/LICENSE-2.0
 
@@ -38,15 +38,31 @@ Yes! The plugin uses an Async Sequential Engine that makes individual REST API c
 = Can I use it for Custom Post Types? =
 Yes. The plugin queries your WordPress instance to automatically identify and support all publicly queryable post types (e.g., custom portfolios, property listings, or directories).
 
+== Screenshots ==
+
+1. Generate Pages — Select your post type and generate a grid of rows for bulk content entry.
+2. Parent & Category Search — Intelligent searchable dropdowns for parent pages and taxonomy terms.
+3. Progress Summary — Real-time progress bar with success/error tracking during bulk creation.
+4. Custom Post Types — Full support for any registered public Custom Post Type.
+5. Dark Mode — Premium Geist-inspired dark theme with system preference detection.
+6. User Guide — Built-in documentation with workflow examples and code patterns.
+7. About Page — Plugin dashboard with capabilities overview and author information.
+
 == Changelog ==
 
-= 1.0.0 =
-* First major public release following WP Bulk Pages Generator audit. Features Geist UI and auto-updates from GitHub releases.
-
-= 1.0.1 =
-* Added search functionality for parent and categories in bulk pages generator.
+= 1.0.3 =
+* Updated compatibility to WordPress 6.9.1 and PHP 8.5.
+* Added visual Screenshots gallery to the About page.
+* Fixed table layout for Custom Post Types causing excessive row spacing.
+* Updated marketing site and documentation with latest screenshots.
 
 = 1.0.2 =
 * Added native GitHub auto-updater integration (one-click updates from WP dashboard).
 * Redesigned the About page with an enhanced Geist UI plugin dashboard.
 * Resolved minor accessibility and typo audit findings.
+
+= 1.0.1 =
+* Added search functionality for parent and categories in bulk pages generator.
+
+= 1.0.0 =
+* First major public release following WP Bulk Pages Generator audit. Features Geist UI and auto-updates from GitHub releases.

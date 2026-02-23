@@ -396,6 +396,41 @@ class WBPG_Admin {
 				</div>
 			</div>
 
+			<!-- Screenshots Gallery -->
+			<div class="wbpg-card wbpg-screenshots-section">
+				<h2><i class="fa-solid fa-images" style="margin-right:12px;color:var(--wbpg-accent);" aria-hidden="true"></i><?php _e( 'Screenshots', 'wp-bulk-pages-generator' ); ?></h2>
+				<div class="wbpg-screenshots-grid">
+					<div class="wbpg-screenshot-item">
+						<img src="<?php echo esc_url( WBPG_PLUGIN_URL . 'screenshots/Generate Page.png' ); ?>" alt="<?php esc_attr_e( 'Generate Page', 'wp-bulk-pages-generator' ); ?>" loading="lazy">
+						<span><?php _e( 'Generate Pages', 'wp-bulk-pages-generator' ); ?></span>
+					</div>
+					<div class="wbpg-screenshot-item">
+						<img src="<?php echo esc_url( WBPG_PLUGIN_URL . 'screenshots/Parent and Category Search.png' ); ?>" alt="<?php esc_attr_e( 'Parent and Category Search', 'wp-bulk-pages-generator' ); ?>" loading="lazy">
+						<span><?php _e( 'Parent & Category Search', 'wp-bulk-pages-generator' ); ?></span>
+					</div>
+					<div class="wbpg-screenshot-item">
+						<img src="<?php echo esc_url( WBPG_PLUGIN_URL . 'screenshots/Progress Summary.png' ); ?>" alt="<?php esc_attr_e( 'Progress Summary', 'wp-bulk-pages-generator' ); ?>" loading="lazy">
+						<span><?php _e( 'Progress Summary', 'wp-bulk-pages-generator' ); ?></span>
+					</div>
+					<div class="wbpg-screenshot-item">
+						<img src="<?php echo esc_url( WBPG_PLUGIN_URL . 'screenshots/Custom Post.png' ); ?>" alt="<?php esc_attr_e( 'Custom Post Type Support', 'wp-bulk-pages-generator' ); ?>" loading="lazy">
+						<span><?php _e( 'Custom Post Types', 'wp-bulk-pages-generator' ); ?></span>
+					</div>
+					<div class="wbpg-screenshot-item">
+						<img src="<?php echo esc_url( WBPG_PLUGIN_URL . 'screenshots/Dark Mode.png' ); ?>" alt="<?php esc_attr_e( 'Dark Mode', 'wp-bulk-pages-generator' ); ?>" loading="lazy">
+						<span><?php _e( 'Dark Mode', 'wp-bulk-pages-generator' ); ?></span>
+					</div>
+					<div class="wbpg-screenshot-item">
+						<img src="<?php echo esc_url( WBPG_PLUGIN_URL . 'screenshots/User Guide.png' ); ?>" alt="<?php esc_attr_e( 'User Guide', 'wp-bulk-pages-generator' ); ?>" loading="lazy">
+						<span><?php _e( 'User Guide', 'wp-bulk-pages-generator' ); ?></span>
+					</div>
+					<div class="wbpg-screenshot-item wbpg-screenshot-wide">
+						<img src="<?php echo esc_url( WBPG_PLUGIN_URL . 'screenshots/About.png' ); ?>" alt="<?php esc_attr_e( 'About Page', 'wp-bulk-pages-generator' ); ?>" loading="lazy">
+						<span><?php _e( 'About Page', 'wp-bulk-pages-generator' ); ?></span>
+					</div>
+				</div>
+			</div>
+
 			<!-- Technical Highlights -->
 			<div class="wbpg-tech-strip">
 				<div class="wbpg-tech-item">

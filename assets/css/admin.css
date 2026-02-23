@@ -638,7 +638,7 @@
 }
 
 .wbpg-table textarea {
-    min-height: 80px;
+    min-height: 40px;
     resize: vertical;
 }
 
@@ -647,17 +647,23 @@
 
     .wbpg-table th:nth-child(3),
     .wbpg-table td:nth-child(3) {
-        width: 30% !important;
+        width: 25% !important;
     }
 
     .wbpg-table th:nth-child(4),
     .wbpg-table td:nth-child(4) {
-        width: 18% !important;
+        width: 14% !important;
     }
 
     .wbpg-table th:nth-child(6),
     .wbpg-table td:nth-child(6) {
-        width: 32% !important;
+        width: 22% !important;
+    }
+
+    /* Prevent parent column overflow from SlimSelect */
+    .col-parent {
+        overflow: hidden !important;
+        position: relative !important;
     }
 }
 
@@ -1385,6 +1391,74 @@
     line-height: 1.6;
     color: var(--wbpg-text-muted);
     margin: 0;
+}
+
+/* Screenshots Gallery */
+.wbpg-screenshots-section {
+    margin-bottom: 24px;
+}
+
+.wbpg-screenshots-section h2 {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    margin-bottom: 20px !important;
+    padding-bottom: 16px !important;
+    border-bottom: 1px solid var(--wbpg-border) !important;
+}
+
+.wbpg-screenshots-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.wbpg-screenshot-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border: 1px solid var(--wbpg-border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--wbpg-bg-page);
+}
+
+.wbpg-screenshot-item:hover {
+    border-color: var(--wbpg-accent);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.wbpg-admin-wrap[data-theme="dark"] .wbpg-screenshot-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.wbpg-screenshot-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.wbpg-screenshot-item span {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--wbpg-text-muted);
+    text-align: center;
+    padding: 0 12px 12px;
+}
+
+.wbpg-screenshot-wide {
+    grid-column: span 2;
+}
+
+@media (max-width: 782px) {
+    .wbpg-screenshots-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .wbpg-screenshot-wide {
+        grid-column: span 2;
+    }
 }
 
 /* Technical Highlights Strip */
